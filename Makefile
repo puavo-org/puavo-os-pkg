@@ -126,4 +126,4 @@ puavo-pkg-installers-bundle.tar: $(packagefiles)
 
 .PHONY: clean
 clean:
-	rm -rf $(packagefiles) puavo-pkg-installers-bundle.tar
+	rm -rf $(packagefiles) puavo-pkg-installers-bundle.tar puavo-pkg.json
