@@ -26,6 +26,7 @@ packagedirs += dragonbox_koulu2
 packagedirs += eclipse
 packagedirs += ekapeli-alku
 packagedirs += enchanting
+packagedirs += epson-easymp
 packagedirs += extra-xkb-symbols
 packagedirs += filius
 packagedirs += firefox
