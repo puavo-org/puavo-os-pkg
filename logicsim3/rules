@@ -1,0 +1,42 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+  configure)
+    upstream_dir=$1
+    ln -fns "${upstream_dir}" /opt/logicsim
+    cat <<'EOF' > /usr/bin/logicsim
+#!/bin/sh
+cd ~/Logicsim
+java -jar LogicSim.jar
+#bash -c "mkdir -p ~/.local/opt/logicsim/ && rsync -r --ignore-existing /opt/logicsim/ ~/.local/opt/logicsim/ && cd ~/.local/opt/logicsim && java -jar LogicSim.jar"
+EOF
+    cat <<'EOF' > /usr/share/applications/logicsim.desktop
+[Desktop Entry]
+Name=LogicSim3
+Icon=access
+GenericName=LogicSim
+Path=/opt/logicsim
+Exec=/usr/bin/logicsim
+Terminal=true
+StartupNotify=false
+Type=Application
+Categories=Education;
+Keywords=logic;simulator;
+EOF
+    ;;
+  unconfigure)
+    rm -f /opt/logicsim /usr/bin/logicsim /usr/share/applications/logicsim.desktop
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    unzip   "$upstream_pack" -d "$upstream_dir"
+    ;;
+  *)
+    ;;
+esac

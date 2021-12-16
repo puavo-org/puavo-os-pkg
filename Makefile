@@ -41,6 +41,7 @@ packagedirs += idid
 packagedirs += kdenlive-appimage
 packagedirs += kojo
 packagedirs += launcherone
+packagedirs += logicsim3
 packagedirs += lmaths
 packagedirs += mafynetti
 packagedirs += marvinsketch
