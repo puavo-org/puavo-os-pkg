@@ -1,7 +1,5 @@
 #!/bin/sh
 
-#Incomplete dummy version
-
 set -eu
 
 command=$1
@@ -11,16 +9,55 @@ shift
 case "${command}" in
   configure)
     upstream_dir=$1
+    ln -fns "${upstream_dir}"/Common_Files /opt/wine/epson-easymp
+    cat <<'EOF' > /usr/bin/epson-easymp
+#!/bin/sh
+VER=$(wine reg QUERY "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion" /v CurrentVersion | tail -c 7 | head -c 3)
+WXPVER="5.2"
+echo "Our WINE version $VER, target version $WXPVER"
+if [ $VER != $WXPVER ]
+then
+  echo "Changing version"
+  notify-send "Setting up EasyMP, please wait"
+  winetricks winxp #support for changing version directly in wine is available starting at 5.0.2:
+  #https://bugs.winehq.org/show_bug.cgi?id=41559 - Bullseye comes with 5.0.3, but in Buster we need to use winetricks
+fi
+echo "Starting the application"
+wine /opt/wine/epson-easymp/EMP_NSC.exe
 
+EOF
+
+        chown root:root "/usr/bin/epson-easymp"
+        chown root:root "/opt/wine/epson-easymp"
+        chmod 4755      "/usr/bin/epson-easymp"
+        chmod 4755      "/opt/wine/epson-easymp"
+
+    cat <<'EOF' > /usr/share/applications/epson-easymp.desktop
+[Desktop Entry]
+Name=Epson EasyMP
+Icon=/opt/wine/epson-easymp/EMP.ico
+GenericName=Epson EasyMP
+Path=/opt/wine/epson-easymp
+Exec=/usr/bin/epson-easymp
+Terminal=false
+StartupNotify=false
+Type=Application
+Categories=Video;
+Keywords=beamer;lan;wlan;projector;
+EOF
     ;;
   unconfigure)
-
+    rm -f /opt/wine/epson-easymp /usr/bin/epson-easymp /usr/share/applications/epson-easymp.desktop
     ;;
   unpack)
     upstream_pack=$1
     upstream_dir=$2
-
-
+    unzip "$upstream_pack" Setup.exe -d "$upstream_dir"
+    cd "$upstream_dir"
+    cabextract -F Inst*.[hc]?? Setup.exe
+    unshield -g Common_Files x InstData/data1.cab
+    rm -rf InstData Setup.exe
+    wrestool -x -t 14 Common_Files/EMP_NSC.exe > Common_Files/EMP.ico
     ;;
   *)
     ;;
