@@ -9,19 +9,25 @@ case "${command}" in
   configure)
     upstream_dir=$1
     ln -fns "${upstream_dir}" /opt/logicsim
-    cat <<'EOF' > /usr/bin/logicsim
+    cat <<'EOF' > /usr/local/bin/logicsim
 #!/bin/sh
+set -eu
+
+mkdir -p ~/Logicsim
+rsync -a /opt/logicsim/ ~/Logicsim/
 cd ~/Logicsim
 java -jar LogicSim.jar
-#bash -c "mkdir -p ~/.local/opt/logicsim/ && rsync -r --ignore-existing /opt/logicsim/ ~/.local/opt/logicsim/ && cd ~/.local/opt/logicsim && java -jar LogicSim.jar"
+
 EOF
-    cat <<'EOF' > /usr/share/applications/logicsim.desktop
+    chmod 755 /usr/local/bin/logicsim
+
+    cat <<'EOF' > /usr/share/applications/logicsim3.desktop
 [Desktop Entry]
 Name=LogicSim3
-Icon=access
+Icon=/opt/logicsim/icon.png
 GenericName=LogicSim
 Path=/opt/logicsim
-Exec=/usr/bin/logicsim
+Exec=/usr/local/bin/logicsim
 Terminal=true
 StartupNotify=false
 Type=Application
@@ -30,7 +36,7 @@ Keywords=logic;simulator;
 EOF
     ;;
   unconfigure)
-    rm -f /opt/logicsim /usr/bin/logicsim /usr/share/applications/logicsim.desktop
+    rm -f /opt/logicsim /usr/local/bin/logicsim /usr/share/applications/logicsim.desktop
     ;;
   unpack)
     upstream_pack=$1
