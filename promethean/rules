@@ -80,10 +80,10 @@ obj-m += promethean.o
 promethean-objs += Mathrout.o usbpromethean.o
 
 all:
-	make -C /lib/modules/$(KERNEL_VERSION)/build SUBDIRS="$(PWD)" modules
+	make -C /lib/modules/$(KERNEL_VERSION)/build KBUILD_EXTMOD="$(PWD)" modules
 
 clean:
-	make -C /lib/modules/$(KERNEL_VERSION)/build SUBDIRS="$(PWD)" clean
+	make -C /lib/modules/$(KERNEL_VERSION)/build KBUILD_EXTMOD="$(PWD)" clean
 EOF
 
   # compile promethean.ko for the default kernel only
