@@ -1,0 +1,42 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+
+    ln -fns "${upstream_dir}/Telegram/Telegram" /usr/bin/telegram-desktop
+
+    cat <<'EOF' > /usr/local/share/applications/telegramdesktop.desktop
+[Desktop Entry]
+Version=1.0
+Name=Telegram Desktop
+Comment=Official desktop version of Telegram messaging app
+Exec=telegram-desktop -- %u
+Icon=telegram
+Terminal=false
+StartupWMClass=TelegramDesktop
+Type=Application
+Categories=Network;InstantMessaging;Qt;
+MimeType=x-scheme-handler/tg;
+Keywords=tg;chat;im;messaging;messenger;sms;tdesktop;
+X-GNOME-UsesNotifications=true
+EOF
+    ;;
+  unconfigure)
+    rm -f /usr/bin/telegram-desktop \
+          /usr/local/share/applications/telegramdesktop.desktop
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    tar -Jx --no-same-owner -C "$upstream_dir" -f "$upstream_pack"
+    ;;
+  *)
+    ;;
+esac

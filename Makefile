@@ -79,6 +79,7 @@ packagedirs += supertuxkart
 packagedirs += teams
 packagedirs += teamviewer
 packagedirs += tela-icon-theme
+packagedirs += telegram-desktop
 packagedirs += tilitin
 packagedirs += t-lasku
 packagedirs += ubuntu-firmware
