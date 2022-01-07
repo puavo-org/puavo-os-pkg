@@ -40,6 +40,7 @@ packagedirs += google-earth
 packagedirs += hp-bios-utils
 packagedirs += idid
 packagedirs += kdenlive-appimage
+packagedirs += kmbeu
 packagedirs += kojo
 packagedirs += launcherone
 packagedirs += logicsim3
