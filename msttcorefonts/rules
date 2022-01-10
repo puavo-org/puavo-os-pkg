@@ -39,7 +39,6 @@ case "${command}" in
             while read sha256 fontexe; do
                 wget \
                     --no-use-server-timestamps \
-                    --no-check-certificate \
                     --no-cookies \
                     --output-document "${fontexe}" \
                     --progress=dot:mega \

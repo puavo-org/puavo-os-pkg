@@ -39,7 +39,6 @@ case "${command}" in
         tmpfile=$(mktemp)
         wget \
             --no-use-server-timestamps \
-            --no-check-certificate \
             --no-cookies \
             --output-document "${tmpfile}" \
             --progress=dot:mega \
@@ -54,7 +53,6 @@ case "${command}" in
         rm -f "${tmpfile}"
         wget \
             --no-use-server-timestamps \
-            --no-check-certificate \
             --no-cookies \
             --output-document "${upstream_pack}" \
             "${baseurl}/${poolpath}" || {

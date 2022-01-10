@@ -65,7 +65,6 @@ case "${command}" in
         tarfile=$(basename "$tarpath")
         wget \
             --no-use-server-timestamps \
-            --no-check-certificate \
             --no-cookies \
             --output-document "$tarfile" \
             --progress=dot:mega \

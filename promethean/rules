@@ -173,7 +173,6 @@ EOF
         deb=$(basename "$debpath")
         wget \
             --no-use-server-timestamps \
-            --no-check-certificate \
             --no-cookies \
             --output-document "$deb" \
             --progress=dot:mega \

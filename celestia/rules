@@ -103,7 +103,6 @@ case "$command" in
         deb=$(basename "$debfile")
         wget \
             --no-use-server-timestamps \
-            --no-check-certificate \
             --no-cookies \
             --output-document "$deb" \
             --progress=dot:mega \
