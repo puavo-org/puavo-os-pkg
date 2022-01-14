@@ -11,8 +11,10 @@ case "$command" in
     for ppd in "${upstream_dir}"/*.ppd; do
       ln -fns "${ppd}" "/usr/share/cups/model/${ppd##*/}"
     done
-    ln -fns "${upstream_dir}/KMbeuEmpPS.pl" /usr/lib/cups/filter/KMbeuEmpPS.pl
-    ln -fns "${upstream_dir}/KMbeuEnc.pm"   /usr/lib/cups/filter/KMbeuEnc.pm
+    install -o root -g root -m 755 "${upstream_dir}/KMbeuEmpPS.pl" \
+                                   /usr/lib/cups/filter/KMbeuEmpPS.pl
+    install -o root -g root -m 755 "${upstream_dir}/KMbeuEnc.pm" \
+                                   /usr/lib/cups/filter/KMbeuEnc.pm
     ;;
   unconfigure)
     upstream_dir=$1
