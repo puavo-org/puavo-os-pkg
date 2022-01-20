@@ -12,7 +12,7 @@ case "$command" in
     ln -fns "${upstream_dir}/Telegram/Telegram" /usr/bin/telegram-desktop
 
     mkdir -p /etc/tdesktop
-    echo "${upstream_dir}/Telegram/Telegram" >> /etc/tdesktop/externalupdater
+    echo "${upstream_dir}/Telegram/Telegram" > /etc/tdesktop/externalupdater
     echo "/usr/bin/telegram-desktop" >> /etc/tdesktop/externalupdater
 
     cat <<'EOF' > /usr/local/share/applications/telegramdesktop.desktop
@@ -33,7 +33,8 @@ EOF
     ;;
   unconfigure)
     rm -f /usr/bin/telegram-desktop \
-          /usr/local/share/applications/telegramdesktop.desktop
+          /usr/local/share/applications/telegramdesktop.desktop \
+          /etc/tdesktop/externalupdater
     ;;
   unpack)
     upstream_pack=$1
