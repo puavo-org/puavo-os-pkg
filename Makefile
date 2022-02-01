@@ -82,6 +82,7 @@ packagedirs += tela-icon-theme
 packagedirs += telegram-desktop
 packagedirs += tilitin
 packagedirs += t-lasku
+packagedirs += tmux-plugins-battery
 packagedirs += ubuntu-firmware
 packagedirs += ubuntu-wallpapers
 packagedirs += unityhub-appimage

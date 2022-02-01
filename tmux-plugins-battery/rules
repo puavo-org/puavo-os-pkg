@@ -1,0 +1,27 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+  configure)
+    upstream_dir=$1
+    mkdir -p /opt/tmux/plugins
+    cp -RT "$upstream_dir" /opt/tmux/plugins/tmux-battery
+    ;;
+  unconfigure)
+    rm -rf /opt/tmux/plugins/tmux-battery
+    rmdir --ignore-fail-on-non-empty /opt/tmux/plugins /opt/tmux
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    tar -zx --no-same-owner --strip-components=1 -C "$upstream_dir" \
+      -f "$upstream_pack"
+    ;;
+  *)
+    ;;
+esac
