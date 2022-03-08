@@ -1,15 +1,5 @@
 #!/bin/sh
 
-### the upstream appimage has been created with:
-# sudo apt-get install npm nodejs
-# git clone https://github.com/OttoDIY/blockly
-# cd blockly/
-# git checkout versionlinux
-# npm install
-# npm run compiler
-#
-# it should now be under "dist"
-
 set -eu
 
 command=$1
@@ -34,6 +24,7 @@ EOF
     ;;
   unconfigure)
     rm -f "$otto_blockly_dir"
+    rm /usr/share/applications/otto-blockly.desktop
     ;;
   unpack)
     upstream_pack=$1
