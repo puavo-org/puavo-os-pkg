@@ -5,6 +5,7 @@ INSTALL = install
 INSTALL_DATA = $(INSTALL) -m 644
 
 packagedirs  = abitti-naksu
+packagedirs += activinspire
 packagedirs += adobe-reader
 packagedirs += appinventor
 packagedirs += arduino-ide
