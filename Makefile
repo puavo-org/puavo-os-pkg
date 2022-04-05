@@ -90,6 +90,7 @@ packagedirs += vagrant
 packagedirs += veracrypt
 packagedirs += vidyo-client
 packagedirs += vscode
+packagedirs += webex
 packagedirs += zoom
 
 packagefiles = $(patsubst %,%.tar.gz,${packagedirs})
