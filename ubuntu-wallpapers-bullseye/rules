@@ -1,0 +1,173 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+ubuntu_backgrounds_links='
+  /usr/share/backgrounds/160218-deux-two_by_Pierre_Cante.jpg
+  /usr/share/backgrounds/Abstract_Painting_Photo_by_Pierre_Châtel-Innocenti.jpg
+  /usr/share/backgrounds/A_Little_Quetzal_by_vgerasimov.jpg
+  /usr/share/backgrounds/Backyard_Mushrooms_by_Kurt_Zitzelman.jpg
+  /usr/share/backgrounds/Beach_by_Renato_Giordanelli.jpg
+  /usr/share/backgrounds/Beaver_Wallpaper_Grey_4096x2304.png
+  /usr/share/backgrounds/Below_Clouds_by_kobinho.jpg
+  /usr/share/backgrounds/Berries_by_Tom_Kijas.jpg
+  /usr/share/backgrounds/Black_hole_by_Marek_Koteluk.jpg
+  /usr/share/backgrounds/BosqueTK.jpg
+  /usr/share/backgrounds/brad-huchteman-stone-mountain.jpg
+  /usr/share/backgrounds/BusquedaNocturna.jpg
+  /usr/share/backgrounds/Cairn_by_Sylvain_Naudin.jpg
+  /usr/share/backgrounds/Camera_Film_by_Markus_Spiske.jpg
+  /usr/share/backgrounds/Cathédrale_Marie-Rheine-du-Monde_by_Thierry_Pon.jpg
+  /usr/share/backgrounds/Cielo_estrellado_by_Eduardo_Diez_Viñuela.jpg
+  /usr/share/backgrounds/clock_by_Bernhard_Hanakam.jpg
+  /usr/share/backgrounds/Colored_Pencils_by_Jess_Bailey.jpg
+  /usr/share/backgrounds/Cornered.jpg
+  /usr/share/backgrounds/Crocus_Wallpaper_by_Roy_Tanck.jpg
+  /usr/share/backgrounds/CurlsbyCandy.jpg
+  /usr/share/backgrounds/Daisy.jpg
+  /usr/share/backgrounds/Dans_ma_bulle_by_Christophe_Weibel.jpg
+  /usr/share/backgrounds/Definitive_Light_Zen_Orange_by_Pierre_Cante.jpg
+  /usr/share/backgrounds/Early_Morning_by_Robert_Katzki.jpg
+  /usr/share/backgrounds/El_Haouaria_by_Nusi_Nusi.jpg
+  /usr/share/backgrounds/FallDrops,AncientLight.jpg
+  /usr/share/backgrounds/Flora_by_Marek_Koteluk.jpg
+  /usr/share/backgrounds/Fluffodome.jpg
+  /usr/share/backgrounds/Focal-Fossa_WP_4096x2304_GREY.png
+  /usr/share/backgrounds/Foggy_Forest_by_Jake_Stewart.jpg
+  /usr/share/backgrounds/Forever_by_Shady_S.jpg
+  /usr/share/backgrounds/Frozen_by_fernando_garcila_redondo.jpg
+  /usr/share/backgrounds/Gorilla_Wallpaper_Grey_4096x2304.png
+  /usr/share/backgrounds/Gran_Canaria_by_ALF.jpg
+  /usr/share/backgrounds/Green_Plant_by_Simon_Schlegl.jpg
+  /usr/share/backgrounds/Halifax_Sunset_by_Vlad_Drobinin.jpg
+  /usr/share/backgrounds/hardy_wallpaper_uhd.png
+  /usr/share/backgrounds/H_by_Manuel_Sagredo.jpg
+  /usr/share/backgrounds/Hippopotamus_Swimming_Photo_by_Francesco_Ungaro.jpg
+  /usr/share/backgrounds/Hirsute-Hippo_WP_4096x2304_Grey.png
+  /usr/share/backgrounds/Ibanez_Infinity_by_Jaco_Kok.jpg
+  /usr/share/backgrounds/Icy_Grass_by_Raymond_Lavoie.jpg
+  /usr/share/backgrounds/Icystones2.jpg
+  /usr/share/backgrounds/Impish-Indri_WP_4096x2304_Grey.png
+  /usr/share/backgrounds/InthedarkRedux.jpg
+  /usr/share/backgrounds/Jelly_Fish_by_RaDu_GaLaN.jpg
+  /usr/share/backgrounds/joshua-coleman-something-yellow.jpg
+  /usr/share/backgrounds/Landscape_Photography_Of_Mountains_by_Simon_Berger.jpg
+  /usr/share/backgrounds/Macro_Shot_of_Black_Animal_by_Gene_Taylor.jpg
+  /usr/share/backgrounds/Manhattan_Sunset_by_Giacomo_Ferroni.jpg
+  /usr/share/backgrounds/Maraetaibeforesunrise.jpg
+  /usr/share/backgrounds/matt-mcnulty-nyc-2nd-ave.jpg
+  /usr/share/backgrounds/Milky_Way_by_Paulo_José_Oliveira_Amaro.jpg
+  /usr/share/backgrounds/Mono_Lake_by_Angela_Henderson.jpg
+  /usr/share/backgrounds/Night_lights_by_Alberto_Salvia_Novella.jpg
+  /usr/share/backgrounds/On_top_of_the_Rubihorn_by_Matthias_Niess.jpg
+  /usr/share/backgrounds/Outoffocus.jpg
+  /usr/share/backgrounds/Pantano_de_Orellana_by_mgarciaiz.jpg
+  /usr/share/backgrounds/Partitura_by_Vincijun.jpg
+  /usr/share/backgrounds/passion_flower_by_Irene_Gr.jpg
+  /usr/share/backgrounds/Pointy.jpg
+  /usr/share/backgrounds/Raindrops_On_The_Table_by_Alex_Fazit.jpg
+  /usr/share/backgrounds/Reflections_by_Trenton_Fox.jpg
+  /usr/share/backgrounds/Roof_Tiles_by_Finn_Sturdy.jpg
+  /usr/share/backgrounds/Ross_Jones_Rockpool_(Sydney)_by_Chris_Carignan.jpg
+  /usr/share/backgrounds/ryan-stone-skykomish-river.jpg
+  /usr/share/backgrounds/Sea_Fury_by_Ian_Worrall.jpg
+  /usr/share/backgrounds/Silver_Back_Gorilla_by_Mike_Arney.jpg
+  /usr/share/backgrounds/SmoothMoment.jpg
+  /usr/share/backgrounds/Spices_in_Athens_by_Makis_Chourdakis.jpg
+  /usr/share/backgrounds/Spring_by_Peter_Apas.jpg
+  /usr/share/backgrounds/TCP118v1_by_Tiziano_Consonni.jpg
+  /usr/share/backgrounds/The_Land_of_Edonias_by_Γιωργος_Αργυροπουλος.jpg
+  /usr/share/backgrounds/This_Is_Bionic_Beaver_by_Pierre_Cante.jpg
+  /usr/share/backgrounds/Vanishing_by_James_Wilson.jpg
+  /usr/share/backgrounds/Wall_with_door_on_Gozo_by_Matthias_Niess.jpg
+  /usr/share/backgrounds/Warmlights.jpg
+  /usr/share/backgrounds/Water_web_by_Tom_Kijas.jpg
+  /usr/share/backgrounds/Way_by_Kacper_Ślusarczyk.jpg
+  /usr/share/backgrounds/Xerus_Wallpaper_Grey_4096x2304.png
+  /usr/share/backgrounds/Yellowflower.jpg
+  /usr/share/gnome-background-properties/bionic-wallpapers.xml
+  /usr/share/gnome-background-properties/focal-wallpapers.xml
+  /usr/share/gnome-background-properties/groovy-wallpapers.xml
+  /usr/share/gnome-background-properties/hirsute-wallpapers.xml
+  /usr/share/gnome-background-properties/impish-wallpapers.xml
+  /usr/share/gnome-background-properties/lucid-wallpapers.xml
+  /usr/share/gnome-background-properties/quantal-wallpapers.xml
+  /usr/share/gnome-background-properties/trusty-wallpapers.xml
+  /usr/share/gnome-background-properties/xenial-wallpapers.xml
+'
+
+urlbase='http://cz.archive.ubuntu.com/ubuntu/pool/universe/u/ubuntu-wallpapers'
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+    for f in $ubuntu_backgrounds_links; do
+      ln -fns -T "${upstream_dir}${f}" "$f"
+    done
+    ;;
+
+  unconfigure)
+    rm -f $ubuntu_backgrounds_links
+    ;;
+
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    tar -x -f "$upstream_pack" -C "$upstream_dir"
+    ;;
+
+  download)
+    upstream_pack=$(readlink -f "$1")
+    tmpdir=
+    trap '[ -n "$tmpdir" ] && rm -rf "$tmpdir"' 0 INT TERM
+    tmpdir=$(mktemp -d)
+
+    (
+      cd "$tmpdir"
+      mkdir -p ubuntu-wallpapers
+
+      while read sha384 debpath; do
+        debfile=$(basename "$debpath")
+        wget \
+            --no-use-server-timestamps \
+            --no-cookies \
+            --output-document "$debfile" \
+            --progress=dot:mega \
+            "${urlbase}/${debpath}" || {
+            [ $? -eq 4 ] && exit 2 ## Network failure.
+            exit 1
+        }
+        if ! echo "${sha384} ${debfile}" | sha384sum --check >/dev/null; then
+          actual_checksum=$(sha384sum "$debfile" | awk '{ print $1 }')
+          echo "checksum NOT matching for $debpath" >&2
+          echo "expected: ${sha384} / actual: ${actual_checksum}" >&2
+          exit 1
+        fi
+        ar p "$debfile" data.tar.zst \
+          | tar --zstd -x -C ubuntu-wallpapers || exit 1
+      done <<EOF
+2a57a1992033d76f1347c466d12566a0f706bb049d500b5c340d22e30c404aeacf0ca39e0e1870e9a2dcf096dd36fd74  ubuntu-wallpapers-lucid_22.04.3-0ubuntu1_all.deb
+d05d76de05e91f8711bd1553fce4a0f1fe6b5eecb369bc36252de7a062913609b8a7e4b7501c83675db4db99c85b279a  ubuntu-wallpapers-quantal_22.04.3-0ubuntu1_all.deb
+e4d89ca50ae592af40598ac8421da39f71e5422dfb2727203a5534dbae609686c352b9f2541b23f34a02e20209372249  ubuntu-wallpapers-trusty_22.04.3-0ubuntu1_all.deb
+7bf0fc34c511df30b04176a0eff1c7f7aa1991f2cabe2d64c2a3e945059e0ad83b0685a99b8dfcc3c44089b71b697a7f  ubuntu-wallpapers-xenial_22.04.3-0ubuntu1_all.deb
+84471e7c035cce4c69ff5d200f2bd674f23861e73c48b754f34b2aaaf540e588550f4bf9d20ccdcbab23da47c44745e5  ubuntu-wallpapers-bionic_22.04.3-0ubuntu1_all.deb
+bb2a13c01dda60478f442ab44a15ae5d13b1fc89d768fb34d86f41d285fa6aaa6d85abcb444abac22a45d3935eee034e  ubuntu-wallpapers-focal_22.04.3-0ubuntu1_all.deb
+17301cc9ddc9c740b42099292cfc9a626a8c4293ca365b61a20278e8eabcb554fb4264b58ba58c79cee3f4bacbe2a482  ubuntu-wallpapers-groovy_22.04.3-0ubuntu1_all.deb
+dd97da33c4f4c7b7d33c63bff2df33612993c5d6f745d50db992613391c2ded53bd067f1a02e230c03e0878a069f7e69  ubuntu-wallpapers-hirsute_22.04.3-0ubuntu1_all.deb
+02a105726e9e62370c68f424093c968e58fd27620fd8c57afe36b9f0d27e1fffcb610ca64ce4c822da8e9659c76b69b0  ubuntu-wallpapers-impish_22.04.3-0ubuntu1_all.deb
+EOF
+      # Set LC_COLLATE=C so that files always sort in the same
+      # way (so we get the same tar-archive independent of locales).
+      env LC_COLLATE=C \
+        tar -C ubuntu-wallpapers --mtime='2000-01-01 00:00:00 +00:00' --sort=name -c \
+          -f "$upstream_pack" .
+    )
+    ;;
+
+    *)
+        ;;
+esac

@@ -85,6 +85,7 @@ packagedirs += t-lasku
 packagedirs += tmux-plugins-battery
 packagedirs += ubuntu-firmware
 packagedirs += ubuntu-wallpapers
+packagedirs += ubuntu-wallpapers-bullseye
 packagedirs += unityhub-appimage
 packagedirs += vagrant
 packagedirs += veracrypt
