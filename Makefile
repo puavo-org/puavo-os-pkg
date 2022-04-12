@@ -89,6 +89,7 @@ packagedirs += ubuntu-wallpapers-bullseye
 packagedirs += unityhub-appimage
 packagedirs += vagrant
 packagedirs += veracrypt
+packagedirs += veyon
 packagedirs += vidyo-client
 packagedirs += vscode
 packagedirs += webex

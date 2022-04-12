@@ -1,0 +1,53 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+links='
+  /lib/systemd/system/veyon.service
+  /usr/bin/veyon-auth-helper
+  /usr/bin/veyon-cli
+  /usr/bin/veyon-configurator
+  /usr/bin/veyon-master
+  /usr/bin/veyon-server
+  /usr/bin/veyon-service
+  /usr/bin/veyon-worker
+  /usr/lib/x86_64-linux-gnu/veyon
+  /usr/share/applications/veyon-configurator.desktop
+  /usr/share/applications/veyon-master.desktop
+  /usr/share/icons/hicolor/48x48/apps/veyon-configurator.png
+  /usr/share/icons/hicolor/48x48/apps/veyon-master.png
+  /usr/share/icons/hicolor/scalable/apps/veyon-configurator.svg
+  /usr/share/icons/hicolor/scalable/apps/veyon-master.svg
+  /usr/share/pixmaps/veyon-configurator.xpm
+  /usr/share/pixmaps/veyon-master.xpm
+  /usr/share/polkit-1/actions/io.veyon.veyon-configurator.policy
+  /usr/share/veyon
+'
+
+case "${command}" in
+  configure)
+    upstream_dir=$1
+
+    for f in $links; do
+      dir=$(dirname "$f")
+      mkdir -p "$dir"
+      ln -fns -T "${upstream_dir}${f}" "$f"
+    done
+    ;;
+  unconfigure)
+    rm -f $links
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    dpkg -x "$upstream_pack" "$upstream_dir"
+
+    # disable 4755 from veyon-auth-helper, we do not need it
+    chmod 755 "${upstream_dir}/usr/bin/veyon-auth-helper"
+    ;;
+  *)
+    ;;
+esac
