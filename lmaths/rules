@@ -14,7 +14,7 @@ case "$command" in
     cat <<EOF > /usr/share/applications/lmaths.desktop
 [Desktop Entry]
 Name=LMathS
-Exec=/opt/lmaths/LMathS.AppImage
+Exec=env OPENSSL_CONF=/etc/ssl/ /opt/lmaths/LMathS.AppImage
 Type=Application
 Terminal=false
 Icon=lmaths
