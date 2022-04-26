@@ -150,15 +150,15 @@ case "$command" in
         ar p "$debfile" data.tar.zst \
           | tar --zstd -x -C ubuntu-wallpapers || exit 1
       done <<EOF
-2a57a1992033d76f1347c466d12566a0f706bb049d500b5c340d22e30c404aeacf0ca39e0e1870e9a2dcf096dd36fd74  ubuntu-wallpapers-lucid_22.04.3-0ubuntu1_all.deb
-d05d76de05e91f8711bd1553fce4a0f1fe6b5eecb369bc36252de7a062913609b8a7e4b7501c83675db4db99c85b279a  ubuntu-wallpapers-quantal_22.04.3-0ubuntu1_all.deb
-e4d89ca50ae592af40598ac8421da39f71e5422dfb2727203a5534dbae609686c352b9f2541b23f34a02e20209372249  ubuntu-wallpapers-trusty_22.04.3-0ubuntu1_all.deb
-7bf0fc34c511df30b04176a0eff1c7f7aa1991f2cabe2d64c2a3e945059e0ad83b0685a99b8dfcc3c44089b71b697a7f  ubuntu-wallpapers-xenial_22.04.3-0ubuntu1_all.deb
-84471e7c035cce4c69ff5d200f2bd674f23861e73c48b754f34b2aaaf540e588550f4bf9d20ccdcbab23da47c44745e5  ubuntu-wallpapers-bionic_22.04.3-0ubuntu1_all.deb
-bb2a13c01dda60478f442ab44a15ae5d13b1fc89d768fb34d86f41d285fa6aaa6d85abcb444abac22a45d3935eee034e  ubuntu-wallpapers-focal_22.04.3-0ubuntu1_all.deb
-17301cc9ddc9c740b42099292cfc9a626a8c4293ca365b61a20278e8eabcb554fb4264b58ba58c79cee3f4bacbe2a482  ubuntu-wallpapers-groovy_22.04.3-0ubuntu1_all.deb
-dd97da33c4f4c7b7d33c63bff2df33612993c5d6f745d50db992613391c2ded53bd067f1a02e230c03e0878a069f7e69  ubuntu-wallpapers-hirsute_22.04.3-0ubuntu1_all.deb
-02a105726e9e62370c68f424093c968e58fd27620fd8c57afe36b9f0d27e1fffcb610ca64ce4c822da8e9659c76b69b0  ubuntu-wallpapers-impish_22.04.3-0ubuntu1_all.deb
+20f4e6694ee05e439f6e0445f255dea98b923f980c31160e8dd3cc1432ea438944dbd651a5e1ef7f37eea0782428d436  ubuntu-wallpapers-lucid_22.04.4-0ubuntu1_all.deb
+aed7cee1563c242f52072d9940769e6a32bff663fde495e4a144a722059e5fa17ffa90cbed2627431e16b3daff1ecdb7  ubuntu-wallpapers-quantal_22.04.4-0ubuntu1_all.deb
+1e3a53a28a96b8f69ac7a44bc74a9f56b17a1228b8303ae23e7fd9ba7eba8db9f233edfb68c1a35a97b4fb18f09779e6  ubuntu-wallpapers-trusty_22.04.4-0ubuntu1_all.deb
+3e0173342fe65ca2f1bba4c3bfb869ee561428045efe42685597a0784f5e785dd54eab6aac98e948be94e1258d1a15b0  ubuntu-wallpapers-xenial_22.04.4-0ubuntu1_all.deb
+1d916172cf295eff495386803d25f346985f75a447514f4c40ce6207920b77436497f18570319304f06f392d5e000bbd  ubuntu-wallpapers-bionic_22.04.4-0ubuntu1_all.deb
+ab5854a77027908f46d768b28d52e814602d2dbd1a63e1333503efa82a0df65e4a7f61d8fa5ef38fc6527dcce9af9592  ubuntu-wallpapers-focal_22.04.4-0ubuntu1_all.deb
+695740e724552c9fb8a9336349fe0eca6d7152ff7ec8c0ac0a0238bd7f189242e712e880671cb45f87d2f4a41dd19c9c  ubuntu-wallpapers-groovy_22.04.4-0ubuntu1_all.deb
+63fcb1486a5bf824321efa9064bdead7b21f43171ce475ed1a27ee8206d6ff9f2787228097dca7983b5e880fb7978cb8  ubuntu-wallpapers-hirsute_22.04.4-0ubuntu1_all.deb
+cfa4ef0b470e588b66bb472db65e5a7489d719734cda3d42bbb2f180ceb4916339b00807fca7af71807fd147b7ae2a0e  ubuntu-wallpapers-impish_22.04.4-0ubuntu1_all.deb
 EOF
       # Set LC_COLLATE=C so that files always sort in the same
       # way (so we get the same tar-archive independent of locales).
