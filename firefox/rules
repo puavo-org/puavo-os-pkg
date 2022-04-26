@@ -5,7 +5,7 @@ set -eu
 command=$1
 shift
 
-version=98.0.2
+version=99.0.1
 urlbase="https://download-installer.cdn.mozilla.net/pub/firefox/releases/${version}/linux-x86_64"
 
 setup_firefox_wrapper() {
@@ -19,6 +19,7 @@ case "$LANG" in
   fi_*) firefox_dir=/opt/firefox/fi    ;;
   fr_*) firefox_dir=/opt/firefox/fr    ;;
   sv_*) firefox_dir=/opt/firefox/sv-SE ;;
+  uk_*) firefox_dir=/opt/firefox/uk    ;;
   *)    firefox_dir=/opt/firefox/en-GB ;;
 esac
 
@@ -116,11 +117,12 @@ EOF
 lockPref("autoadmin.global_config_url", "file:///etc/firefox/puavodesktop.js");
 FF_PUAVO_JS_EOF
       done <<EOF
-99a9ab23191a3b780a7617897acd11ccabb03c7df7132c5f45fedc8677b9832c7c755f1378a4809a2aec95463593967a de/firefox-${version}.tar.bz2
-4037e4bfb9c20011f566cf4e30fc0b9009b79713e2ca4bc7cbeda45e7c9b2d3487b5aeb5256ac664711121161574e73a en-GB/firefox-${version}.tar.bz2
-ebf9caaaadf40d927490b737de8358e755f8c569fd9400770e3877db5161f99da09fb74a9a0a0baf432aa329b22a2aa9 fi/firefox-${version}.tar.bz2
-3fe87c97746ce66e363661db76c312e4af745977c720497d0541693dc649f752d14b4ce5391ca03d598166b53889cb98 fr/firefox-${version}.tar.bz2
-33073ff836e64f6a4b4bcd8c31cec5678a47b28e0bee670c2bce31e21f4f7ecfdc1da121d18c651de0162cd543cc8898 sv-SE/firefox-${version}.tar.bz2
+16c5bd1d501b8bd442d6fc957b4d3ac459fa3cbf69d3003918c216e1b1b7d2a407b92e61c75f379c32811fb0ace2a9e9 de/firefox-${version}.tar.bz2
+6200319a0daa9ccb93fc40b55f64d003685070fa28428631078a01cbd2bf4b3c913e36db7d60d8dd56f213a5eb28afa9 en-GB/firefox-${version}.tar.bz2
+94443b33b83b57201297a647eed73cf2e8ecb3740910fab9eee17124698bcfdb8c9f14fa9d302285351d52b5e8e2e818 fi/firefox-${version}.tar.bz2
+66654013ea182f257a039913da8bd912597c03f6f4890ff8755212ea42dd763ce015da5aaca5efd8b83805e80d92d8e6 fr/firefox-${version}.tar.bz2
+7ac576818226fe68da94aaf45a4b9ff3a499effefe2f36c0bd6f54f3b7cbcebce2dde5eb934714e58da2cd28c57e47e9 sv-SE/firefox-${version}.tar.bz2
+a389f8775312725a12a4058db19f2cf1581b979676e186207db5566218befa2fb095e492e4138430b384c4e7f3426436 uk/firefox-99.0.1.tar.bz2
 EOF
 
       # hard link many duplicate files
