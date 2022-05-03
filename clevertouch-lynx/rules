@@ -1,0 +1,40 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+    configure)
+	upstream_dir=$1
+
+	ln -fns "${upstream_dir}" /opt/clevertouch-lynx
+        ln -fns "${upstream_dir}/clevertouch-lynx.png" /usr/share/icons/clevertouch-lynx.png
+        cat <<EOF > /usr/share/applications/clevertouch-lynx.desktop
+[Desktop Entry]
+Name=Clevertouch Lynx
+Exec=/opt/clevertouch-lynx/clevertouch-lynx.appImage
+Type=Application
+Terminal=false
+Icon=clevertouch-lynx
+StartupNotify=true
+Categories=Education;
+EOF
+	;;
+    unconfigure)
+	rm -f /opt/clevertouch-lynx \
+              /usr/share/applications/clevertouch-lynx.desktop \
+              /usr/share/icons/clevertouch-lynx.png
+	;;
+    unpack)
+	upstream_pack=$1
+	upstream_dir=$2
+
+        cp "${upstream_pack}" "${upstream_dir}/clevertouch-lynx.appImage"
+        chmod 755 "${upstream_dir}/clevertouch-lynx.appImage"
+        cp -p clevertouch-lynx.png "$upstream_dir"
+	;;
+    *)
+	;;
+esac

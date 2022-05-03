@@ -16,6 +16,7 @@ packagedirs += bluegriffon
 packagedirs += bluej
 packagedirs += canon-cque
 packagedirs += celestia
+packagedirs += clevertouch-lynx
 packagedirs += cmaptools
 packagedirs += cnijfilter2
 packagedirs += cura-appimage
