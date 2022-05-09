@@ -7,9 +7,9 @@ shift
 
 symlink_targets='
   /etc/udev/rules.d/99-flashforge.rules
-  /usr/share/applications/FlashPrint.desktop
-  /usr/share/FlashPrint
-  /usr/share/icons/hicolor/64x64/apps/flashforge.png
+  /usr/share/applications/FlashPrint5.desktop
+  /usr/share/FlashPrint5
+  /usr/share/icons/hicolor/64x64/apps/flashforge5.png
 '
 
 case "${command}" in
