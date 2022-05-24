@@ -6,6 +6,7 @@ INSTALL_DATA = $(INSTALL) -m 644
 
 packagedirs  = abitti-naksu
 packagedirs += adobe-reader
+packagedirs += airtame
 packagedirs += appinventor
 packagedirs += arduino-ide
 packagedirs += arduino-ottodiylib
