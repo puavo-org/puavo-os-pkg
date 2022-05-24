@@ -5,34 +5,35 @@ set -eu
 command=$1
 shift
 
+links='
+  /opt/Airtame
+  /usr/share/applications/airtame-application.desktop
+  /usr/share/doc/airtame-application
+  /usr/share/icons/hicolor/16x16/apps/airtame-application.png
+  /usr/share/icons/hicolor/32x32/apps/airtame-application.png
+  /usr/share/icons/hicolor/64x64/apps/airtame-application.png
+  /usr/share/icons/hicolor/128x128/apps/airtame-application.png
+  /usr/share/icons/hicolor/256x256/apps/airtame-application.png
+  /usr/share/icons/hicolor/512x512/apps/airtame-application.png
+  /usr/share/icons/hicolor/1024x1024/apps/airtame-application.png
+'
+
+
 case "${command}" in
     configure)
         upstream_dir=$1
-
-        ln -fns "${upstream_dir}" /opt/airtame-application
-        cat <<'EOF' > /usr/share/applications/airtame.desktop
-[Desktop Entry]
-Version=1.0
-Type=Application
-Encoding=UTF-8
-Name=Airtame
-Comment=Airtame is a wireless streaming solution.
-Exec=/opt/airtame-application/launch-airtame.sh
-Icon=/opt/airtame-application/icon.png
-Terminal=false
-Path=/opt/airtame-application/
-Categories=GTK;GNOME;Utility;
-Keywords=streaming;
-EOF
+        for f in $links; do
+          mkdir -p "$(dirname "$f")"
+          ln -fns -T "${upstream_dir}/${f}" "$f"
+        done
         ;;
     unconfigure)
-        rm -rf /usr/share/applications/airtame.desktop \
-               /opt/airtame-application
+        rm -rf $links
         ;;
     unpack)
         upstream_pack=$1
         upstream_dir=$2
-        tar xf "${upstream_pack}" -C "${upstream_dir}" --strip-components=1
+        dpkg-deb -x "$upstream_pack" "$upstream_dir"
         ;;
     *)
         ;;
