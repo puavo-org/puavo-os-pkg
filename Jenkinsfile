@@ -56,7 +56,7 @@ EOF
     stage('Install puavo-pkg and build dependencies') {
       steps {
         sh '''
-          apt-get install -y make puavo-pkg
+          apt-get install -y jq make puavo-pkg
         '''
       }
     }
