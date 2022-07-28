@@ -69,7 +69,7 @@ EOF
       }
     }
 
-    stage('Setup a dummy puavo-conf') {
+    stage('Setup a dummy environment') {
       steps {
         sh '''
           cat <<'EOF' > /usr/local/bin/puavo-conf
@@ -88,6 +88,9 @@ case "$1" in
 esac
 EOF
           chmod 755 /usr/local/bin/puavo-conf
+
+          mkdir -p /etc/puavo
+          echo opinsys.fi > /etc/puavo/topdomain
         '''
       }
     }
