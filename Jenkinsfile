@@ -91,5 +91,29 @@ EOF
         '''
       }
     }
+
+    stage('Install all puavo-pkg packages') {
+      steps {
+        sh '''
+          errors_in_packages=''
+
+          for pkg in $(make list_packages); do
+            if ! puavo-pkg install "${pkg}.tar.gz"; then
+              errors_in_packages="${errors_in_packages} ${pkg}"
+            fi
+          done
+
+          if [ -n "$errors_in_packages" ]; then
+            echo "THERE WERE ERRORS WHEN INSTALLING THE FOLLOWING PACKAGES:"
+            for pkg in $errors_in_packages; do
+              echo "    ${pkg}"
+            done
+            exit 1
+          fi
+
+          echo 'All puavo-pkg packages installed fine.'
+        '''
+      }
+    }
   }
 }
