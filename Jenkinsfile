@@ -68,5 +68,28 @@ EOF
         '''
       }
     }
+
+    stage('Setup a dummy puavo-conf') {
+      steps {
+        sh '''
+          cat <<'EOF' > /usr/local/bin/puavo-conf
+#!/bin/sh
+
+case "$1" in
+  puavo.hosttype)
+    echo laptop
+    ;;
+  puavo.image.servers)
+    ;;
+  *)
+    echo 'Unsupported puavo-conf variable' >&2
+    exit 1
+    ;;
+esac
+EOF
+          chmod 755 /usr/local/bin/puavo-conf
+        '''
+      }
+    }
   }
 }
