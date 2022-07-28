@@ -44,8 +44,8 @@ z8D7K8XcGx0uufZ4RvJMmzUSmdeKq47R/v2Ct9QGQb0/8YgZZwNtf+pb64N4ByJtryBijJPzxxRy
 itF+hxsyHgXRLmbtg44zyqxXkY7pcjw0yj5p1q3M7+oGThJBBW5Jc0TENuNM0g3BMxbykQ==
 EOF
           cat <<'EOF' > /etc/apt/sources.list.d/puavo-os-remote.list
-deb http://archive.opinsys.fi/puavo bullseye main contrib non-free
-deb-src http://archive.opinsys.fi/puavo bullseye main contrib non-free
+deb http://archive-internal.opinsys.fi/puavo bullseye main contrib non-free
+deb-src http://archive-internal.opinsys.fi/puavo bullseye main contrib non-free
 EOF
           apt-get update
           apt-get -y dist-upgrade
