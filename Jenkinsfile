@@ -107,6 +107,7 @@ EOF
 
             # cleanup so we do not run out of space
             puavo-pkg remove "$pkg" || true
+            rm -rf /var/cache/puavo-pkg/ || true
           done
 
           set +x
