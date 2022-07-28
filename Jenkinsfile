@@ -104,8 +104,12 @@ EOF
             if ! puavo-pkg install "${pkg}.tar.gz"; then
               errors_in_packages="${errors_in_packages} ${pkg}"
             fi
+
+            # cleanup so we do not run out of space
+            puavo-pkg remove "$pkg" || true
           done
 
+          set +x
           if [ -n "$errors_in_packages" ]; then
             echo "THERE WERE ERRORS WHEN INSTALLING THE FOLLOWING PACKAGES:"
             for pkg in $errors_in_packages; do
@@ -113,6 +117,7 @@ EOF
             done
             exit 1
           fi
+          set -x
 
           echo 'All puavo-pkg packages installed fine.'
         '''
