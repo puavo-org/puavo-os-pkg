@@ -180,6 +180,7 @@ case "$command" in
   configure)
     upstream_dir=$1
     for f in $ubuntu_backgrounds_links; do
+      mkdir -p "$(dirname "$f")"
       ln -fns -T "${upstream_dir}${f}" "$f"
     done
     ;;
