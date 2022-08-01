@@ -8,6 +8,7 @@ shift
 case "$command" in
   configure)
     upstream_dir=$1
+    mkdir -p /usr/share/cups/model
     for ppd in "${upstream_dir}"/*.ppd; do
       ln -fns "${ppd}" "/usr/share/cups/model/${ppd##*/}"
     done
