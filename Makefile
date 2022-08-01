@@ -104,6 +104,10 @@ packagefiles = $(patsubst %,%.tar.gz,${packagedirs})
 all: $(packagefiles) puavo-pkg-installers-bundle.tar puavo-pkg.json
 	echo $(packagefiles)
 
+.PHONY: list_packages
+list_packages:
+	@echo $(packagedirs)
+
 puavo-pkg.json: $(packagefiles)
 	jq --null-input --arg packages "$(packagedirs)" \
 	  '$$packages | split(" ") | reduce .[] as $$item ({}; .["puavo.pkg." + $$item] = { default: "" })' \
