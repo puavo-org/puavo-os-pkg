@@ -83,6 +83,7 @@ case "$command" in
     IFS='
 '
     for f in $openclipart_links; do
+      mkdir -p "$(dirname "$f")"
       ln -fns -T "${upstream_dir}${f}" "$f"
     done
     ;;
