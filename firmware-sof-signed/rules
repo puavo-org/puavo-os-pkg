@@ -6,28 +6,30 @@ command=$1
 shift
 
 firmware_files='
-  ./lib/firmware/intel/sof
-  ./lib/firmware/intel/sof-tplg
-  ./lib/firmware/intel/sof-tplg-v1.7
+  /lib/firmware/intel/sof
+  /lib/firmware/intel/sof-tplg
+  /lib/firmware/intel/sof-tplg-v1.7
 '
 
 case "$command" in
   configure)
     upstream_dir=$1
     for f in $firmware_files; do
-      cp -RT "${upstream_dir}/${f}" "/${f}"
+      mkdir -p "$(dirname "$f")"
+      cp -RT "${upstream_dir}${f}" "$f"
     done
     ;;
 
   unconfigure)
-    (cd / && rm -rf $firmware_files)
+    rm -rf $firmware_files
     ;;
 
   unpack)
     upstream_pack=$1
     upstream_dir=$2
     dpkg-deb --fsys-tarfile "$upstream_pack" \
-      | tar -C "$upstream_dir" -x $firmware_files
+      | tar -C "$upstream_dir" -x \
+            $(echo $firmware_files | xargs -n1 | sed 's|^|.|')
     ;;
 
   *)
