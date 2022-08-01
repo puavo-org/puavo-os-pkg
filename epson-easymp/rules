@@ -8,6 +8,7 @@ shift
 case "$command" in
   configure)
     upstream_dir=$1
+    mkdir -p /opt/wine
     ln -fns "${upstream_dir}/Common_Files" /opt/wine/epson-easymp
     cat <<'EOF' > /usr/local/bin/epson-easymp
 #!/bin/sh
