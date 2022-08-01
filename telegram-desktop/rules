@@ -15,6 +15,7 @@ case "$command" in
     echo "${upstream_dir}/Telegram/Telegram" > /etc/tdesktop/externalupdater
     echo "/usr/bin/telegram-desktop" >> /etc/tdesktop/externalupdater
 
+    mkdir -p /usr/local/share/applications
     cat <<'EOF' > /usr/local/share/applications/telegramdesktop.desktop
 [Desktop Entry]
 Version=1.0
@@ -32,9 +33,9 @@ X-GNOME-UsesNotifications=true
 EOF
     ;;
   unconfigure)
-    rm -f /usr/bin/telegram-desktop \
-          /usr/local/share/applications/telegramdesktop.desktop \
-          /etc/tdesktop/externalupdater
+    rm -f /etc/tdesktop/externalupdater \
+          /usr/bin/telegram-desktop \
+          /usr/local/share/applications/telegramdesktop.desktop
     ;;
   unpack)
     upstream_pack=$1
