@@ -1,0 +1,41 @@
+#!/bin/sh
+
+set -eux
+
+command=$1
+shift
+
+case "${command}" in
+    configure)
+	upstream_dir=$1
+
+	ln -fns "${upstream_dir}/DB_Koulu_3_lin64" \
+		/opt/DB-Koulu3
+        ln -fns "${upstream_dir}/DB_Koulu_3_lin64/DB Koulu 3_Data/Resources/UnityPlayer.png" \
+                /usr/share/icons/dragonbox_koulu3.png
+        cat <<'EOF' > /usr/share/applications/db_koulu3.desktop
+[Desktop Entry]
+Name=DragonBox Koulu 3
+Exec=/opt/DB-Koulu3/DB\ Koulu\ 3
+Type=Application
+Terminal=false
+Icon=dragonbox_koulu3
+StartupNotify=true
+Categories=Education;
+EOF
+	;;
+    unconfigure)
+	rm -f /opt/DB-Koulu3 \
+              /usr/share/applications/db_koulu3.desktop \
+              /usr/share/icons/dragonbox_koulu3.png
+	;;
+    unpack)
+	upstream_pack=$1
+	upstream_dir=$2
+
+        unzip -q -d "${upstream_dir}" "${upstream_pack}"
+        chmod +x "${upstream_dir}/DB_Koulu_3_lin64/DB Koulu 3"
+	;;
+    *)
+	;;
+esac
