@@ -1,0 +1,41 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+    configure)
+	upstream_dir=$1
+
+	ln -fns "${upstream_dir}/BigNumbersPro_linux" \
+		/opt/db_bignumbers
+        ln -fns "${upstream_dir}/BigNumbersPro_linux/BigNumbersPro_Data/Resources/UnityPlayer.png" \
+                /usr/share/icons/dragonbox_bignumbers.png
+        cat <<'EOF' > /usr/share/applications/db_bignumbers.desktop
+[Desktop Entry]
+Name=DragonBox Big Numbers
+Exec=/opt/db_bignumbers/BigNumbersPro.x86_64
+Type=Application
+Terminal=false
+Icon=dragonbox_bignumbers
+StartupNotify=true
+Categories=Education;
+EOF
+	;;
+    unconfigure)
+	rm -f /opt/db_bignumbers \
+              /usr/share/applications/db_bignumbers.desktop \
+              /usr/share/icons/dragonbox_bignumbers.png
+	;;
+    unpack)
+	upstream_pack=$1
+	upstream_dir=$2
+
+        unzip -q -d "${upstream_dir}" "${upstream_pack}"
+        chmod +x "${upstream_dir}/BigNumbersPro_linux/BigNumbersPro.x86_64"
+	;;
+    *)
+	;;
+esac
