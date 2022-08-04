@@ -1,0 +1,41 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+    configure)
+	upstream_dir=$1
+
+	ln -fns "${upstream_dir}/Login_Access:_Algebra_5+_linux" \
+		/opt/db_algebra_5
+        ln -fns "${upstream_dir}/Login_Access:_Algebra_5+_linux/Login Access: Algebra 5+_Data/Resources/UnityPlayer.png" \
+                /usr/share/icons/dragonbox_algebra_5.png
+        cat <<'EOF' > /usr/share/applications/db_algebra_5.desktop
+[Desktop Entry]
+Name=DragonBox Algebra 5
+Exec='/opt/db_algebra_5/Login Access: Algebra 5+.x86_64'
+Type=Application
+Terminal=false
+Icon=dragonbox_algebra_5
+StartupNotify=true
+Categories=Education;
+EOF
+	;;
+    unconfigure)
+	rm -f /opt/db_algebra_5 \
+              /usr/share/applications/db_algebra_5.desktop \
+              /usr/share/icons/dragonbox_algebra_5.png
+	;;
+    unpack)
+	upstream_pack=$1
+	upstream_dir=$2
+
+        unzip -q -d "${upstream_dir}" "${upstream_pack}"
+        chmod +x "${upstream_dir}/Login_Access:_Algebra_5+_linux/Login Access: Algebra 5+.x86_64"
+	;;
+    *)
+	;;
+esac
