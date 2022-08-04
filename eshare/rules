@@ -1,0 +1,38 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+    configure)
+	upstream_dir=$1
+	ln -fns "${upstream_dir}/opt/EShare" /opt/EShare
+        chmod 644 "${upstream_dir}/usr/share/icons/eShare/eShare.png"
+	ln -fns "${upstream_dir}/usr/share/icons/eShare/eShare.png" /usr/share/icons/eshare.png
+
+    cat <<'EOF' > /usr/share/applications/eshare.desktop
+[Desktop Entry]
+Name=EShare
+Comment=EShare
+Exec=/opt/EShare/EShare
+Terminal=false
+Type=Application
+Icon=/usr/share/icons/eshare.png
+EOF
+	;;
+    unconfigure)
+        rm -rf /usr/share/applications/eshare.desktop
+        rm -rf /usr/share/icons/eshare.png
+	rm -rf /opt/EShare
+	;;
+    unpack)
+	upstream_pack=$1
+	upstream_dir=$2
+
+	dpkg -x "${upstream_pack}" "${upstream_dir}"
+	;;
+    *)
+	;;
+esac

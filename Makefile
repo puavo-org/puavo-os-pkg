@@ -35,6 +35,7 @@ packagedirs += eclipse
 packagedirs += ekapeli-alku
 packagedirs += enchanting
 packagedirs += epson-easymp
+packagedirs += eshare
 packagedirs += extra-xkb-symbols
 packagedirs += filius
 packagedirs += firefox
