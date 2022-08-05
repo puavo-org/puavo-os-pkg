@@ -131,6 +131,7 @@ case "$command" in
             /etc/init.d/activdevices
     update-rc.d activdevices defaults
 
+    mkdir -p /usr/share/X11/xorg.conf.d
     cat <<'EOF' > /usr/share/X11/xorg.conf.d/75-promethean.conf
 Section "InputClass"
 	Identifier   "calibration"
