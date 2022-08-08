@@ -7,7 +7,7 @@ shift
 
 links='
   /etc/udev/rules.d/vex_robotics.rules
-  /etc/opt/chrome/native-messaging-hosts
+  /etc/opt/chrome/native-messaging-hosts/com.robotmesh.robotmeshconnect.json
   /opt/RobotMeshConnect
   /usr/lib/mozilla/native-messaging-hosts/com.robotmesh.robotmeshconnect.json
   /usr/share/lintian/robotmeshconnect
