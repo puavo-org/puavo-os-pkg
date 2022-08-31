@@ -44,6 +44,7 @@ case "${command}" in
         mkdir -p /usr/share/applications
         ln -fns -T "${upstream_dir}/opt/google/earth/pro/google-earth-pro.desktop" \
             /usr/share/applications/google-earth.desktop
+        sed -i '/googleearth-bin" "$@"/i export LC_NUMERIC=en_US.UTF-8' /opt/google/earth/pro/google-earth-pro
         ;;
     unconfigure)
         rm -f /opt/google/earth/pro                               \
