@@ -3,29 +3,28 @@
 set -eu
 
 # get the idid-package url by using the following apt-sources:
-#   deb http://apt.idid.fi xenial main
+#   deb [allow-insecure=yes] http://apt.idid.fi bionic main
 
 command=$1
 shift
 
 case "${command}" in
-    configure)
-	upstream_dir=$1
-	ln -fns "${upstream_dir}/opt/idid" /opt/idid
-	ln -fns /opt/idid/idid /usr/local/bin/idid
+  configure)
+    upstream_dir=$1
+    ln -fns "${upstream_dir}/opt/idid" /opt/idid
+    ln -fns /opt/idid/idid /usr/local/bin/idid
 
-	chown root:root "${upstream_dir}/opt/idid/chrome-sandbox"
-	chmod 4755      "${upstream_dir}/opt/idid/chrome-sandbox"
-	;;
-    unconfigure)
-	rm -rf /usr/local/bin/idid /opt/idid
-	;;
-    unpack)
-	upstream_pack=$1
-	upstream_dir=$2
+    ;;
+  unconfigure)
+    rm -f /usr/local/bin/idid /opt/idid
+    ;;
 
-	dpkg -x "${upstream_pack}" "${upstream_dir}"
-	;;
-    *)
-	;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    dpkg -x "$upstream_pack" "$upstream_dir"
+    ;;
+  *)
+    ;;
 esac
