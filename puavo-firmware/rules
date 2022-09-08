@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+    configure)
+	upstream_dir=$1
+	ln -fns "${upstream_dir}/iwlwifi-so-a0-gf-a0.pnvm" /lib/firmware/iwlwifi-so-a0-gf-a0.pnvm
+	;;
+    unconfigure)
+        rm -rf /lib/firmware/iwlwifi-so-a0-gf-a0.pnvm
+	;;
+    unpack)
+	upstream_pack=$1
+	upstream_dir=$2
+
+	mkdir -p "${upstream_dir}"
+        cp "${upstream_pack}" "${upstream_dir}/iwlwifi-so-a0-gf-a0.pnvm"
+	;;
+    *)
+	;;
+esac

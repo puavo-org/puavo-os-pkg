@@ -74,6 +74,7 @@ packagedirs += otto-blockly
 packagedirs += processing
 packagedirs += promethean
 packagedirs += prusaslicer
+packagedirs += puavo-firmware
 packagedirs += pycharm
 packagedirs += qcad-cam
 packagedirs += robboscratch
