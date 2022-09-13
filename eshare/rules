@@ -9,6 +9,7 @@ case "${command}" in
     configure)
 	upstream_dir=$1
 	ln -fns "${upstream_dir}/opt/EShare" /opt/EShare
+        rm -rf /opt/EShare/lib/libav* #may be removed if upstream updates package some day
         chmod 644 "${upstream_dir}/usr/share/icons/eShare/eShare.png"
 	ln -fns "${upstream_dir}/usr/share/icons/eShare/eShare.png" /usr/share/icons/eshare.png
 
@@ -31,7 +32,9 @@ EOF
 	upstream_pack=$1
 	upstream_dir=$2
 
-	dpkg -x "${upstream_pack}" "${upstream_dir}"
+        dpkg -x "${upstream_pack}" "${upstream_dir}"
+        rm -rf "${upstream_dir}"/opt/EShare/lib/libav*
+
 	;;
     *)
 	;;
