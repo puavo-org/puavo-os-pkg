@@ -6,10 +6,10 @@ command=$1
 shift
 
 case "${command}" in
-    configure)
-	upstream_dir=$1
+  configure)
+    upstream_dir=$1
     ln -fns "${upstream_dir}" /opt/wine/eshare
-	ln -fns "${upstream_dir}/eshare.ico" /usr/share/icons/eshare.ico
+    ln -fns "${upstream_dir}/eshare.ico" /usr/share/icons/eshare.ico
     cat <<'EOF' > /usr/local/bin/eshare
 #!/bin/sh
 
@@ -30,21 +30,21 @@ Terminal=false
 Type=Application
 Icon=/usr/share/icons/eshare.ico
 EOF
-	;;
-    unconfigure)
-        rm -rf /usr/share/applications/eshare.desktop \
-               /usr/local/bin/eshare  \
-               /usr/share/icons/eshare.ico
-	rm -rf /opt/wine/eshare
-	;;
-    unpack)
-	upstream_pack=$1
-	upstream_dir=$2
+    ;;
+  unconfigure)
+    rm -rf /usr/share/applications/eshare.desktop \
+           /usr/local/bin/eshare  \
+           /usr/share/icons/eshare.ico
+    rm -rf /opt/wine/eshare
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
     7z x "$upstream_pack" disk1.cab -o"$upstream_dir"
     cd "$upstream_dir"
     cabextract disk1.cab
     wrestool -x -t 14 EShare.exe > eshare.ico
-	;;
-    *)
-	;;
+    ;;
+  *)
+    ;;
 esac
