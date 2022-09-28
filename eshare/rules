@@ -32,10 +32,10 @@ Icon=/usr/share/icons/eshare.ico
 EOF
     ;;
   unconfigure)
-    rm -rf /usr/share/applications/eshare.desktop \
-           /usr/local/bin/eshare  \
-           /usr/share/icons/eshare.ico
-    rm -rf /opt/wine/eshare
+    rm -f /opt/wine/eshare \
+          /usr/local/bin/eshare \
+          /usr/share/applications/eshare.desktop \
+          /usr/share/icons/eshare.ico
     ;;
   unpack)
     upstream_pack=$1
