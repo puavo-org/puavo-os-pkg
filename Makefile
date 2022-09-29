@@ -37,6 +37,7 @@ packagedirs += enchanting
 packagedirs += epson-easymp
 packagedirs += eshare
 packagedirs += extra-xkb-symbols
+packagedirs += ffsend
 packagedirs += filius
 packagedirs += firefox
 packagedirs += firmware-sof-signed
