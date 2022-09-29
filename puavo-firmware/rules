@@ -8,16 +8,19 @@ shift
 
 urlbase='https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/plain/'
 
-
 case "${command}" in
     configure)
 	upstream_dir=$1
 	ln -fns "${upstream_dir}/iwlwifi-so-a0-gf-a0-71.ucode" /lib/firmware/iwlwifi-so-a0-gf-a0-71.ucode
 	ln -fns "${upstream_dir}/iwlwifi-so-a0-gf-a0.pnvm" /lib/firmware/iwlwifi-so-a0-gf-a0.pnvm
+        mv /lib/firmware/rtw89/rtw8852a_fw.bin /lib/firmware/rtw89/rtw8852a_fw.bin.orig
+        ln -fns "${upstream_dir}/rtw8852a_fw.bin" /lib/firmware/rtw89/rtw8852a_fw.bin
 	;;
     unconfigure)
-        rm -rf /lib/firmware/iwlwifi-so-a0-gf-a0.pnvm
-        rm -rf /lib/firmware/iwlwifi-so-a0-gf-a0-71.ucode
+        rm -f /lib/firmware/iwlwifi-so-a0-gf-a0.pnvm
+        rm -f /lib/firmware/iwlwifi-so-a0-gf-a0-71.ucode
+        rm -f /lib/firmware/rtw89/rtw8852a_fw.bin
+        mv /lib/firmware/rtw89/rtw8852a_fw.bin.orig /lib/firmware/rtw89/rtw8852a_fw.bin
 	;;
     unpack)
 	upstream_pack=$1
@@ -46,8 +49,8 @@ case "${command}" in
             [ $? -eq 4 ] && exit 2 ## Network failure.
             exit 1
         }
-        if ! echo "${sha384} ${fwfilepath}" | sha384sum --check >/dev/null; then
-          actual_checksum=$(sha384sum "$debfile" | awk '{ print $1 }')
+        if ! echo "${sha384} $(basename $fwfilepath)" | sha384sum --check >/dev/null; then
+          actual_checksum=$(sha384sum "$fwfile" | awk '{ print $1 }')
           echo "checksum NOT matching for $fwfilepath" >&2
           echo "expected: ${sha384} / actual: ${actual_checksum}" >&2
           exit 1
@@ -56,6 +59,7 @@ case "${command}" in
       done <<EOF
 47c7e527f85c38c3c17ebd0ca5531f29da8509f1a87f9b39a9c6de7c565cf2dfa351e81390cc8c2e3a4796c8b9406ff1  iwlwifi-so-a0-gf-a0.pnvm
 b1e31efc3506cb20ca9c27c33c66cb6f063a7ef7d8f8c8f1bf8a9c0b05cba658d0767f5b89c8ffec92dfb10b90b24305  iwlwifi-so-a0-gf-a0-71.ucode
+694c5575199e1cf0dace64fb5111191e65ed89579158589a2db07ec1ccb3bb2c4de5bee82f26b37634a5b7cff26a764b  rtw89/rtw8852a_fw.bin
 EOF
       # Set LC_COLLATE=C so that files always sort in the same
       # way (so we get the same tar-archive independent of locales).
