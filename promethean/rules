@@ -140,6 +140,21 @@ Section "InputClass"
 EndSection
 EOF
 
+    cat <<'EOF' > /usr/src/promethean/kernel/Makefile
+obj-m += promethean.o
+promethean-objs += Mathrout.o usbpromethean.o
+
+debug: all
+all:
+	make -C /lib/modules/$(shell uname -r)/build KBUILD_EXTMOD="$(PWD)" modules
+
+clean:
+	make -C /lib/modules/$(shell uname -r)/build KBUILD_EXTMOD="$(PWD)" clean
+
+install:
+	./b install
+EOF
+
     build_and_install_promethean_ko
     ;;
 
