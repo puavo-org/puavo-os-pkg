@@ -1,0 +1,91 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+
+case "${command}" in
+    configure)
+	upstream_dir=$1
+	ln -fns "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/bin/blescan" /usr/local/bin/blescan
+	ln -fns "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/bin/bluepy_helper_cap" /usr/local/bin/bluepy_helper_cap
+	ln -fns "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/bin/scratch_link" /usr/local/bin/scratch_link
+	ln -fns "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/bin/sensortag" /usr/local/bin/sensortag
+	ln -fns "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/bin/thingy52" /usr/local/bin/thingy52
+	mkdir -p /usr/local/lib/python3.9/dist-packages/
+	ln -fns "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/lib/python3.9/site-packages/bluepy-1.3.0-py3.9.egg" /usr/local/lib/python3.9/dist-packages/bluepy-1.3.0-py3.9.egg
+	ln -fns "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/lib/python3.9/site-packages/pyscrlink-0.2.6-py3.9.egg" /usr/local/lib/python3.9/dist-packages/pyscrlink-0.2.6-py3.9.egg
+	echo "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/lib/python3.9/site-packages/bluepy-1.3.0-py3.9.egg" >> //usr/local/lib/python3.9/dist-packages/easy-install.pth
+	echo "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/lib/python3.9/site-packages/pyscrlink-0.2.6-py3.9.egg" >> //usr/local/lib/python3.9/dist-packages/easy-install.pth
+        /usr/local/bin/bluepy_helper_cap
+	;;
+    unconfigure)
+        rm -f /usr/local/bin/blescan
+	rm -f /usr/local/bin/bluepy_helper_cap
+	rm -f /usr/local/bin/scratch_link
+	rm -f /usr/local/bin/sensortag
+	rm -f /usr/local/bin/thingy52
+	rm -f /usr/local/lib/python3.9/dist-packages/bluepy-1.3.0-py3.9.egg
+	rm -f /usr/local/lib/python3.9/dist-packages/pyscrlink-0.2.6-py3.9.egg
+	;;
+    unpack)
+	upstream_pack=$1
+	upstream_dir=$2
+
+	tar -x -f "$upstream_pack" -C "$upstream_dir"
+	cd "$upstream_dir"
+	unzip 7ad565231a97c304c0eff45f2649cd005e69db09.zip
+	cd bluepy-7ad565231a97c304c0eff45f2649cd005e69db09
+	python3 setup.py build
+	python3 setup.py install --prefix=./built
+	cd ..
+	unzip 3956c81869d1c4a92de4fb1a27e7135b7dc098e2.zip
+	cd pyscrlink-3956c81869d1c4a92de4fb1a27e7135b7dc098e2
+	python3 setup.py build
+	python3 setup.py install --prefix=../bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built
+
+	;;
+
+	download) #based on ubuntu-wallpapers-bullseye
+    upstream_pack=$(readlink -f "$1")
+    tmpdir=
+    trap '[ -n "$tmpdir" ] && rm -rf "$tmpdir"' 0 INT TERM
+    tmpdir=$(mktemp -d)
+
+    (
+      cd "$tmpdir"
+      mkdir -p pyscrlink
+      while read sha384 fwfilepath; do
+        fwfile=$(basename "$fwfilepath")
+        wget \
+            --no-use-server-timestamps \
+            --no-cookies \
+            --output-document "$fwfile" \
+            --progress=dot:mega \
+            "${fwfilepath}" || {
+            [ $? -eq 4 ] && exit 2 ## Network failure.
+            exit 1
+        }
+        if ! echo "${sha384} $(basename $fwfilepath)" | sha384sum --check >/dev/null; then
+          actual_checksum=$(sha384sum "$fwfile" | awk '{ print $1 }')
+          echo "checksum NOT matching for $fwfilepath" >&2
+          echo "expected: ${sha384} / actual: ${actual_checksum}" >&2
+          exit 1
+        fi
+        mv "$fwfile" pyscrlink/ || exit 1
+      done <<EOF
+5c67ad3f4fa7017a241b96ca7b77cd289861da61ffa8a9dd91b7842cdc5aa66db211130c57833065140d665ea0424c68  https://github.com/kawasaki/pyscrlink/archive/3956c81869d1c4a92de4fb1a27e7135b7dc098e2.zip
+d962588081808f09c26044fc4862903ee55ff2c0ce45a9b84d8823984f746f0bdd839bf1fab14a696fae79bd5e2a8b48  https://github.com/IanHarvey/bluepy/archive/7ad565231a97c304c0eff45f2649cd005e69db09.zip
+EOF
+      # Set LC_COLLATE=C so that files always sort in the same
+      # way (so we get the same tar-archive independent of locales).
+      env LC_COLLATE=C \
+        tar -C pyscrlink --mtime='2000-01-01 00:00:00 +00:00' --sort=name -c \
+          -f "$upstream_pack" .
+    )
+    ;;
+    *)
+	;;
+esac
