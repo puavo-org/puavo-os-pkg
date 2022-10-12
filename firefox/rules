@@ -65,8 +65,8 @@ Exec=/usr/local/bin/firefox --new-window %u
 [Desktop Action PrivateBrowsing]
 Name=New Private Browsing Window
 Name[fi]=Uusi yksityisen selauksen ikkuna
-Name[de]=Neues Privatfenster
-Name[sv]=Nytt privatfönster
+Name[de]=Neues privates Fenster
+Name[sv]=Nytt privat fönster
 Exec=/usr/local/bin/firefox --private-window %u
 
 EOF
