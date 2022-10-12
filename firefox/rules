@@ -52,6 +52,23 @@ Categories=Network;WebBrowser;
 MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/vnd.mozilla.xul+xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;
 StartupWMClass=Firefox
 StartupNotify=true
+
+Actions=new-window;PrivateBrowsing
+
+[Desktop Action new-window]
+Name=New Window
+Name[fi]=Uusi ikkuna
+Name[de]=Neues Fenster
+Name[sv]=Nytt fönster
+Exec=/usr/local/bin/firefox --new-window %u
+
+[Desktop Action PrivateBrowsing]
+Name=New Private Browsing Window
+Name[fi]=Uusi yksityisen selauksen ikkuna
+Name[de]=Neues Privatfenster
+Name[sv]=Nytt privatfönster
+Exec=/usr/local/bin/firefox --private-window %u
+
 EOF
     mv /usr/share/applications/firefox.desktop.tmp \
        /usr/share/applications/firefox.desktop
