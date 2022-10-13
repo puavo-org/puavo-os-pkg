@@ -17,9 +17,9 @@ case "${command}" in
 	mkdir -p /usr/local/lib/python3.9/dist-packages/
 	ln -fns "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/lib/python3.9/site-packages/bluepy-1.3.0-py3.9.egg" /usr/local/lib/python3.9/dist-packages/bluepy-1.3.0-py3.9.egg
 	ln -fns "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/lib/python3.9/site-packages/pyscrlink-0.2.6-py3.9.egg" /usr/local/lib/python3.9/dist-packages/pyscrlink-0.2.6-py3.9.egg
-	echo "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/lib/python3.9/site-packages/bluepy-1.3.0-py3.9.egg" >> //usr/local/lib/python3.9/dist-packages/easy-install.pth
-	echo "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/lib/python3.9/site-packages/pyscrlink-0.2.6-py3.9.egg" >> //usr/local/lib/python3.9/dist-packages/easy-install.pth
-        /usr/local/bin/bluepy_helper_cap
+	echo "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/lib/python3.9/site-packages/bluepy-1.3.0-py3.9.egg" >> /usr/local/lib/python3.9/dist-packages/easy-install.pth
+	echo "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/lib/python3.9/site-packages/pyscrlink-0.2.6-py3.9.egg" >> /usr/local/lib/python3.9/dist-packages/easy-install.pth
+        /usr/local/bin/bluepy_helper_cap || true #ok, seems to always return 1.
 	;;
     unconfigure)
         rm -f /usr/local/bin/blescan
@@ -39,12 +39,12 @@ case "${command}" in
 	unzip 7ad565231a97c304c0eff45f2649cd005e69db09.zip
 	cd bluepy-7ad565231a97c304c0eff45f2649cd005e69db09
 	python3 setup.py build
-	python3 setup.py install --prefix=./built
+	PYTHONPATH="../bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/lib/python3.9/site-packages/" python3 setup.py install --prefix=./built
 	cd ..
 	unzip 3956c81869d1c4a92de4fb1a27e7135b7dc098e2.zip
 	cd pyscrlink-3956c81869d1c4a92de4fb1a27e7135b7dc098e2
 	python3 setup.py build
-	python3 setup.py install --prefix=../bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built
+	PYTHONPATH="../bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/lib/python3.9/site-packages/" python3 setup.py install --prefix=../bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built
 
 	;;
 
