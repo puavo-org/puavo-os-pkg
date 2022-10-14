@@ -29,6 +29,7 @@ case "${command}" in
 	rm -f /usr/local/bin/thingy52
 	rm -f /usr/local/lib/python3.9/dist-packages/bluepy-1.3.0-py3.9.egg
 	rm -f /usr/local/lib/python3.9/dist-packages/pyscrlink-0.2.6-py3.9.egg
+        gawk -i inplace '!/pyscrlink/' /usr/local/lib/python3.9/dist-packages/easy-install.pth || true
 	;;
     unpack)
 	upstream_pack=$1
