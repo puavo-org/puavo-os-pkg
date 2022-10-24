@@ -6,7 +6,7 @@ command=$1
 shift
 
 
-urlbase='https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/plain/'
+urlbase='https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/plain'
 
 case "${command}" in
     configure)
@@ -39,7 +39,7 @@ case "${command}" in
       cd "$tmpdir"
       mkdir -p puavo-firmware
       while read sha384 fwfilepath; do
-        fwfile=$(basename "$fwfilepath")
+        fwfile=$(basename "${fwfilepath%\?*}")
         wget \
             --no-use-server-timestamps \
             --no-cookies \
@@ -49,7 +49,7 @@ case "${command}" in
             [ $? -eq 4 ] && exit 2 ## Network failure.
             exit 1
         }
-        if ! echo "${sha384} $(basename $fwfilepath)" | sha384sum --check >/dev/null; then
+        if ! echo "${sha384} $(basename ${fwfilepath%\?*})" | sha384sum --check >/dev/null; then
           actual_checksum=$(sha384sum "$fwfile" | awk '{ print $1 }')
           echo "checksum NOT matching for $fwfilepath" >&2
           echo "expected: ${sha384} / actual: ${actual_checksum}" >&2
@@ -57,9 +57,9 @@ case "${command}" in
         fi
         mv "$fwfile" puavo-firmware/ || exit 1
       done <<EOF
-47c7e527f85c38c3c17ebd0ca5531f29da8509f1a87f9b39a9c6de7c565cf2dfa351e81390cc8c2e3a4796c8b9406ff1  iwlwifi-so-a0-gf-a0.pnvm
-b1e31efc3506cb20ca9c27c33c66cb6f063a7ef7d8f8c8f1bf8a9c0b05cba658d0767f5b89c8ffec92dfb10b90b24305  iwlwifi-so-a0-gf-a0-71.ucode
-694c5575199e1cf0dace64fb5111191e65ed89579158589a2db07ec1ccb3bb2c4de5bee82f26b37634a5b7cff26a764b  rtw89/rtw8852a_fw.bin
+874557b285f087de0a1f1d0d26d7483aef6190ce267bb82734a303a4adcadcafc92459840f86e05bd53f42b5d8403a07  iwlwifi-so-a0-gf-a0.pnvm?id=48407ffd7adb9511701547068b1e6f0956bd1c94
+b1e31efc3506cb20ca9c27c33c66cb6f063a7ef7d8f8c8f1bf8a9c0b05cba658d0767f5b89c8ffec92dfb10b90b24305  iwlwifi-so-a0-gf-a0-71.ucode?id=48407ffd7adb9511701547068b1e6f0956bd1c94
+694c5575199e1cf0dace64fb5111191e65ed89579158589a2db07ec1ccb3bb2c4de5bee82f26b37634a5b7cff26a764b  rtw89/rtw8852a_fw.bin?id=48407ffd7adb9511701547068b1e6f0956bd1c94
 EOF
       # Set LC_COLLATE=C so that files always sort in the same
       # way (so we get the same tar-archive independent of locales).
