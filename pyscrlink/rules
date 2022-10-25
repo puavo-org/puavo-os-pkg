@@ -44,6 +44,7 @@ case "${command}" in
 	cd ..
 	unzip 7cc9ccac2e48c489f6afbb1b2217a753d41e17ed.zip
 	cd pyscrlink-7cc9ccac2e48c489f6afbb1b2217a753d41e17ed
+        sed -i 's/device-manager.scratch.mit.edu/127.0.0.1/g' pyscrlink/scratch_link.py
 	python3 setup.py build
 	PYTHONPATH="../bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/lib/python3.9/site-packages/" python3 setup.py install --prefix=../bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built
 	;;
