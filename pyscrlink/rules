@@ -20,8 +20,20 @@ case "${command}" in
 	echo "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/lib/python3.9/site-packages/bluepy-1.3.0-py3.9.egg" >> /usr/local/lib/python3.9/dist-packages/easy-install.pth
 	echo "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/lib/python3.9/site-packages/pyscrlink-0.2.5-py3.9.egg" >> /usr/local/lib/python3.9/dist-packages/easy-install.pth
         /usr/local/bin/bluepy_helper_cap || true #ok, seems to always return 1.
+
+
+        cat <<EOF > /usr/share/applications/pyscrlink.desktop
+[Desktop Entry]
+Name=Pyscrlink
+Exec=xterm /usr/local/bin/scratch_link
+Icon=scratch
+Terminal=false
+Type=Application
+EOF
+
 	;;
     unconfigure)
+        rm -f /usr/share/applications/pyscrlink.desktop
         rm -f /usr/local/bin/blescan
 	rm -f /usr/local/bin/bluepy_helper_cap
 	rm -f /usr/local/bin/scratch_link
