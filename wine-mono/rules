@@ -1,0 +1,27 @@
+#!/bin/sh
+
+set -eu
+version="7.4.0"
+
+command=$1
+shift
+
+case "${command}" in
+    configure)
+	upstream_dir=$1
+        mkdir -p /usr/share/wine/mono
+	ln -fns "${upstream_dir}/wine-mono-${version}-x86.msi" "/usr/share/wine/mono/wine-mono-${version}-x86.msi"
+	;;
+    unconfigure)
+	rm -rf "/usr/share/wine/mono/wine-mono-${version}-x86.msi"
+	;;
+    unpack)
+	upstream_pack=$1
+	upstream_dir=$2
+
+	mkdir -p "${upstream_dir}"
+	cp "${upstream_pack}"    "${upstream_dir}/wine-mono-${version}-x86.msi"
+	;;
+    *)
+	;;
+esac

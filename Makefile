@@ -105,6 +105,7 @@ packagedirs += veracrypt
 packagedirs += vidyo-client
 packagedirs += vscode
 packagedirs += webex
+packagedirs += wine-mono
 packagedirs += zoom
 
 packagefiles = $(patsubst %,%.tar.gz,${packagedirs})
