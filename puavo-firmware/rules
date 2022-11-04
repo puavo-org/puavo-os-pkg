@@ -15,12 +15,25 @@ case "${command}" in
 	ln -fns "${upstream_dir}/iwlwifi-so-a0-gf-a0.pnvm" /lib/firmware/iwlwifi-so-a0-gf-a0.pnvm
         mv /lib/firmware/rtw89/rtw8852a_fw.bin /lib/firmware/rtw89/rtw8852a_fw.bin.orig
         ln -fns "${upstream_dir}/rtw8852a_fw.bin" /lib/firmware/rtw89/rtw8852a_fw.bin
+
+        mkdir -p /lib/firmware/ath11k/WCN6855/hw2.0
+        ln -fns "${upstream_dir}/amss.bin" /lib/firmware/ath11k/WCN6855/hw2.0/amss.bin
+        ln -fns "${upstream_dir}/board-2.bin" /lib/firmware/ath11k/WCN6855/hw2.0/board-2.bin
+        ln -fns "${upstream_dir}/m3.bin" /lib/firmware/ath11k/WCN6855/hw2.0/m3.bin
+        ln -fns "${upstream_dir}/regdb.bin" /lib/firmware/ath11k/WCN6855/hw2.0/regdb.bin
+
 	;;
     unconfigure)
         rm -f /lib/firmware/iwlwifi-so-a0-gf-a0.pnvm
         rm -f /lib/firmware/iwlwifi-so-a0-gf-a0-71.ucode
         rm -f /lib/firmware/rtw89/rtw8852a_fw.bin
+
         mv /lib/firmware/rtw89/rtw8852a_fw.bin.orig /lib/firmware/rtw89/rtw8852a_fw.bin
+
+        rm -f /lib/firmware/ath11k/WCN6855/hw2.0/amss.bin
+        rm -f /lib/firmware/ath11k/WCN6855/hw2.0/board-2.bin
+        rm -f /lib/firmware/ath11k/WCN6855/hw2.0/m3.bin
+        rm -f /lib/firmware/ath11k/WCN6855/hw2.0/regdb.bin
 	;;
     unpack)
 	upstream_pack=$1
@@ -60,6 +73,10 @@ case "${command}" in
 874557b285f087de0a1f1d0d26d7483aef6190ce267bb82734a303a4adcadcafc92459840f86e05bd53f42b5d8403a07  iwlwifi-so-a0-gf-a0.pnvm?id=48407ffd7adb9511701547068b1e6f0956bd1c94
 b1e31efc3506cb20ca9c27c33c66cb6f063a7ef7d8f8c8f1bf8a9c0b05cba658d0767f5b89c8ffec92dfb10b90b24305  iwlwifi-so-a0-gf-a0-71.ucode?id=48407ffd7adb9511701547068b1e6f0956bd1c94
 694c5575199e1cf0dace64fb5111191e65ed89579158589a2db07ec1ccb3bb2c4de5bee82f26b37634a5b7cff26a764b  rtw89/rtw8852a_fw.bin?id=48407ffd7adb9511701547068b1e6f0956bd1c94
+2dda0804dc9fe9d2a5ed7451bc1d3e57886e6b0d957e3638dd4e792fa3f9e67a85d475517d07cb711fe9203c9255f24e  ath11k/WCN6855/hw2.0/amss.bin?id=8bb75626e9dd831d323c4e460414b56260f0b700
+75e9d6d3079527cdf93ab48aa456528bc0c46944cbed21a934cd99bfc825e66ec2152a43c7bca0c01ffcd32adb3d46c9  ath11k/WCN6855/hw2.0/board-2.bin?id=8bb75626e9dd831d323c4e460414b56260f0b700
+c2f61da71f922537f0bcc8325a0bbbcd9ce1c3760d93f97cd3451efbec18226224cdfd416169bc844be446fc9b60e67f  ath11k/WCN6855/hw2.0/m3.bin?id=8bb75626e9dd831d323c4e460414b56260f0b700
+bce2056a07d61d88db2abefad4e4eee3ce6b1e7574a0ad0ec7268bcc83ff0b42a0658dde8498f487caf5e920c0cd4e87  ath11k/WCN6855/hw2.0/regdb.bin?id=8bb75626e9dd831d323c4e460414b56260f0b700
 EOF
       # Set LC_COLLATE=C so that files always sort in the same
       # way (so we get the same tar-archive independent of locales).
