@@ -10,9 +10,9 @@ urlbase='https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware
 
 case "${command}" in
     configure)
-	upstream_dir=$1
-	ln -fns "${upstream_dir}/iwlwifi-so-a0-gf-a0-71.ucode" /lib/firmware/iwlwifi-so-a0-gf-a0-71.ucode
-	ln -fns "${upstream_dir}/iwlwifi-so-a0-gf-a0.pnvm" /lib/firmware/iwlwifi-so-a0-gf-a0.pnvm
+        upstream_dir=$1
+        ln -fns "${upstream_dir}/iwlwifi-so-a0-gf-a0-71.ucode" /lib/firmware/iwlwifi-so-a0-gf-a0-71.ucode
+        ln -fns "${upstream_dir}/iwlwifi-so-a0-gf-a0.pnvm" /lib/firmware/iwlwifi-so-a0-gf-a0.pnvm
         mv /lib/firmware/rtw89/rtw8852a_fw.bin /lib/firmware/rtw89/rtw8852a_fw.bin.orig
         ln -fns "${upstream_dir}/rtw8852a_fw.bin" /lib/firmware/rtw89/rtw8852a_fw.bin
 
@@ -22,7 +22,10 @@ case "${command}" in
         ln -fns "${upstream_dir}/m3.bin" /lib/firmware/ath11k/WCN6855/hw2.0/m3.bin
         ln -fns "${upstream_dir}/regdb.bin" /lib/firmware/ath11k/WCN6855/hw2.0/regdb.bin
 
-	;;
+        mkdir -p /lib/firmware/qca
+        ln -fns "${upstream_dir}/rampatch_usb_00130200.bin" /lib/firmware/qca/rampatch_usb_00130200.bin
+        ln -fns "${upstream_dir}/nvm_usb_00130200.bin" /lib/firmware/qca/nvm_usb_00130200.bin
+        ;;
     unconfigure)
         rm -f /lib/firmware/iwlwifi-so-a0-gf-a0.pnvm
         rm -f /lib/firmware/iwlwifi-so-a0-gf-a0-71.ucode
@@ -34,39 +37,42 @@ case "${command}" in
         rm -f /lib/firmware/ath11k/WCN6855/hw2.0/board-2.bin
         rm -f /lib/firmware/ath11k/WCN6855/hw2.0/m3.bin
         rm -f /lib/firmware/ath11k/WCN6855/hw2.0/regdb.bin
-	;;
+
+        rm -f /lib/firmware/qca/rampatch_usb_00130200.bin
+        rm -f /lib/firmware/qca/nvm_usb_00130200.bin
+        ;;
     unpack)
-	upstream_pack=$1
-	upstream_dir=$2
+        upstream_pack=$1
+        upstream_dir=$2
 
-    tar -x -f "$upstream_pack" -C "$upstream_dir"
-	;;
+        tar -x -f "$upstream_pack" -C "$upstream_dir"
+        ;;
 
-	download) #based on ubuntu-wallpapers-bullseye
-    upstream_pack=$(readlink -f "$1")
-    tmpdir=
-    trap '[ -n "$tmpdir" ] && rm -rf "$tmpdir"' 0 INT TERM
-    tmpdir=$(mktemp -d)
+    download) #based on ubuntu-wallpapers-bullseye
+        upstream_pack=$(readlink -f "$1")
+        tmpdir=
+        trap '[ -n "$tmpdir" ] && rm -rf "$tmpdir"' 0 INT TERM
+        tmpdir=$(mktemp -d)
 
-    (
-      cd "$tmpdir"
-      mkdir -p puavo-firmware
-      while read sha384 fwfilepath; do
-        fwfile=$(basename "${fwfilepath%\?*}")
-        wget \
-            --no-use-server-timestamps \
-            --no-cookies \
-            --output-document "$fwfile" \
-            --progress=dot:mega \
-            "${urlbase}/${fwfilepath}" || {
-            [ $? -eq 4 ] && exit 2 ## Network failure.
-            exit 1
-        }
+        (
+        cd "$tmpdir"
+        mkdir -p puavo-firmware
+        while read sha384 fwfilepath; do
+            fwfile=$(basename "${fwfilepath%\?*}")
+            wget \
+                --no-use-server-timestamps \
+                --no-cookies \
+                --output-document "$fwfile" \
+                --progress=dot:mega \
+                "${urlbase}/${fwfilepath}" || {
+                [ $? -eq 4 ] && exit 2 ## Network failure.
+                exit 1
+            }
         if ! echo "${sha384} $(basename ${fwfilepath%\?*})" | sha384sum --check >/dev/null; then
-          actual_checksum=$(sha384sum "$fwfile" | awk '{ print $1 }')
-          echo "checksum NOT matching for $fwfilepath" >&2
-          echo "expected: ${sha384} / actual: ${actual_checksum}" >&2
-          exit 1
+            actual_checksum=$(sha384sum "$fwfile" | awk '{ print $1 }')
+            echo "checksum NOT matching for $fwfilepath" >&2
+            echo "expected: ${sha384} / actual: ${actual_checksum}" >&2
+            exit 1
         fi
         mv "$fwfile" puavo-firmware/ || exit 1
       done <<EOF
@@ -77,14 +83,16 @@ b1e31efc3506cb20ca9c27c33c66cb6f063a7ef7d8f8c8f1bf8a9c0b05cba658d0767f5b89c8ffec
 75e9d6d3079527cdf93ab48aa456528bc0c46944cbed21a934cd99bfc825e66ec2152a43c7bca0c01ffcd32adb3d46c9  ath11k/WCN6855/hw2.0/board-2.bin?id=8bb75626e9dd831d323c4e460414b56260f0b700
 c2f61da71f922537f0bcc8325a0bbbcd9ce1c3760d93f97cd3451efbec18226224cdfd416169bc844be446fc9b60e67f  ath11k/WCN6855/hw2.0/m3.bin?id=8bb75626e9dd831d323c4e460414b56260f0b700
 bce2056a07d61d88db2abefad4e4eee3ce6b1e7574a0ad0ec7268bcc83ff0b42a0658dde8498f487caf5e920c0cd4e87  ath11k/WCN6855/hw2.0/regdb.bin?id=8bb75626e9dd831d323c4e460414b56260f0b700
+d791046335e2793a58c9b86dc6983bd744e4a61fa777332b7abc7bf40374f46d390d5c2903b38095c516640f9d91a08d  qca/rampatch_usb_00130200.bin
+06292b389be8895e3989672ff2a11a3df2df21a69da3992ffa7f8f24782e0030b90dff6c32aa406dfb18aed2200487ad  qca/nvm_usb_00130200.bin
 EOF
-      # Set LC_COLLATE=C so that files always sort in the same
-      # way (so we get the same tar-archive independent of locales).
-      env LC_COLLATE=C \
-        tar -C puavo-firmware --mtime='2000-01-01 00:00:00 +00:00' --sort=name -c \
-          -f "$upstream_pack" .
-    )
-    ;;
+    # Set LC_COLLATE=C so that files always sort in the same
+    # way (so we get the same tar-archive independent of locales).
+        env LC_COLLATE=C \
+            tar -C puavo-firmware --mtime='2000-01-01 00:00:00 +00:00' --sort=name -c \
+            -f "$upstream_pack" .
+        )
+        ;;
     *)
-	;;
+    ;;
 esac
