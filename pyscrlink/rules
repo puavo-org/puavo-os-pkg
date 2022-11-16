@@ -9,6 +9,7 @@ shift
 case "${command}" in
     configure)
 	upstream_dir=$1
+        ln -fns "${upstream_dir}/Master%201024x1024.png" /usr/share/icons/scratch_link-pkg.png
 	ln -fns "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/bin/blescan" /usr/local/bin/blescan
 	ln -fns "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/bin/bluepy_helper_cap" /usr/local/bin/bluepy_helper_cap
 	ln -fns "${upstream_dir}/bluepy-7ad565231a97c304c0eff45f2649cd005e69db09/built/bin/scratch_link" /usr/local/bin/scratch_link
@@ -26,7 +27,7 @@ case "${command}" in
 [Desktop Entry]
 Name=Pyscrlink
 Exec=xterm /usr/local/bin/scratch_link
-Icon=scratch
+Icon=/usr/share/icons/scratch_link-pkg.png
 Terminal=false
 Type=Application
 EOF
@@ -34,6 +35,7 @@ EOF
 	;;
     unconfigure)
         rm -f /usr/share/applications/pyscrlink.desktop
+        rm -f /usr/share/icons/scratch_link-pkg.png
         rm -f /usr/local/bin/blescan
 	rm -f /usr/local/bin/bluepy_helper_cap
 	rm -f /usr/local/bin/scratch_link
@@ -91,6 +93,7 @@ EOF
       done <<EOF
 6407ff2838250508cc64b94ab7c473de4c5feb569d17dd1d9aee1a113ac863fa129a59b17d583ec69df5ca27b4944a67  https://github.com/kawasaki/pyscrlink/archive/7cc9ccac2e48c489f6afbb1b2217a753d41e17ed.zip
 d962588081808f09c26044fc4862903ee55ff2c0ce45a9b84d8823984f746f0bdd839bf1fab14a696fae79bd5e2a8b48  https://github.com/IanHarvey/bluepy/archive/7ad565231a97c304c0eff45f2649cd005e69db09.zip
+78d5bcdf183a4e8a19e1e257762468b3a2eba5c16df1e90630706ad798f5da17f7b5f3fe14abc13d4db97dbfb2c81128  https://raw.githubusercontent.com/LLK/scratch-link/f78273b9003bc0272dbcfb8a39a5a1358de89007/Assets/Mac/raster/Master%201024x1024.png
 EOF
       # Set LC_COLLATE=C so that files always sort in the same
       # way (so we get the same tar-archive independent of locales).
