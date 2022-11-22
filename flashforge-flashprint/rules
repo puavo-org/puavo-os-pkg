@@ -7,7 +7,6 @@ shift
 
 symlink_targets='
   /etc/udev/rules.d/99-flashforge.rules
-  /usr/share/applications/FlashPrint5.desktop
   /usr/share/FlashPrint5
   /usr/share/icons/hicolor/64x64/apps/flashforge5.png
 '
@@ -19,11 +18,23 @@ case "${command}" in
       mkdir -p "$(dirname "$symlink_target")"
       ln -fns -T "${upstream_dir}${symlink_target}" "$symlink_target"
     done
+
+    cat <<EOF > /usr/share/applications/FlashPrint5.desktop
+[Desktop Entry]
+GenericName=FlashPrint5
+MimeType=text/plain;
+Exec=env QT_STYLE_OVERRIDE=breeze /usr/share/FlashPrint5/FlashPrint
+X-KDE-StartupNotify=true
+X-KDE-HasTempFileOption=true
+Icon=flashforge5
+Type=Application
+EOF
     ;;
   unconfigure)
     for symlink_target in $symlink_targets; do
       rm -f "$symlink_target"
     done
+    rm -rf /usr/share/applications/FlashPrint5.desktop
     ;;
   unpack)
     upstream_pack=$1
