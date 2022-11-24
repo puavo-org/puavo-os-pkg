@@ -62,9 +62,11 @@ EOF
     thymiodir="${download_tmpdir}/thymiosuite"
     export HOME="$thymiodir"
     mkdir -p "$thymiodir"
-    flatpak --user remote-add flathub https://flathub.org/repo/flathub.flatpakrepo
+    flatpak --user remote-add flathub \
+                   https://flathub.org/repo/flathub.flatpakrepo
     flatpak --assumeyes --noninteractive install flathub org.mobsya.ThymioSuite
-    tar --mtime='2000-01-01 00:00:00 +00:00' -C "${download_tmpdir}/thymiosuite/.local/.share" -c \
+    tar --mtime='2000-01-01 00:00:00 +00:00' \
+        -C "${download_tmpdir}/thymiosuite/.local/.share" -c \
         -f - thymiosuite | gzip -n > "$upstream_pack"
     ;;
   unconfigure)
@@ -78,8 +80,8 @@ EOF
   unpack)
     upstream_pack=$1
     upstream_dir=$2
-
-    tar -zxf "$upstream_pack" -C "$upstream_dir" --strip-components=4 thymiosuite/.local/share/flatpak
+    tar -zxf "$upstream_pack" -C "$upstream_dir" --strip-components=4 \
+        thymiosuite/.local/share/flatpak
     ;;
   *)
     ;;
