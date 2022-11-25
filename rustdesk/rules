@@ -14,14 +14,14 @@ case "${command}" in
     ln -fns "${upstream_dir}/usr/lib/python3.9/site-packages/pynput-1.7.5.egg-info" /usr/local/lib/python3.9/dist-packages/pynput-1.7.5.egg-info
     ln -fns "${upstream_dir}/usr/lib/python3.9/site-packages/pynput" /usr/local/lib/python3.9/dist-packages/pynput
     echo "${upstream_dir}/usr/lib/python3.9/site-packages/pynput" >> /usr/local/lib/python3.9/dist-packages/easy-install.pth
-    mkdir -p /usr/local/lib/rustdesk
-    ln -fns "${upstream_dir}/usr/lib/rustdesk/libsciter-gtk.so" /usr/local/lib/rustdesk/libsciter-gtk.so
+    mkdir -p /usr/lib/rustdesk
+    ln -fns "${upstream_dir}/usr/lib/rustdesk/libsciter-gtk.so" /usr/lib/rustdesk/libsciter-gtk.so
     ln -fns "${upstream_dir}/usr/bin/rustdesk" /usr/bin/rustdesk
     ln -fns "${upstream_dir}/usr/share/applications/rustdesk.desktop" /usr/share/applications/rustdesk.desktop
     ;;
     unconfigure)
     rm -r /usr/bin/rustdesk
-    rm -r /usr/local/lib/rustdesk/libsciter-gtk.so
+    rm -r /usr/lib/rustdesk/libsciter-gtk.so
     rm -f /usr/share/applications/rustdesk.desktop
     rm -f /usr/local/lib/python3.9/dist-packages/pynput-1.7.5.egg-info
     rm -f /usr/local/lib/python3.9/dist-packages/pynput
