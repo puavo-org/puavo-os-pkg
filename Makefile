@@ -79,6 +79,7 @@ packagedirs += puavo-firmware
 packagedirs += pycharm
 packagedirs += pyscrlink
 packagedirs += qcad-cam
+packagedirs += rustdesk
 packagedirs += robboscratch
 packagedirs += robotmeshconnect
 packagedirs += schoolstore-ti-widgets
