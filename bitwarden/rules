@@ -1,0 +1,41 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+links='
+  /opt/Bitwarden
+  /usr/share/applications/bitwarden.desktop
+  /usr/share/doc/bitwarden
+  /usr/share/icons/hicolor/1024x1024/apps/bitwarden.png
+  /usr/share/icons/hicolor/128x128/apps/bitwarden.png
+  /usr/share/icons/hicolor/16x16/apps/bitwarden.png
+  /usr/share/icons/hicolor/256x256/apps/bitwarden.png
+  /usr/share/icons/hicolor/32x32/apps/bitwarden.png
+  /usr/share/icons/hicolor/512x512/apps/bitwarden.png
+  /usr/share/icons/hicolor/64x64/apps/bitwarden.png
+'
+
+case "${command}" in
+    configure)
+        upstream_dir=$1
+        for f in $links; do
+          mkdir -p "$(dirname "$f")"
+          ln -fns -T "${upstream_dir}${f}" "$f"
+        done
+        ln -fns -T "/opt/Bitwarden/bitwarden" "/usr/bin/bitwarden"
+        sed -i "s/Icon=bitwarden/Icon=\/usr\/share\/icons\/hicolor\/64x64\/apps\/bitwarden.png/" "${upstream_dir}/usr/share/applications/bitwarden.desktop"
+        ;;
+    unconfigure)
+        rm -rf $links
+        ;;
+    unpack)
+        upstream_pack=$1
+        upstream_dir=$2
+        dpkg-deb -x "$upstream_pack" "$upstream_dir"
+        ;;
+    *)
+        ;;
+esac
