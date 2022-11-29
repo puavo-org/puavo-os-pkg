@@ -108,6 +108,7 @@ packagedirs += veracrypt
 packagedirs += vidyo-client
 packagedirs += vscode
 packagedirs += webex
+packagedirs += wine-gecko
 packagedirs += wine-mono
 packagedirs += zoom
 
