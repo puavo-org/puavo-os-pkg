@@ -17,6 +17,10 @@ set -eu
 
 WINEPREFIX=~/.wineprefix-eshare
 export WINEPREFIX
+if [ ! -f "${WINEPREFIX}/drive_c/users/$(whoami)/AppData/Local/EShareClient/EShare.ini" ]; then
+  mkdir -p "${WINEPREFIX}/drive_c/users/$(whoami)/AppData/Local/EShareClient/"
+  echo -e "[General]\nclient_name=$(hostname)" > ${WINEPREFIX}/drive_c/users/$(whoami)/AppData/Local/EShareClient/EShare.ini
+fi
 wine /opt/wine/eshare/EShare.exe
 EOF
     chmod 755 /usr/local/bin/eshare
