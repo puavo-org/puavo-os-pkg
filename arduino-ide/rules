@@ -25,9 +25,9 @@ Keywords=embedded electronics;electronics;avr;microcontroller;
 EOF
         ;;
     unconfigure)
-        rm -rf /usr/bin/arduino \
-               /usr/share/applications/arduino.desktop \
-               /opt/arduino-ide
+        rm -f /usr/bin/arduino \
+              /usr/share/applications/arduino.desktop \
+              /opt/arduino-ide
         ;;
     unpack)
         upstream_pack=$1

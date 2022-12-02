@@ -22,7 +22,7 @@ Icon=/opt/mattermost-desktop/icon.png
 EOF
 	;;
     unconfigure)
-	rm -rf /opt/mattermost-desktop /usr/share/applications/mattermost-desktop.desktop
+	rm -f /opt/mattermost-desktop /usr/share/applications/mattermost-desktop.desktop
 	;;
     unpack)
 	upstream_pack=$1

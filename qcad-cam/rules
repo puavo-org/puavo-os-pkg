@@ -26,9 +26,9 @@ Categories=Education;
 EOF
         ;;
     unconfigure)
-        rm -rf "$qcad_dir" \
-                /usr/share/icons/qcad_icon.png \
-                /usr/share/applications/qcad-cam.desktop
+        rm -f "$qcad_dir" \
+               /usr/share/icons/qcad_icon.png \
+               /usr/share/applications/qcad-cam.desktop
         ;;
     unpack)
         upstream_pack=$1

@@ -20,11 +20,11 @@ case "${command}" in
                 /usr/share/pixmaps/vidyo_icon.png.png
 	;;
     unconfigure)
-	rm -rf /opt/vidyo \
-               /usr/bin/VidyoDesktop \
-               /usr/share/applications/VidyoDesktop.desktop \
-               /usr/share/pixmaps/vidyo_icon.png            \
-               /usr/share/pixmaps/vidyo_icon.png.png
+	rm -f /opt/vidyo \
+              /usr/bin/VidyoDesktop \
+              /usr/share/applications/VidyoDesktop.desktop \
+              /usr/share/pixmaps/vidyo_icon.png            \
+              /usr/share/pixmaps/vidyo_icon.png.png
 	;;
     unpack)
 	upstream_pack=$1

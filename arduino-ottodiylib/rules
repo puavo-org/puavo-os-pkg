@@ -17,7 +17,7 @@ case "$command" in
         ln -fns "$upstream_dir" "$otto_dir"
         ;;
     unconfigure)
-        rm -rf "$otto_dir"
+        rm -f "$otto_dir"
         ;;
     unpack)
         upstream_pack=$1

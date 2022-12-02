@@ -7,30 +7,27 @@ shift
 
 case "${command}" in
     configure)
-	upstream_dir=$1
-	ln -fns "${upstream_dir}/ffsend-v0.2.76-linux-x64" /usr/local/bin/ffsend-v0.2.76-linux-x64
-    cat <<'EOF' > /usr/local/bin/ffsend
+        upstream_dir=$1
+        ln -fns "${upstream_dir}/ffsend-v0.2.76-linux-x64" /usr/local/bin/ffsend-v0.2.76-linux-x64
+        cat <<'EOF' > /usr/local/bin/ffsend
 #!/bin/sh
 
 set -eu
 
 /usr/local/bin/ffsend-v0.2.76-linux-x64 u --host https://send.opinsys.fi --download-limit 1 --expiry-time 604800 $1
 EOF
-    chmod 755 /usr/local/bin/ffsend
-    chmod 755 /usr/local/bin/ffsend-v0.2.76-linux-x64
-
-	;;
+        chmod 755 /usr/local/bin/ffsend /usr/local/bin/ffsend-v0.2.76-linux-x64
+        ;;
     unconfigure)
-	rm -rf /usr/local/bin/ffsend-v0.2.76-linux-x64
-	rm -rf /usr/local/bin/ffsend
-	;;
+        rm -f /usr/local/bin/ffsend /usr/local/bin/ffsend-v0.2.76-linux-x64
+        ;;
     unpack)
-	upstream_pack=$1
-	upstream_dir=$2
+        upstream_pack=$1
+        upstream_dir=$2
 
-	mkdir -p "${upstream_dir}"
-	cp "${upstream_pack}" "${upstream_dir}/ffsend-v0.2.76-linux-x64"
-	;;
+        mkdir -p "${upstream_dir}"
+        cp "${upstream_pack}" "${upstream_dir}/ffsend-v0.2.76-linux-x64"
+        ;;
     *)
-	;;
+        ;;
 esac

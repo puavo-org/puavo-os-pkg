@@ -18,11 +18,11 @@ case "${command}" in
 	ln -fns "${upstream_dir}/usr/share/tilitin" /usr/share/tilitin
 	;;
     unconfigure)
-	rm -rf /usr/bin/tilitin                        \
-               /usr/share/applications/tilitin.desktop \
-               /usr/share/doc/tilitin                  \
-               /usr/share/pixmaps/tilitin.png          \
-               /usr/share/tilitin
+	rm -f /usr/bin/tilitin                        \
+              /usr/share/applications/tilitin.desktop \
+              /usr/share/doc/tilitin                  \
+              /usr/share/pixmaps/tilitin.png          \
+              /usr/share/tilitin
 	;;
     unpack)
 	upstream_pack=$1

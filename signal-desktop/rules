@@ -30,7 +30,7 @@ case "$command" in
     done
     ;;
   unconfigure)
-    rm -rf $signal_links
+    rm -f $signal_links
     ;;
   unpack)
     upstream_pack=$1

@@ -30,7 +30,7 @@ architectures=*
 EOF
         ;;
     unconfigure)
-        rm -rf "$opinsys_dir"
+        rm -f "$opinsys_dir"
         ;;
     unpack)
         upstream_pack=$1

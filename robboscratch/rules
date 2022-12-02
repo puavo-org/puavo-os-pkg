@@ -24,10 +24,10 @@ EOF
     chmod 755 /usr/bin/robboscratch3
     ;;
   unconfigure)
-    rm -rf /opt/robboscratch3 \
-           /usr/bin/robboscratch3 \
-           /usr/share/applications/robboscratch3.desktop \
-           /usr/share/pixmaps/robboscratch3.png
+    rm -f /opt/robboscratch3 \
+          /usr/bin/robboscratch3 \
+          /usr/share/applications/robboscratch3.desktop \
+          /usr/share/pixmaps/robboscratch3.png
     ;;
   unpack)
     upstream_pack=$1

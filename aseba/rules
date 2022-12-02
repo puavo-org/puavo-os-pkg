@@ -78,7 +78,7 @@ case "${command}" in
     done
     ;;
   unconfigure)
-    rm -rf $aseba_links
+    rm -f $aseba_links
     ;;
   unpack)
     upstream_pack=$1

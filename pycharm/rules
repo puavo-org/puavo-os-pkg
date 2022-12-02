@@ -24,7 +24,7 @@ GenericName=PyCharm
 EOF
 	;;
     unconfigure)
-	rm -rf /opt/pycharm /usr/share/applications/pycharm.desktop
+	rm -f /opt/pycharm /usr/share/applications/pycharm.desktop
 	;;
     unpack)
 	upstream_pack=$1

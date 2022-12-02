@@ -21,7 +21,7 @@ Type=Application
 EOF
 	;;
     unconfigure)
-	rm -rf /usr/google /usr/share/applications/appinventor.desktop
+	rm -f /usr/google /usr/share/applications/appinventor.desktop
 	;;
     unpack)
 	upstream_pack=$1

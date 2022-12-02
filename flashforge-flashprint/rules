@@ -34,7 +34,7 @@ EOF
     for symlink_target in $symlink_targets; do
       rm -f "$symlink_target"
     done
-    rm -rf /usr/share/applications/FlashPrint5.desktop
+    rm -f /usr/share/applications/FlashPrint5.desktop
     ;;
   unpack)
     upstream_pack=$1

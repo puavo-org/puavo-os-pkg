@@ -28,7 +28,7 @@ case "${command}" in
     done
     ;;
   unconfigure)
-    rm -rf $scratux_links
+    rm -f $scratux_links
     ;;
   unpack)
     upstream_pack=$1

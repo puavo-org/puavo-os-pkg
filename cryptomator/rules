@@ -28,7 +28,7 @@ case "${command}" in
         echo cryptomator >> /var/lib/puavo-pkg/.update_mime_database
         ;;
     unconfigure)
-        rm -rf $links
+        rm -f $links
         ;;
     unpack)
         upstream_pack=$1

@@ -12,8 +12,7 @@ case "${command}" in
 	ln -fns "${upstream_dir}/opt/Webex/bin/webex.desktop" /usr/share/applications/webex.desktop
 	;;
     unconfigure)
-        rm -rf /usr/share/applications/webex.desktop
-	rm -rf /opt/Webex
+        rm -f /usr/share/applications/webex.desktop /opt/Webex
 	;;
     unpack)
 	upstream_pack=$1

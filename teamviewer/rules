@@ -43,7 +43,7 @@ case "${command}" in
 EOF
     ;;
   unconfigure)
-      rm -rf $teamviewer_links
+      rm -f $teamviewer_links
       ;;
   unpack)
       upstream_pack=$1

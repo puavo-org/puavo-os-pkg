@@ -13,7 +13,7 @@ case "${command}" in
 	ln -fns "${upstream_dir}/wine-mono-${version}-x86.msi" "/usr/share/wine/mono/wine-mono-${version}-x86.msi"
 	;;
     unconfigure)
-	rm -rf "/usr/share/wine/mono/wine-mono-${version}-x86.msi"
+	rm -f "/usr/share/wine/mono/wine-mono-${version}-x86.msi"
 	;;
     unpack)
 	upstream_pack=$1

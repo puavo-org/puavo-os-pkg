@@ -17,8 +17,10 @@ case "${command}" in
         ln -fns /opt/bluegriffon/bluegriffon /usr/bin/bluegriffon
 	;;
     unconfigure)
-        rm -rf /opt/bluegriffon /usr/share/applications/bluegriffon.desktop \
-/usr/bin/bluegriffon
+        rm -f /opt/bluegriffon \
+              /usr/bin/bluegriffon \
+              /usr/share/applications/bluegriffon.desktop \
+              /usr/share/pixmaps/bluegriffon.png
 	;;
     unpack)
 	upstream_pack=$1

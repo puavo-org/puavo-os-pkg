@@ -30,7 +30,7 @@ case "${command}" in
     chmod 4755 "${upstream_dir}/opt/Mafynetti/chrome-sandbox"
     ;;
   unconfigure)
-    rm -rf $mafynetti_links
+    rm -f $mafynetti_links
     ;;
   unpack)
     upstream_pack=$1

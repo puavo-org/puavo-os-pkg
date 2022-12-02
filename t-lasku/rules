@@ -17,10 +17,10 @@ case "${command}" in
                 /usr/share/pixmaps/t-lasku.png
 	;;
     unconfigure)
-	rm -rf /usr/bin/t-lasku \
-               /usr/bin/t-lasku-cli \
-               /usr/share/applications/t-lasku.desktop \
-               /usr/share/icons/hicolor/48x48/apps/t-lasku.png
+	rm -f /usr/bin/t-lasku \
+              /usr/bin/t-lasku-cli \
+              /usr/share/applications/t-lasku.desktop \
+              /usr/share/icons/hicolor/48x48/apps/t-lasku.png
 	;;
     unpack)
 	upstream_pack=$1

@@ -24,7 +24,7 @@ GenericName=Processing
 EOF
 	;;
     unconfigure)
-	rm -rf /opt/processing /usr/share/applications/processing.desktop
+	rm -f /opt/processing /usr/share/applications/processing.desktop
 	;;
     unpack)
 	upstream_pack=$1
