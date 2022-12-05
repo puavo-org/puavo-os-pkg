@@ -18,11 +18,13 @@ case "${command}" in
     ln -fns "${upstream_dir}/usr/lib/rustdesk/libsciter-gtk.so" /usr/lib/rustdesk/libsciter-gtk.so
     ln -fns "${upstream_dir}/usr/bin/rustdesk" /usr/bin/rustdesk
     ln -fns "${upstream_dir}/usr/share/applications/rustdesk.desktop" /usr/share/applications/rustdesk.desktop
+    ln -fns "${upstream_dir}/usr/share/icons/hicolor/128x128/apps/rustdesk.png" /usr/share/icons/rustdesk.png
     ;;
     unconfigure)
     rm -r /usr/bin/rustdesk
     rm -r /usr/lib/rustdesk/libsciter-gtk.so
     rm -f /usr/share/applications/rustdesk.desktop
+    rm -f /usr/share/icons/rustdesk.png
     rm -f /usr/local/lib/python3.9/dist-packages/pynput-1.7.5.egg-info
     rm -f /usr/local/lib/python3.9/dist-packages/pynput
     gawk -i inplace '!/pynput/' /usr/local/lib/python3.9/dist-packages/easy-install.pth || true
