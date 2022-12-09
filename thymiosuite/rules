@@ -66,8 +66,8 @@ EOF
                    https://flathub.org/repo/flathub.flatpakrepo
     flatpak --assumeyes --noninteractive install flathub org.mobsya.ThymioSuite
     tar --mtime='2000-01-01 00:00:00 +00:00' \
-        -C "${download_tmpdir}/thymiosuite/.local/.share" -c \
-        -f - thymiosuite | gzip -n > "$upstream_pack"
+        -C "${download_tmpdir}/thymiosuite/.local/share" -c \
+        -f - flatpak | gzip -n > "$upstream_pack"
     ;;
   unconfigure)
     rm -f /etc/flatpak/installations.d/thymiosuite.conf \
@@ -80,8 +80,7 @@ EOF
   unpack)
     upstream_pack=$1
     upstream_dir=$2
-    tar -zxf "$upstream_pack" -C "$upstream_dir" --strip-components=4 \
-        thymiosuite/.local/share/flatpak
+    tar -zxf "$upstream_pack" -C "$upstream_dir" --strip-components=1
     ;;
   *)
     ;;
