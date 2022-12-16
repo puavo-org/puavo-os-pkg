@@ -7,7 +7,6 @@ shift
 
 links='
 /etc/geogebra
-/usr/bin/geogebra
 /usr/lib/jvm/java-geogebra
 /usr/share/applications/geogebra.desktop
 /usr/share/geogebra
@@ -65,9 +64,35 @@ case "${command}" in
             ln -fns -T "${upstream_dir}${f}" "${f}"
         done
         echo geogebra >> /var/lib/puavo-pkg/.update_mime_database
+        cat <<'EOF' > /usr/bin/geogebra
+#!/bin/bash
+#---------------------------------------------
+# Script to start GeoGebra
+#---------------------------------------------
+
+#---------------------------------------------
+# Export name of this script
+
+export GG_SCRIPTNAME=$(basename $0)
+
+#---------------------------------------------
+# Export path of system directory containing geogebra.conf
+
+export GG_SYS_CONFIG_PATH='/etc/geogebra'
+
+# Fix 3d view startup on devices where default GL version is too new
+export MESA_GL_VERSION_OVERRIDE=2.0
+
+#---------------------------------------------
+# Run
+
+exec "/usr/share/geogebra/geogebra" "$@"
+EOF
+        chmod 0755 /usr/bin/geogebra
         ;;
     unconfigure)
         rm -f ${links}
+        rm -f /usr/bin/geogebra
         ;;
     unpack)
         upstream_pack=$1
