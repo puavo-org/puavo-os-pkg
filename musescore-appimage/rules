@@ -13,7 +13,7 @@ case "$command" in
     ln -fns "${upstream_dir}/mscore-appimage.svg" /usr/share/icons/mscore-appimage.svg
     cat <<EOF > /usr/share/applications/musescore-appimage.desktop
 [Desktop Entry]
-Name=MuseScore 3
+Name=MuseScore 4
 Exec=/opt/musescore-appimage/musescore.AppImage
 Type=Application
 Terminal=false
