@@ -38,7 +38,9 @@ EOF
   unpack)
     upstream_pack=$1
     upstream_dir=$2
-    dpkg-deb -x "$upstream_pack" "$upstream_dir"
+    # The .deb includes .svn folders. Exclude them, save half of the space.
+    dpkg-deb --fsys-tarfile "$upstream_pack" \
+      | tar -C "$upstream_dir" --exclude='.svn' -x
     ;;
   *)
     ;;
