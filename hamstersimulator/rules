@@ -1,0 +1,87 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+    configure)
+    upstream_dir=$1
+    cat <<EOF > /usr/local/bin/hamstersimulator
+#!/bin/sh
+set -eu
+mkdir -p ~/hamstersimulator/Programme
+rsync -a /opt/hamstersimulator/hamstersimulator-v29-06/Programme/ ~/hamstersimulator/Programme
+cd ~/hamstersimulator
+/opt/hamstersimulator/jdk-17.0.6/bin/java -jar /opt/hamstersimulator/hamstersimulator-v29-06/hamstersimulator.jar
+EOF
+    chmod 755 /usr/local/bin/hamstersimulator
+
+    cat <<EOF > /usr/share/applications/hamstersimulator.desktop
+[Desktop Entry]
+Type=Application
+Name=Hamster-Simulator
+Exec=hamstersimulator
+Icon=/usr/share/icons/hamstersimulator.gif
+EOF
+    ln -fns "${upstream_dir}/hamstersimulator-v29-06/splashscreen.gif" /usr/share/icons/hamstersimulator.gif
+    ln -fns "${upstream_dir}" /opt/hamstersimulator
+    ;;
+    unconfigure)
+    rm -f /opt/hamstersimulator /usr/local/bin/hamstersimulator
+    rm -f /usr/share/icons/hamstersimulator.gif
+    rm -f /usr/share/applications/hamstersimulator.desktop
+    ;;
+
+    unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    tar -x -f "$upstream_pack" -C "$upstream_dir"
+    cd "$upstream_dir"
+    tar -xzvf jdk-17_linux-x64_bin.tar.gz
+    unzip hamstersimulator-v29-06.zip
+    ;;
+
+    download) #based on ubuntu-wallpapers-bullseye
+    upstream_pack=$(readlink -f "$1")
+    tmpdir=
+    trap '[ -n "$tmpdir" ] && rm -rf "$tmpdir"' 0 INT TERM
+    tmpdir=$(mktemp -d)
+
+    (
+    cd "$tmpdir"
+    mkdir -p hamstersimulator
+    while read sha384 fwfilepath; do
+        fwfile=$(basename "$fwfilepath")
+        wget \
+            --no-use-server-timestamps \
+            --no-cookies \
+            --output-document "$fwfile" \
+            --progress=dot:mega \
+            "${fwfilepath}" || {
+            [ $? -eq 4 ] && exit 2 ## Network failure.
+            exit 1
+        }
+        if ! echo "${sha384} $(basename $fwfilepath)" | sha384sum --check >/dev/null; then
+        actual_checksum=$(sha384sum "$fwfile" | awk '{ print $1 }')
+        echo "checksum NOT matching for $fwfilepath" >&2
+        echo "expected: ${sha384} / actual: ${actual_checksum}" >&2
+        exit 1
+        fi
+        mv "$fwfile" hamstersimulator/ || exit 1
+    done <<EOF
+d4b8c8ba7aa194b51b093a808a2e7a54d2306b7e1be86b70f8f943a3f572e07529c1ece17bc7d84fd440d9e82db95ee6  https://www.java-hamster-modell.de/download/v29/hamstersimulator-v29-06.zip
+57e64c093b3d1dcbd5737abf19b78e634e7cc1c3fc3f8444734b862c1c489496c435f71ee3d194d517dda12340f7c6f7  https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz
+EOF
+    # Set LC_COLLATE=C so that files always sort in the same
+    # way (so we get the same tar-archive independent of locales).
+    env LC_COLLATE=C \
+        tar -C hamstersimulator --mtime='2000-01-01 00:00:00 +00:00' --sort=name -c \
+        -f "$upstream_pack" .
+    )
+    ;;
+    *)
+    ;;
+esac
