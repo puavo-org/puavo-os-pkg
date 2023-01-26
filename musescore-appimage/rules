@@ -11,10 +11,26 @@ case "$command" in
 
     ln -fns "$upstream_dir" /opt/musescore-appimage
     ln -fns "${upstream_dir}/mscore-appimage.svg" /usr/share/icons/mscore-appimage.svg
+    cat <<EOF > /usr/local/bin/musescore-appimage
+#!/bin/sh
+set -eu
+mkdir -p ~/.config/MuseScore/
+  if ! test -f ~/.config/MuseScore/MuseScore4.ini; then
+    cat <<EOIF > ~/.config/MuseScore/MuseScore4.ini
+[application]
+checkForUpdate=false
+EOIF
+    echo "Default options for MuseScore set."
+  fi
+
+/opt/musescore-appimage/musescore.AppImage
+EOF
+    chmod 0755 /usr/local/bin/musescore-appimage
+
     cat <<EOF > /usr/share/applications/musescore-appimage.desktop
 [Desktop Entry]
 Name=MuseScore 4
-Exec=/opt/musescore-appimage/musescore.AppImage
+Exec=/usr/local/bin/musescore-appimage
 Type=Application
 Terminal=false
 Icon=mscore-appimage.svg
@@ -25,7 +41,8 @@ EOF
   unconfigure)
     rm -f /opt/musescore-appimage \
           /usr/share/applications/musescore-appimage.desktop \
-          /usr/share/icons/mscore-appimage.svg
+          /usr/share/icons/mscore-appimage.svg \
+          /usr/local/bin/musescore-appimage
     ;;
   unpack)
     upstream_pack=$1
