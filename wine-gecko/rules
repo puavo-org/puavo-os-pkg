@@ -1,7 +1,7 @@
 #!/bin/sh
 
 set -eu
-version="2.47.2"
+version="2.47.3"
 
 command=$1
 shift
@@ -51,8 +51,8 @@ case "${command}" in
             fi
             mv "$fwfile" wine-gecko/ || exit 1
         done <<EOF
-b34863bba58ac58d9c343cd1d37276ffa39c43321b51b0659d3bcf46509ced9ed2a0c7fa28e0e5252d45d3b3ec4f32ec  http://dl.winehq.org/wine/wine-gecko/2.47.2/wine-gecko-2.47.2-x86_64.msi
-149153b056219ded0215da9bd46dde19ee85a86405b2957f81f97eb0bfaebf83e720cc2da396af0cc9600b396af84cc0  http://dl.winehq.org/wine/wine-gecko/2.47.2/wine-gecko-2.47.2-x86.msi
+20ae0b205a2e550e217ec88e11899daec5f7d3f6a6b8969b200998309bc1e108645ac49e5ee7e8d5fb602051eaffcad8  http://dl.winehq.org/wine/wine-gecko/2.47.3/wine-gecko-2.47.3-x86_64.msi
+93030892ebe89c6fddd5c21f0209a10afe1fe549194df448699cb46d81515faa58df8bcbc877a80d1e66a6d4dce0faeb  http://dl.winehq.org/wine/wine-gecko/2.47.3/wine-gecko-2.47.3-x86.msi
 EOF
 
         # Set LC_COLLATE=C so that files always sort in the same
