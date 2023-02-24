@@ -92,6 +92,7 @@ packagedirs += skype
 packagedirs += smartboard
 packagedirs += spotify-client
 packagedirs += supertuxkart
+packagedirs += teams
 packagedirs += teamviewer
 packagedirs += tela-icon-theme
 packagedirs += telegram-desktop
