@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+
+    ln -fns "${upstream_dir}/bw" /usr/local/bin/bw
+    ;;
+  unconfigure)
+    rm -f /usr/local/bin/bw
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    unzip "$upstream_pack" -d "$upstream_dir"
+    ;;
+  *)
+    ;;
+esac

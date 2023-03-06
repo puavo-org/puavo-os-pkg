@@ -14,6 +14,7 @@ packagedirs += arduino-radiohead
 packagedirs += arduino-tm1637
 packagedirs += aseba
 packagedirs += bitwarden
+packagedirs += bitwarden-cli
 packagedirs += bluegriffon
 packagedirs += bluej
 packagedirs += canon-cque
