@@ -6,13 +6,14 @@ command=$1
 shift
 
 debfiles='
-  smart-activation_1.1.2066.1-1_i386.deb
-  smart-common_10.3.2171.1-1_i386.deb
-  smart-gallerysetup_1.3.6235.1-1_i386.deb
-  smart-hwr_11.3.2121.1-1_i386.deb
-  smart-languagesetup_2.2.2060.4-1_i386.deb
-  smart-notebook_11.0.7511.0-1_i386.deb
-  smart-product-drivers_11.3.2121.1-1_i386.deb
+  pool/non-free/f/fwupdatesmart/fwupdatesmart_1.0.8-5_amd64.deb
+  pool/non-free/s/smart-activation/smart-activation_1.3.60.0-1_amd64.deb
+  pool/non-free/s/smart-common/smart-common_10.3.3245.1-1_amd64.deb
+  pool/non-free/s/smart-gallerysetup/smart-gallerysetup_1.4.32.0-1_amd64.deb
+  pool/non-free/s/smart-hwr/smart-hwr_12.17.6.0-1_amd64.deb
+  pool/non-free/s/smart-languagesetup/smart-languagesetup_2.3.34.0-1_amd64.deb
+  pool/non-free/s/smart-notebook/smart-notebook_11.1.114.0-1_amd64.deb
+  pool/non-free/s/smart-product-drivers/smart-product-drivers_12.17.449.0-5_amd64.deb
 '
 
 mime_xml_files='
@@ -24,6 +25,8 @@ mime_xml_files='
 smart_technologies_dir='/opt/SMART Technologies'
 
 smartboard_links='
+  /etc/nextwindow/nw-fermi/nw-fermi/DefaultDriverSettings.dat
+  /etc/udev/rules.d/99-sbm7xx.rules
   /usr/share/icons/hicolor/128x128/apps/SMART_Board_Software.png
   /usr/share/icons/hicolor/128x128/apps/SMART_ControlPanel.png
   /usr/share/icons/hicolor/128x128/apps/SMART_Essentials_For_Educators.png
@@ -262,6 +265,7 @@ create_configurations() {
   make_config_file "/etc/adobe/FlashPlayerTrust/SMARTNotebook.cfg" <<'EOF'
 /opt/SMART Technologies
 EOF
+
   make_config_file "/etc/udev/rules.d/60-SMARTBoard32.rules" <<'EOF'
 #SMART Technologies rules for permissions.
 KERNEL=="ttyS*", MODE="0666"
@@ -287,23 +291,32 @@ KERNEL=="event*", ATTRS{idVendor}=="0b8c", ATTRS{idProduct}=="0060", NAME="SB%k"
 KERNEL=="event*", ATTRS{idVendor}=="0b8c", ATTRS{idProduct}=="0061", NAME="SB%k"
 KERNEL=="event*", ATTRS{idVendor}=="0b8c", ATTRS{idProduct}=="0042", NAME="SB%k"
 EOF
+
   make_config_file "/etc/xdg/SMART Technologies.conf" <<'EOF'
 [Software]
-SMART%20Technologies\Activation%20Wizard\Location=/opt/SMART Technologies/Activation Wizard/bin/.activationwizard_elf
+SMART%20Technologies\Activation%20Wizard%202\Location=/opt/SMART Technologies/Activation Wizard/bin/.activationwizard_elf
+SMART%20Technologies\License%20Information\Trial\0\K9Q7B7XJ3M6PVNNMW9X9WK6RISDEFRAS\5JF3EP743VG9DHAHNDFMRMYEXA43AEFS=E5VUA5CAN6SADGJADGSAABIAAAV2ANWAFJY2AANIEMESAAAE8GDUDAGKAA
 SMART%20Technologies\MyScript\MyScriptPath=/opt/SMART Technologies/MyScript
-SMART%20Technologies\Language%20Setup\Path=/opt/SMART Technologies/Language Setup
-SMART%20Technologies\Language%20Setup\Version=2.2.2060.4
-SMART%20Technologies\Notebook%20Software\Install%20Information\NotebookExePath=/opt/SMART Technologies/Notebook Software
-SMART%20Technologies\Notebook%20Software\Install%20Information\Notebook%20Version=11.0.7511.0
 SMART%20Technologies\Notebook%20Software\Install%20Information\Documentation=/opt/SMART Technologies/Notebook Software/bin/Notebook/documentation
-SMART%20Technologies\SMART%20Board%20Drivers\Install%20Information\Drivers%20Directory=/opt/SMART Technologies/SMART Product Drivers
-SMART%20Technologies\SMART%20Board%20Drivers\Install%20Information\Drivers%20Version=11.3.2121.1
+SMART%20Technologies\Notebook%20Software\Install%20Information\Notebook%20Version=11.1.114.0
+SMART%20Technologies\Notebook%20Software\Install%20Information\NotebookExePath=/opt/SMART Technologies/Notebook Software
+SMART%20Technologies\SMART%20Board%20Drivers\Board%20Tools\FloatingToolsWasRunning=1
+SMART%20Technologies\SMART%20Board%20Drivers\Install%20Information\CustomLayout=/opt/SMART Technologies/Notebook Software/../SMART Product Drivers/Default Profiles and Layouts/CustomLayout.xml
+SMART%20Technologies\SMART%20Board%20Drivers\Install%20Information\CustomLayoutTranslation=/opt/SMART Technologies/Notebook Software/../SMART Product Drivers/Default Profiles and Layouts/CustomLayoutTranslation.xml
+SMART%20Technologies\SMART%20Board%20Drivers\Install%20Information\DefaultLayout=/opt/SMART Technologies/SMART Product Drivers/Default Profiles and Layouts/DefaultLayout.xml
 SMART%20Technologies\SMART%20Board%20Drivers\Install%20Information\Documentation=/opt/SMART Technologies/SMART Product Drivers/documentation
-SMART%20Technologies\License%20Information\Trial\0\MGTR6TX59W3BSW7A3XC7XJSCKJB5UI87\5JF3EP743VG9DHAHNDFMRMYEXA43AEFS=W7F8A5EENJSADFJAAYSAABTSAAV2B6NABT42AAN2EJHSAAABQGE9VAS2AA
+SMART%20Technologies\SMART%20Board%20Drivers\Install%20Information\Drivers%20Directory=/opt/SMART Technologies/SMART Product Drivers
+SMART%20Technologies\SMART%20Board%20Drivers\Install%20Information\Drivers%20Version=12.17.449.0
+SMART%20Technologies\SMART%20Tools\ToolsPath=/opt/SMART Technologies/SMART Product Drivers
+SMART%20Technologies\Language%20Setup\Path=/opt/SMART Technologies/Language Setup
+SMART%20Technologies\Language%20Setup\Version=2.3.34.0
 EOF
+
   make_config_file "/etc/xdg/SMART Technologies Drivers.conf" <<'EOF'
 EOF
+
   make_config_file "/etc/xdg/SMART Technologies/Language Setup.conf" <<'EOF'
+[Activation2]
 DisplayName=Activation Wizard
 IsHwConfigurable=0
 IsLanguageConfigurable=0
@@ -329,6 +342,7 @@ LanguagesFolder=/opt/SMART Technologies/Notebook Software/bin/Notebook/resources
 LanguagesFolder1=/opt/SMART Technologies/Notebook Software/Languages
 LanguagesFolder2=/opt/SMART Technologies/Activation Wizard/Languages
 EOF
+
   make_config_file "/etc/xdg/SMART Technologies/SMART Notebook.conf" <<'EOF'
 [Software]
 SMART%20Technologies\Gallery\OnlineMarketplace=http://learningmarketplace.smarttech.com/notebook.aspx
@@ -341,7 +355,7 @@ SMART%20Technologies\Gallery\TeamContent\gallery.smarttech.com\Enabled=0
 SMART%20Technologies\Gallery\TeamContent\gallery.smarttech.com\Remote=0
 SMART%20Technologies\Gallery\TeamContent\gallery.smarttech.com\ForceUser=0
 SMART%20Technologies\Language%20Setup\Path=/opt/SMART Technologies/Language Setup
-SMART%20Technologies\Language%20Setup\Version=2.2.2060.4
+SMART%20Technologies\Language%20Setup\Version=2.3.34.0
 SMART%20Technologies\Gallery\GallerySamplerManifest=/opt/SMART Technologies/Notebook Software/Gallery/imsmanifest.xml
 SMART%20Technologies\Gallery\TeamContent\fd16a709-8b28-4662-b5bd-63dc86eeb34e.com\ImsManifestXml=/opt/SMART Technologies/Notebook Galleries/SMART Technologies/Lesson Activity Toolkit/imsmanifest.xml
 SMART%20Technologies\Gallery\TeamContent\fd16a709-8b28-4662-b5bd-63dc86eeb34e.com\MetadataXml=/opt/SMART Technologies/Notebook Galleries/Configurations/Lesson Activity Toolkit/fd16a709-8b28-4662-b5bd-63dc86eeb34e.com/metadata.xml
@@ -357,6 +371,18 @@ EOF
   #
   # Autostart scripts
   #
+
+  make_config_file "/etc/xdg/autostart/smart_1-_Notifications.desktop" <<'EOF'
+[Desktop Entry]
+Name=SMARTBoardService
+Encoding=UTF-8
+Version=1.0
+X-GNOME-Autostart-enabled=true
+Exec=/usr/local/bin/start_smartboard_notifications
+Type=Application
+Icon=system-run
+Comment=SMART Software
+EOF
 
   make_config_file "/etc/xdg/autostart/smart_1-_Service.desktop" <<'EOF'
 [Desktop Entry]
@@ -381,6 +407,21 @@ Type=Application
 Icon=system-run
 Comment=SMART Software
 EOF
+
+  make_config_file "/usr/local/bin/start_smartboard_notifications" <<'EOF'
+#!/bin/sh
+
+set -eu
+
+# do not start smartboard stuff if we do not have a smartboard connected
+if ! lsusb | awk '$6 ~ /^0b8c:/' | grep -q .; then
+  exit 1
+fi
+
+exec "/opt/SMART Technologies/SMART Product Drivers/bin/SystemNotifications" \
+     "$@"
+EOF
+  chmod 755 "/usr/local/bin/start_smartboard_notifications"
 
   make_config_file "/usr/local/bin/start_smartboard_service" <<'EOF'
 #!/bin/sh
@@ -414,32 +455,7 @@ EOF
 
   make_config_file "/usr/local/bin/smart_notebook" <<'EOF'
 #!/bin/sh
-
-# XXX This is a horrible wrapper for notebook software.  It segfaults
-# XXX or otherwise breaks sometimes on startup with some machines, and as
-# XXX it is closed source software and the Linux version not maintained by
-# XXX the vendor, there is not much else we can do.
-
-set -eu
-
-i=0
-previous_seconds=$(date +%s)
-status=0
-
-while [ "$i" -lt 100 ]; do
-  status=0
-  "/opt/SMART Technologies/Notebook Software/bin/Notebook/.notebook_elf" "$@" \
-    || status=$?
-  current_seconds=$(date +%s)
-  if [ "$current_seconds" -ge "$(($previous_seconds + 3))" ]; then
-    break
-  fi
-
-  previous_seconds="$current_seconds"
-  i=$(($i + 1))
-done
-
-exit "$status"
+exec "/opt/SMART Technologies/Notebook Software/bin/notebook" "$@"
 EOF
   chmod 755 "/usr/local/bin/smart_notebook"
 
@@ -462,84 +478,68 @@ setup_mimetypes() {
   echo smartboard >> /var/lib/puavo-pkg/.update_mime_database
 }
 
-if [ "$(lsb_release -cs)" = 'stretch' ]; then
-  is_stretch=true
-else
-  is_stretch=false
-fi
-
 case "${command}" in
-    configure)
-        upstream_dir=$1
+  configure)
+    upstream_dir=$1
 
-        if $is_stretch; then
-          # If smartboard license is not enabled, do not configure a package.
-          if [ "$(puavo-conf puavo.nonfree.smartboard.enabled)" != 'true' ]; then
-              chmod 700 "$upstream_dir"
-              exit 0
-          fi
-        fi
-        chmod 755 "$upstream_dir"
+    for f in "$smart_technologies_dir" $smartboard_links; do
+      mkdir -p "$(dirname "$f")"
+      ln -fns -T "${upstream_dir}/smartboard${f}" "$f"
+    done
 
-        for f in "$smart_technologies_dir" ${smartboard_links}; do
-            mkdir -p "$(dirname "$f")"
-            ln -fns -T "${upstream_dir}/smartboard${f}" "$f"
-        done
+    create_configurations
 
-        create_configurations
+    setup_mimetypes "$upstream_dir"
+    ;;
+  unconfigure)
+    upstream_dir=$1
+    rm -f "$smart_technologies_dir"                         \
+          $smartboard_links                                 \
+          /etc/adobe/FlashPlayerTrust/SMARTNotebook.cfg     \
+          /etc/udev/rules.d/60-SMARTBoard32.rules           \
+          /etc/xdg/autostart/smart_1-_Notifications.desktop \
+          /etc/xdg/autostart/smart_1-_Service.desktop       \
+          /etc/xdg/autostart/smart_1-_Tools.desktop         \
+          "/etc/xdg/SMART Technologies.conf"                \
+          "/etc/xdg/SMART Technologies Drivers.conf"        \
+          "/etc/xdg/SMART Technologies/Language Setup.conf" \
+          "/etc/xdg/SMART Technologies/SMART Notebook.conf" \
+          /usr/local/bin/smart_notebook                     \
+          /usr/local/bin/start_smartboard_notifications     \
+          /usr/local/bin/start_smartboard_service           \
+          /usr/local/bin/start_smartboard_tools             \
+          /usr/share/applications/smarttech-notebook.desktop
+    for mime_xml in $mime_xml_files; do
+      rm -f "/usr/share/mime/packages/${mime_xml}"
+    done
 
-        setup_mimetypes "$upstream_dir"
-        ;;
-    unconfigure)
-        upstream_dir=$1
-        rm -f "$smart_technologies_dir"                         \
-              ${smartboard_links}                               \
-              "$smart_notebook_desktop_file"                    \
-              /usr/local/bin/smart_notebook                     \
-              /usr/local/bin/start_smartboard_service           \
-              /usr/local/bin/start_smartboard_tools             \
-              /etc/adobe/FlashPlayerTrust/SMARTNotebook.cfg     \
-              /etc/udev/rules.d/60-SMARTBoard32.rules           \
-              "/etc/xdg/SMART Technologies.conf"                \
-              "/etc/xdg/SMART Technologies Drivers.conf"        \
-              "/etc/xdg/SMART Technologies/Language Setup.conf" \
-              "/etc/xdg/SMART Technologies/SMART Notebook.conf"
-        for mime_xml in $mime_xml_files; do
-           rm -f "/usr/share/mime/packages/${mime_xml}"
-        done
-        update-mime-database /usr/share/mime
-        rm -f "${upstream_dir}/.mimetype_setup_done"
-        if $is_stretch; then chmod 700 "$upstream_dir"; fi
-        ;;
-    unpack)
-        upstream_pack=$1
-        upstream_dir=$2
-        tar --no-same-owner -z -x -f "${upstream_pack}" -C "${upstream_dir}"
-        for deb in $debfiles; do
-            dpkg -x "${upstream_dir}/${deb}" "${upstream_dir}/smartboard"
-            rm -f "${upstream_dir}/${deb}"
-        done
+    update-mime-database /usr/share/mime
+    rm -f "${upstream_dir}/.mimetype_setup_done"
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
 
-        (
-            cd "${upstream_dir}/smartboard${smart_technologies_dir}/common/lib"
-            for lib in ../lib.common/*; do
-                ln -fns "$lib" "$(basename "$lib")"
-            done
-            cd "${upstream_dir}/smartboard${smart_technologies_dir}/common/nb/lib"
-            for lib in ../../lib.common/*; do
-                ln -fns "$lib" "$(basename "$lib")"
-            done
-        )
+    tar --no-same-owner -z -x -f "$upstream_pack" -C "$upstream_dir"
+    for deb in $debfiles; do
+      dpkg -x "${upstream_dir}/${deb}" "${upstream_dir}/smartboard"
+      rm -f "${upstream_dir}/${deb}"
+    done
 
-        smart_datadir="${upstream_dir}/smartboard${smart_technologies_dir}/common/data"
-        mkdir -m 1777 -p "$smart_datadir"
-        ln -fns /state/external_files/smartboard_license \
-                "${smart_datadir}/.mp.1.1.dat"
+    (
+      cd "${upstream_dir}/smartboard${smart_technologies_dir}/common/lib"
+      for lib in ../lib.common/*; do
+        ln -fns "$lib" "$(basename "$lib")"
+      done
+    )
 
-        # Because this is proprietary software, set ${upstream_dir}
-        # permissions to 0700 by default.
-        if $is_stretch; then chmod 700 "${upstream_dir}"; fi
-        ;;
-    *)
-        ;;
+    smart_datadir="${upstream_dir}/smartboard${smart_technologies_dir}/common/data"
+    mkdir -m 1777 -p "$smart_datadir"
+    ln -fns /state/external_files/smartboard_license \
+            "${smart_datadir}/.mp.1.1.dat"
+
+    focal_lib_path=/opt/focal/lib/x64_64-linux-gnu
+    grep -lRZ '^export LD_LIBRARY_PATH=$' . \
+      | xargs -0 sed -i "/^export LD_LIBRARY_PATH=$/s|$|${focal_lib_path}|"
+    ;;
 esac
