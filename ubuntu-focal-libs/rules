@@ -1,0 +1,77 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+    mkdir -p /opt/focal/lib
+    ln -fns "$upstream_dir" /opt/focal/lib/x64_64-linux-gnu
+    ;;
+
+  unconfigure)
+    rm -f /opt/focal/lib/x64_64-linux-gnu
+    rmdir /opt/focal/lib /opt/focal
+    ;;
+
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    tar -xf "$upstream_pack" -C "$upstream_dir"
+    ;;
+
+  download)
+    upstream_pack=$(readlink -f "$1")
+    tmpdir=
+    trap '[ -n "$tmpdir" ] && rm -rf "$tmpdir"' 0 INT TERM
+    tmpdir=$(mktemp -d)
+
+    focal_mirror_base='https://mirrors.kernel.org'
+
+    (
+      cd "$tmpdir"
+      mkdir -p ubuntu-focal-libs
+      while read sha384 deburl files; do
+        deb=$(basename "$deburl")
+        wget \
+          --no-use-server-timestamps \
+          --no-cookies               \
+          --output-document "$deb"   \
+          --progress=dot:mega        \
+          "$deburl" || {
+            [ $? -eq 4 ] && exit 2 ## Network failure.
+            exit 1
+        }
+        echo "${sha384} ${deb}" | sha384sum --check >/dev/null || exit 1
+        dpkg-deb -x "$deb" ubuntu-focal-libs.tmp || exit 1
+        for f in $files; do
+          cp -p "ubuntu-focal-libs.tmp/usr/lib/x86_64-linux-gnu/${f}" \
+                ubuntu-focal-libs
+        done
+      done <<EOF
+2878b3a906ce5304d0f39868f2025a8b5ab54e58da304d260649ab7447a2e2d7b99d0a6878ce574f6cdf4d20ef1c64db ${focal_mirror_base}/ubuntu/pool/universe/b/boost1.67/libboost-chrono1.67.0_1.67.0-17ubuntu8_amd64.deb          libboost_chrono.so.1.67.0
+7fe35d443f82e9f687facae75e4c76420cd0739d68ba74831b8e0e1b42906d84138466aad7fb7758e5a94380ea9b515f ${focal_mirror_base}/ubuntu/pool/universe/b/boost1.67/libboost-date-time1.67.0_1.67.0-17ubuntu8_amd64.deb       libboost_date_time.so.1.67.0
+16392d640b55dc368d81d361781e034ada0a5cbcea56a6ea87fb5639945870715c465db93a49ab6fb01c412b59a4601c ${focal_mirror_base}/ubuntu/pool/universe/b/boost1.67/libboost-filesystem1.67.0_1.67.0-17ubuntu8_amd64.deb      libboost_filesystem.so.1.67.0
+10dd9ba2db25650bb5261494555be056f7d7536c960179165b34cb379e8f000ec86cb732c51150b9f695ad7502021df9 ${focal_mirror_base}/ubuntu/pool/universe/b/boost1.67/libboost-program-options1.67.0_1.67.0-17ubuntu8_amd64.deb libboost_program_options.so.1.67.0
+45e9417475ac0fbbedefd284c1827bf46311c828ea1666c4a503922019acedd1a0955831f511fb9943fa13a1c9830d78 ${focal_mirror_base}/ubuntu/pool/universe/b/boost1.67/libboost-regex1.67.0_1.67.0-17ubuntu8_amd64.deb           libboost_regex.so.1.67.0
+64ea2eaa226c41457da04ba11e300b0dde70f03066810d3f4d60aaa3811b432c4748109bb0b86d7c2471280e4307e377 ${focal_mirror_base}/ubuntu/pool/universe/b/boost1.67/libboost-signals1.67.0_1.67.0-17ubuntu8_amd64.deb         libboost_signals.so.1.67.0
+53c69c8d9d1513a1e1a720a639b7c6560a8f5bda697a388ab544313fe0cafe3eb5545ff7673b8284f1bd0eed823be2e5 ${focal_mirror_base}/ubuntu/pool/universe/b/boost1.67/libboost-system1.67.0_1.67.0-17ubuntu8_amd64.deb          libboost_system.so.1.67.0
+b86c363fbe94f3303446c081db35c1279ca9c9e66ddda53073055988ff807f9f64160c9cba29664d287a77e66852797e ${focal_mirror_base}/ubuntu/pool/universe/b/boost1.67/libboost-thread1.67.0_1.67.0-17ubuntu8_amd64.deb          libboost_thread.so.1.67.0
+5e2237bc9e52634d7e8c196cf89c72373abcd2481af64db765f2ef81bc0cdd4dcaa92b2b6be0a663c676c5948334230f ${focal_mirror_base}/ubuntu/pool/universe/libc/libcrypto++/libcrypto++6_5.6.4-9build1_amd64.deb                 libcrypto++.so.6
+232aa78b8b594db6842c5c1e58444956d45382c5df943989d3795c44c97acb87e531a127fa892ff42594965f48db94ef http://security.ubuntu.com/ubuntu/pool/main/i/icu/libicu66_66.1-2ubuntu2.1_amd64.deb                            libicudata.so.66 libicui18n.so.66 libicuio.so.66 libicuuc.so.66
+5f4fb688971760592a4c71629b69e464df82c3fc27ffc2bd41379f204118a8b64b70f7786bac1f7cdc5674e3d938a60f ${focal_mirror_base}/ubuntu/pool/main/libj/libjsoncpp/libjsoncpp1_1.7.4-3.1ubuntu2_amd64.deb                    libjsoncpp.so.1
+0eb789b1a4e5bf03139e40b77fa6b6363624a223692166d182a0035b319567d2b8fe9bd1ff88522ac57e696e78d29545 ${focal_mirror_base}/ubuntu/pool/universe/l/log4cxx/liblog4cxx10v5_0.10.0-15ubuntu2_amd64.deb                   liblog4cxx.so.10
+29efd0a3ebd3ede8d92fd16f11b26859209d5c42648fe03221dc11e7eb80a5309fe00fadffc821f7535cb1eee9cb1ad8 http://security.ubuntu.com/ubuntu/pool/main/m/mysql-8.0/libmysqlclient21_8.0.32-0ubuntu0.20.04.2_amd64.deb      libmysqlclient.so.21
+0657e6f52073b1aa00c4988dd13a5100edcb30202e74349203978d20539f49e6092de77044a9bc9c8d76fe5e00e79199 ${focal_mirror_base}/ubuntu/pool/universe/x/xqilla/libxqilla6v5_2.3.4-1build2_amd64.deb                         libxqilla.so.6
+EOF
+      # Set LC_COLLATE=C so that files always sort in the same
+      # way (so we get the same tar-archive independent of locales).
+      env LC_COLLATE=C \
+        tar -C ubuntu-focal-libs --mtime='2000-01-01 00:00:00 +00:00' \
+          --sort=name -c -f "$upstream_pack" .
+    )
+    ;;
+esac
