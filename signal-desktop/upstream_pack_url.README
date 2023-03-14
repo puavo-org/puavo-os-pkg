@@ -1,0 +1,4 @@
+Signal does not let freely browse their apt repository, so the latest
+deb-package and its download url must be checked from:
+
+https://updates.signal.org/desktop/apt/dists/xenial/main/binary-amd64/Packages
