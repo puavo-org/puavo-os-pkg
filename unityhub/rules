@@ -1,0 +1,39 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+unityhub_links='
+  /opt/unityhub
+  /usr/share/applications/unityhub.desktop
+  /usr/share/icons/hicolor/16x16/apps/unityhub.png
+  /usr/share/icons/hicolor/32x32/apps/unityhub.png
+  /usr/share/icons/hicolor/48x48/apps/unityhub.png
+  /usr/share/icons/hicolor/64x64/apps/unityhub.png
+  /usr/share/icons/hicolor/128x128/apps/unityhub.png
+  /usr/share/icons/hicolor/256x256/apps/unityhub.png
+  /usr/share/icons/hicolor/512x512/apps/unityhub.png
+  /usr/share/icons/hicolor/1024x1024/apps/unityhub.png
+'
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+    for f in $unityhub_links; do
+      mkdir -p "$(dirname "$f")"
+      ln -fns -T "${upstream_dir}${f}" "$f"
+    done
+    ;;
+  unconfigure)
+    rm -f $unityhub_links
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    dpkg-deb -x "$upstream_pack" "$upstream_dir"
+    ;;
+  *)
+    ;;
+esac
