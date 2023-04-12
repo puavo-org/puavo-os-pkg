@@ -9,11 +9,11 @@ case "$command" in
   configure)
     upstream_dir=$1
     mkdir -p /opt/focal/lib
-    ln -fns "$upstream_dir" /opt/focal/lib/x64_64-linux-gnu
+    ln -fns "$upstream_dir" /opt/focal/lib/x86_64-linux-gnu
     ;;
 
   unconfigure)
-    rm -f /opt/focal/lib/x64_64-linux-gnu
+    rm -f /opt/focal/lib/x86_64-linux-gnu
     rmdir /opt/focal/lib /opt/focal
     ;;
 

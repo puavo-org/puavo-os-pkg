@@ -538,7 +538,7 @@ case "${command}" in
     ln -fns /state/external_files/smartboard_license \
             "${smart_datadir}/.mp.1.1.dat"
 
-    focal_lib_path=/opt/focal/lib/x64_64-linux-gnu
+    focal_lib_path=/opt/focal/lib/x86_64-linux-gnu
     grep -lRZ '^export LD_LIBRARY_PATH=$' . \
       | xargs -0 sed -i "/^export LD_LIBRARY_PATH=$/s|$|${focal_lib_path}|"
     ;;
