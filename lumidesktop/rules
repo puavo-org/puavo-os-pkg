@@ -1,0 +1,48 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+
+    ln -fns "$upstream_dir" /opt/lumidesktop
+    ln -fns "${upstream_dir}/lumidesktop.png" /usr/share/icons/lumidesktop.png
+    cat <<EOF > /usr/local/bin/lumidesktop
+#!/bin/sh
+set -eu
+/opt/lumidesktop/lumidesktop.AppImage
+EOF
+    chmod 0755 /usr/local/bin/lumidesktop
+
+    cat <<EOF > /usr/share/applications/lumidesktop.desktop
+[Desktop Entry]
+Name=Lumi
+Exec=/usr/local/bin/lumidesktop
+Type=Application
+Terminal=false
+Icon=lumidesktop.png
+StartupNotify=true
+Categories=Education;
+EOF
+    ;;
+  unconfigure)
+    rm -f /opt/lumidesktop \
+          /usr/share/applications/lumidesktop.desktop \
+          /usr/share/icons/lumidesktop.png \
+          /usr/local/bin/lumidesktop
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    cp -p "$upstream_pack" "${upstream_dir}/lumidesktop.AppImage"
+    chmod 755 "${upstream_dir}/lumidesktop.AppImage"
+    cp -p lumidesktop.png "$upstream_dir"
+    ;;
+  *)
+    ;;
+esac

@@ -59,6 +59,7 @@ packagedirs += kojo
 packagedirs += launcherone
 packagedirs += logicsim3
 packagedirs += lmaths
+packagedirs += lumidesktop
 packagedirs += mafynetti
 packagedirs += marvinsketch
 packagedirs += mattermost-desktop
