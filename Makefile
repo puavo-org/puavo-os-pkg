@@ -92,6 +92,7 @@ packagedirs += shotcut
 packagedirs += signal-desktop
 packagedirs += skype
 packagedirs += smartboard
+packagedirs += sparkvue
 packagedirs += spotify-client
 packagedirs += supertuxkart
 packagedirs += teams
