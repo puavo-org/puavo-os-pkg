@@ -63,6 +63,7 @@ packagedirs += lumidesktop
 packagedirs += mafynetti
 packagedirs += marvinsketch
 packagedirs += mattermost-desktop
+packagedirs += mathpix
 packagedirs += mindplus
 packagedirs += msttcorefonts
 packagedirs += musescore-appimage
