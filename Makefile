@@ -96,6 +96,7 @@ packagedirs += smartboard
 packagedirs += sparkvue
 packagedirs += spotify-client
 packagedirs += supertuxkart
+packagedirs += structorizer
 packagedirs += teams
 packagedirs += teamviewer
 packagedirs += tela-icon-theme

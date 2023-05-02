@@ -1,0 +1,50 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+    configure)
+	upstream_dir=$1
+        ln -fns "${upstream_dir}" /opt/structorizer
+
+        cat <<'EOF' > /usr/share/applications/structorizer.desktop
+[Desktop Entry]
+Name=Structorizer
+Icon=/opt/structorizer/Structorizer/Structorizer.app/Contents/Resources/Structorizer.icns
+GenericName=Structorizer
+Path=/opt/structorizer/Structorizer
+Exec=/opt/structorizer/Structorizer/structorizer.sh
+Terminal=true
+StartupNotify=false
+Type=Application
+Categories=Education;
+Keywords=diagram;editor;
+EOF
+        cat <<'EOF' > /usr/share/applications/structorizer-arranger.desktop
+[Desktop Entry]
+Name=Structorizer Arranger
+Icon=/opt/structorizer/Structorizer/Structorizer.app/Contents/Resources/Structorizer.icns
+GenericName=Structorizer Arranger
+Path=/opt/structorizer/Structorizer
+Exec=/opt/structorizer/Structorizer/Arranger.sh
+Terminal=true
+StartupNotify=false
+Type=Application
+Categories=Education;
+Keywords=diagram;editor;
+EOF
+	;;
+    unconfigure)
+        rm -f /opt/structorizer /usr/share/applications/structorizer.desktop /usr/share/applications/structorizer-arranger.desktop
+	;;
+    unpack)
+	upstream_pack=$1
+	upstream_dir=$2
+        unzip "$upstream_pack" -d "$upstream_dir"
+	;;
+    *)
+	;;
+esac
