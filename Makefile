@@ -78,6 +78,7 @@ packagedirs += openscad-nightly
 packagedirs += openshot-appimage
 packagedirs += otto-blockly
 packagedirs += processing
+packagedirs += projectlibre
 packagedirs += promethean
 packagedirs += prusaslicer
 packagedirs += puavo-firmware
