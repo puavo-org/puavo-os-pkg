@@ -52,6 +52,7 @@ packagedirs += google-chrome
 packagedirs += google-earth
 packagedirs += hamstersimulator
 packagedirs += hp-bios-utils
+packagedirs += icaclient
 packagedirs += idid
 packagedirs += kdenlive-appimage
 packagedirs += kmbeu
