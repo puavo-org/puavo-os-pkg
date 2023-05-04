@@ -13,6 +13,7 @@ packagedirs += arduino-ottodiylib
 packagedirs += arduino-radiohead
 packagedirs += arduino-tm1637
 packagedirs += aseba
+packagedirs += aversphere2
 packagedirs += bitwarden
 packagedirs += bitwarden-cli
 packagedirs += bluegriffon
