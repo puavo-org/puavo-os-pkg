@@ -37,6 +37,18 @@ case "${command}" in
 
     dpkg -x "$upstream_pack" "$upstream_dir"
     ;;
+  download)
+    dlurl="https://$(curl https://www.citrix.com/downloads/workspace-app/linux/workspace-app-for-linux-latest.html |grep icaclient_23.3.0.32_amd64.deb | awk -F'rel=\"//' '{print $2}' | awk -F'\"' '{print $1}')"
+    wget \
+            --no-use-server-timestamps \
+            --no-cookies \
+            --output-document "$1" \
+            --progress=dot:mega \
+            "$dlurl" || {
+            [ $? -eq 4 ] && exit 2 ## Network failure.
+            exit 1
+        }
+    ;;
   *)
     ;;
 esac
