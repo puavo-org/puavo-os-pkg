@@ -19,15 +19,12 @@ WINEPREFIX=~/.wineprefix-epson-easymp
 export WINEPREFIX
 
 VER=$(wine reg QUERY "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion" /v CurrentVersion | tail -c 7 | head -c 3)
-WXPVER="5.2"
-echo "Our WINE version $VER, target version $WXPVER"
-if [ "$VER" != "$WXPVER" ]; then
+W2K3VER="5.2"
+echo "Our WINE version $VER, target version $W2K3VER"
+if [ "$VER" != "$W2K3VER" ]; then
   echo "Changing version"
   notify-send "Setting up EasyMP, please wait"
-  # support for changing version directly in wine is available starting at
-  # 5.0.2: https://bugs.winehq.org/show_bug.cgi?id=41559 - Bullseye comes
-  # with 5.0.3, but in Buster we need to use winetricks
-  winetricks winxp
+  winecfg /v win2003
 fi
 
 echo "Starting the application"
