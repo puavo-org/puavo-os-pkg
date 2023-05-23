@@ -2,3 +2,6 @@ Signal does not let freely browse their apt repository, so the latest
 deb-package and its download url must be checked from:
 
 https://updates.signal.org/desktop/apt/dists/xenial/main/binary-amd64/Packages
+
+Usually something like:
+https://updates.signal.org/desktop/apt/pool/main/s/signal-desktop/signal-desktop_x.xx.x_amd64.deb
