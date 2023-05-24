@@ -18,14 +18,10 @@ set -eu
 WINEPREFIX=~/.wineprefix-epson-easymp
 export WINEPREFIX
 
-VER=$(wine reg QUERY "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion" /v CurrentVersion | tail -c 7 | head -c 3)
-W2K3VER="5.2"
-echo "Our WINE version $VER, target version $W2K3VER"
-if [ "$VER" != "$W2K3VER" ]; then
-  echo "Changing version"
-  notify-send "Setting up EasyMP, please wait"
-  winecfg /v win2003
-fi
+# this option was introduced in 5.0.2; Bullseye is enough
+# previously buster wine required using winetricks for this. it was slow.
+# winecfg is fast, so we'll just do it every startup to minimize corner cases.
+winecfg /v win2003
 
 echo "Starting the application"
 wine /opt/wine/epson-easymp/EMP_NSC.exe
