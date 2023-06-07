@@ -52,14 +52,63 @@ export MESA_GL_VERSION_OVERRIDE=2.0
 /usr/local/bin/LicenseManager.orig
 EOF
 
-        cat <<EOF > /usr/local/bin/MarvinSketch
+        cat <<'EOF' > /usr/local/bin/MarvinSketch
 #!/bin/sh
 # This folder is needed for proper functionality
 mkdir -p ~/.chemaxon
 # Fix 3d view on devices where default GL version is too new
 export MESA_GL_VERSION_OVERRIDE=2.0
 
-/usr/local/bin/MarvinSketch.orig
+
+setup_mimetypes() {
+  # mimetype associations
+  MRVFILE="${HOME}/.local/share/applications/marvin-document-mrv.desktop"
+  if [ -f $MRVFILE ]; then
+    echo "mimetypes ok"
+    return
+  fi
+  echo "setting up mimetypes"
+  mkdir -p ~/.local/share/applications
+  cat <<-EOF > ~/.local/share/applications/marvin-document-mrv.desktop
+	[Desktop Entry]
+	Type=Application
+	Name=MarvinSketch
+	MimeType=application/x-marvin-document-mrv;
+	Exec=/usr/local/bin/MarvinSketch %f
+	NoDisplay=true
+	StartupNotify=true
+	Icon=/opt/chemaxon/marvinsuite/.install4j/MarvinSketch.png
+	EOF
+
+  mkdir -p ~/.local/share/mime/application
+  cat <<-EOF > ~/.local/share/mime/application/x-marvin-document-mrv.xml
+	<?xml version="1.0" encoding="utf-8"?>
+	<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="application/x-marvin-document-mrv">
+	  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+	  <glob pattern="*.mrv"/>
+	  <comment>Marvin Document</comment>
+	</mime-type>
+	EOF
+
+  mkdir -p ~/.local/share/mime/packages
+  cat <<-EOF > ~/.local/share/mime/packages/application-x-marvin-document-mrv.xml
+	<?xml version="1.0" encoding="UTF-8"?>
+	<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+	  <mime-type type="application/x-marvin-document-mrv">
+	    <glob pattern="*.mrv"/>
+	    <comment>Marvin Document</comment>
+	  </mime-type>
+	</mime-info>
+	EOF
+
+  xdg-mime default marvin-document-mrv.desktop \
+       application/x-marvin-document-mrv
+  update-mime-database ~/.local/share/mime
+}
+
+setup_mimetypes
+
+/usr/local/bin/MarvinSketch.orig "$@"
 EOF
 
         cat <<EOF > /usr/local/bin/MarvinView
@@ -79,21 +128,21 @@ EOF
 [Desktop Entry]
 Type=Application
 Name=LicenseManager
-Exec=sh -c 'mkdir -p ~/.chemaxon && /usr/local/bin/LicenseManager'
+Exec=sh -c '/usr/local/bin/LicenseManager'
 Icon=${upstream_dir}/opt/chemaxon/marvinsuite/.install4j/LicenseManager.png
 EOF
 	cat <<EOF > /usr/share/applications/MarvinSketch.desktop
 [Desktop Entry]
 Type=Application
 Name=MarvinSketch
-Exec=sh -c 'mkdir -p ~/.chemaxon && /usr/local/bin/MarvinSketch'
+Exec=sh -c '/usr/local/bin/MarvinSketch'
 Icon=${upstream_dir}/opt/chemaxon/marvinsuite/.install4j/MarvinSketch.png
 EOF
 	cat <<EOF > /usr/share/applications/MarvinView.desktop
 [Desktop Entry]
 Type=Application
 Name=MarvinView
-Exec=sh -c 'mkdir -p ~/.chemaxon && /usr/local/bin/MarvinView'
+Exec=sh -c '/usr/local/bin/MarvinView'
 Icon=${upstream_dir}/opt/chemaxon/marvinsuite/.install4j/MarvinView.png
 EOF
 	;;
