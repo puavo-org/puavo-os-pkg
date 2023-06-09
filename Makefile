@@ -80,6 +80,7 @@ packagedirs += openscad-nightly
 packagedirs += openshot-appimage
 packagedirs += otto-blockly
 packagedirs += processing
+packagedirs += projecteur
 packagedirs += projectlibre
 packagedirs += promethean
 packagedirs += prusaslicer
