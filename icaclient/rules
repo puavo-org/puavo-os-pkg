@@ -43,6 +43,9 @@ Name=icaclient
 Exec=sh -c '/opt/Citrix/ICAClient/util/storebrowse -a ${ICASERVER} && /opt/Citrix/ICAClient/selfservice'
 EOF
 
+    mv /opt/Citrix/ICAClient/config/wfclient.template /opt/Citrix/ICAClient/config/wfclient.template.orig
+    awk '/AllowAudioInput=True/ { print; print "DriveEnabledP=True"; print "DriveWriteAccessP=0"; print "DriveReadAccessP=0"; print "DrivePathP=$HOME/"; next}1' \
+      /opt/Citrix/ICAClient/config/wfclient.template.orig > /opt/Citrix/ICAClient/config/wfclient.template
 
 #############
 
