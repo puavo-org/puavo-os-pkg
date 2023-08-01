@@ -64,7 +64,10 @@ EOF
     mkdir -p "$thymiodir"
     flatpak --user remote-add flathub \
                    https://flathub.org/repo/flathub.flatpakrepo
-    flatpak --assumeyes --noninteractive install flathub org.mobsya.ThymioSuite
+    wget -O "${download_tmpdir}/ThymioSuite-2.4.0-linux515.flatpak" \
+          https://github.com/Mobsya/aseba/releases/download/2.4.0/ThymioSuite-2.4.0-linux515.flatpak
+    flatpak --assumeyes --noninteractive --user install \
+            "${download_tmpdir}/ThymioSuite-2.4.0-linux515.flatpak"
     tar --mtime='2000-01-01 00:00:00 +00:00' \
         -C "${download_tmpdir}/thymiosuite/.local/share" -c \
         -f - flatpak | gzip -n > "$upstream_pack"
