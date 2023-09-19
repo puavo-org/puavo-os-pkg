@@ -107,7 +107,6 @@ packagedirs += tela-icon-theme
 packagedirs += telegram-desktop
 packagedirs += tilitin
 packagedirs += t-lasku
-packagedirs += thymiosuite
 packagedirs += tmux-plugins-battery
 packagedirs += ubuntu-focal-libs
 packagedirs += ubuntu-trusty-libs
