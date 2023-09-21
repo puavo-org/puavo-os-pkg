@@ -10,6 +10,7 @@ case "${command}" in
     configure)
     upstream_dir=$1
 
+    mkdir -p /usr/lib/rustdesk
     ln -fns "${upstream_dir}/usr/lib/rustdesk" /usr/lib/rustdesk
     ln -fns "${upstream_dir}/usr/lib/rustdesk/rustdesk" /usr/bin/rustdesk
     ln -fns "${upstream_dir}/usr/share/applications/rustdesk.desktop" /usr/share/applications/rustdesk.desktop
@@ -18,10 +19,10 @@ case "${command}" in
     ;;
     unconfigure)
     rm -f /usr/bin/rustdesk
-    rm -f /usr/lib/rustdesk
+    rm -f /usr/lib/rustdesk/rustdesk
     rm -f /usr/share/applications/rustdesk.desktop
     rm -f /usr/share/rustdesk/files/rustdesk.png
-    rmdir /usr/share/rustdesk/files /usr/share/rustdesk
+    rmdir /usr/share/rustdesk/files /usr/share/rustdesk /usr/lib/rustdesk
     ;;
 
     unpack)
