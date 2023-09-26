@@ -134,7 +134,7 @@ list_packages:
 
 puavo-pkg.json: $(packagefiles)
 	jq --null-input --arg packages "$(packagedirs)" \
-	  '$$packages | split(" ") | reduce .[] as $$item ({}; .["puavo.pkg." + $$item] = { default: "" })' \
+	  '$$packages | split(" ") | reduce .[] as $$item ({}; .["puavo.pkg." + $$item] = { default: "", description: ("Rule action[:version] for puavo-pkg " + $$item + " (action: do-nothing, extract, install, prepare, remove; latest means install:latest)"), typehint: "string" })' \
 	  > $@.tmp
 	mv $@.tmp $@
 
