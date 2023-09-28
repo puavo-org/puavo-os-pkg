@@ -21,6 +21,28 @@ links='
   /usr/share/menu/icaclient
 '
 
+add_locale_links() {
+  local lang upstream_dir
+  upstream_dir=$1
+
+  lang=$(puavo-conf puavo.l10n.locale | cut -c 1-2)
+
+  if [ ! -d "${upstream_dir}/opt/Citrix/ICAClient/nls/${lang}/" ]; then
+    lang=en
+  fi
+
+  ln -fns "../nls/${lang}/appsrv.template" \
+          "${upstream_dir}/opt/Citrix/ICAClient/config/appsrv.template"
+  ln -fns "../nls/${lang}/module.ini" \
+          "${upstream_dir}/opt/Citrix/ICAClient/config/module.ini"
+  ln -fns "../nls/${lang}/wfclient.template" \
+          "${upstream_dir}/opt/Citrix/ICAClient/config/wfclient.template"
+  ln -fns "nls/${lang}.UTF-8/eula.txt" \
+          "${upstream_dir}/opt/Citrix/ICAClient/eula.txt"
+  ln -fns "../nls/${lang}/index.htm" \
+          "${upstream_dir}/opt/Citrix/ICAClient/help/index.htm"
+}
+
 case "$command" in
   configure)
     # XXX is this dependency okay?
@@ -104,6 +126,7 @@ EOF
     upstream_pack=$1
     upstream_dir=$2
     dpkg-deb -x "$upstream_pack" "$upstream_dir"
+    add_locale_links "$upstream_dir"
     ;;
 
   *)
