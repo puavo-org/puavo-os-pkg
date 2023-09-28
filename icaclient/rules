@@ -11,22 +11,45 @@ links='
   /lib/systemd/system/ctxcwalogd.service
   /opt/Citrix
   /usr/share/applications/configmgr.desktop
-  /usr/share/applications/new_store.desktop
-  /usr/share/applications/selfservice.desktop
   /usr/share/applications/conncenter.desktop
+  /usr/share/applications/new_store.desktop
   /usr/share/applications/receiver.desktop
+  /usr/share/applications/receiver_fido2.desktop
+  /usr/share/applications/selfservice.desktop
   /usr/share/applications/wfica.desktop
   /usr/share/doc/icaclient
   /usr/share/menu/icaclient
 '
 
-case "${command}" in
+case "$command" in
   configure)
+    # XXX is this dependency okay?
+    if [ ! -e /state/external_files/icacert.zip ]; then
+      echo 'icacert missing from external files, can not configure' >&2
+      exit 1
+    fi
+
     upstream_dir=$1
     for f in $links; do
       mkdir -p "$(dirname "$f")"
       ln -fns -T "${upstream_dir}${f}" "$f"
     done
+
+    su puavo-pkg -s /bin/sh -c 'unzip -qo /state/external_files/icacert.zip -d /opt/Citrix/ICAClient/keystore/cacerts/'
+    su puavo-pkg -s /bin/sh -c /opt/Citrix/ICAClient/util/ctx_rehash >/dev/null
+
+    # XXX is this needed?
+    cat <<'EOF' > /opt/Citrix/ICAClient/wfica.sh
+#!/bin/sh
+ICAROOT=/opt/Citrix/ICAClient
+export ICAROOT
+LD_LIBRARY_PATH=/opt/Citrix/ICAClient/lib
+export LD_LIBRARY_PATH
+$ICAROOT/wfica -file $1
+EOF
+    chmod 755 /opt/Citrix/ICAClient/wfica.sh
+
+    exit 0
 
 ############# temporary temporary temporary
     export DEBIAN_FRONTEND=noninteractive
@@ -48,33 +71,41 @@ EOF
       /opt/Citrix/ICAClient/config/wfclient.template.orig > /opt/Citrix/ICAClient/config/wfclient.template
 
 #############
-
-
-
     ;;
+
+  download)
+    upstream_pack=$1
+    latest_linux_version_url='https://www.citrix.com/downloads/workspace-app/linux/workspace-app-for-linux-latest.html'
+    icaclient_download_url=$(
+      wget -q -O - "$latest_linux_version_url" \
+        | perl -ne '
+            m{rel="//(.*?icaclient.*?amd64.deb.*?)"}
+              && print("https://$1")
+              && exit(0)
+          ')
+    if [ -z "$icaclient_download_url" ]; then
+      echo "could not lookup download url from ${latest_linux_version_url}" >&2
+      exit 1
+    fi
+    wget --no-use-server-timestamps         \
+         --no-cookies                       \
+         --output-document "$upstream_pack" \
+         --progress=dot:mega "$icaclient_download_url" || {
+           [ $? -eq 4 ] && exit 2 ## Network failure.
+           exit 1
+         }
+    ;;
+
   unconfigure)
-    rm -f $links
-    rm -f /usr/share/applications/ica-word.desktop #temporary
+    rm -f $links /opt/Citrix/ICAClient/wfica.sh
     ;;
+
   unpack)
     upstream_pack=$1
     upstream_dir=$2
+    dpkg-deb -x "$upstream_pack" "$upstream_dir"
+    ;;
 
-    dpkg -x "$upstream_pack" "$upstream_dir"
-    cp "$upstream_pack" "$upstream_dir"/icaclient.deb
-    ;;
-  download)
-    dlurl="https://$(curl https://www.citrix.com/downloads/workspace-app/linux/workspace-app-for-linux-latest.html |grep icaclient_23.5.0.58_amd64.deb | awk -F'rel=\"//' '{print $2}' | awk -F'\"' '{print $1}')"
-    wget \
-            --no-use-server-timestamps \
-            --no-cookies \
-            --output-document "$1" \
-            --progress=dot:mega \
-            "$dlurl" || {
-            [ $? -eq 4 ] && exit 2 ## Network failure.
-            exit 1
-        }
-    ;;
   *)
     ;;
 esac
