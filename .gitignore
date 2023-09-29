@@ -1,3 +1,4 @@
 *.tar.gz
 puavo-pkg-installers-bundle.tar
 puavo-pkg.json
+puavo-pkg-packageconfs.json

@@ -1,0 +1,7 @@
+{
+  "puavo.pkg.icaclient.server": {
+    "default": "",
+    "description": "Citrix client server to use",
+    "typehint": "string"
+  }
+}
