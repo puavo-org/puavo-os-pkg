@@ -7,8 +7,6 @@ shift
 
 links='
   /etc/icaclient
-  /etc/init.d/ctxcwalogd
-  /lib/systemd/system/ctxcwalogd.service
   /opt/Citrix
   /usr/share/applications/configmgr.desktop
   /usr/share/applications/conncenter.desktop
