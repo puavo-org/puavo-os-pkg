@@ -125,8 +125,7 @@ packagedirs += zoom
 packagefiles = $(patsubst %,%.tar.gz,${packagedirs})
 
 .PHONY: all
-all: $(packagefiles) puavo-pkg-installers-bundle.tar puavo-pkg.json
-	echo $(packagefiles)
+all: $(packagefiles) puavo-pkg-installers-bundle.tar puavo-pkg.json puavo-pkg-packageconfs.json
 
 .PHONY: list_packages
 list_packages:
@@ -138,6 +137,10 @@ puavo-pkg.json: $(packagefiles)
 	  > $@.tmp
 	mv $@.tmp $@
 
+puavo-pkg-packageconfs.json: $(wildcard */puavo_conf.json)
+	jq --slurp 'reduce .[] as $$item ({}; . + $$item)' $^ > $@.tmp
+	mv $@.tmp $@
+
 .PHONY: installdirs
 installdirs:
 	mkdir -p $(DESTDIR)$(datarootdir)/puavo-conf/definitions
@@ -146,7 +149,7 @@ installdirs:
 .PHONY: install
 install: installdirs
 	$(INSTALL_DATA) -t $(DESTDIR)$(datarootdir)/puavo-conf/definitions \
-		puavo-pkg.json
+		puavo-pkg.json puavo-pkg-packageconfs.json
 	$(INSTALL_DATA) -t $(DESTDIR)$(datarootdir)/puavo-pkg/packages \
 		$(packagefiles)
 
