@@ -15,7 +15,8 @@ case "${command}" in
     ln -fns "${upstream_dir}/usr/lib/rustdesk/rustdesk" /usr/bin/rustdesk
     ln -fns "${upstream_dir}/usr/share/applications/rustdesk.desktop" /usr/share/applications/rustdesk.desktop
     mkdir -p /usr/share/rustdesk/files/
-    ln -fns "${upstream_dir}/usr/share/rustdesk/files/rustdesk.png" /usr/share/rustdesk/files/rustdesk.png
+    ln -fns "${upstream_dir}/usr/share/icons/hicolor/256x256/apps/rustdesk.png" /usr/share/icons/hicolor/256x256/apps/rustdesk.png
+    ln -fns "${upstream_dir}/usr/share/icons/hicolor/scalable/apps/rustdesk.png" /usr/share/icons/hicolor/scalable/apps/rustdesk.png
     ;;
     unconfigure)
     rm -f /usr/bin/rustdesk
