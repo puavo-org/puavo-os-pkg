@@ -152,18 +152,84 @@ $ICAROOT/wfica -file $1
 EOF
     chmod 755 /opt/Citrix/ICAClient/wfica.sh
 
-    exit 0
-
-############# temporary temporary temporary
-    ICASERVER=`cat /opt/Citrix/ICAClient/keystore/cacerts/icaserver`
-
-    cat <<EOF > /usr/share/applications/ica-word.desktop
+    cat <<EOF > /usr/local/share/applications/ica-excel.desktop
 #!/bin/sh
 [Desktop Entry]
 Type=Application
-Name=icaclient
-Exec=sh -c '/opt/Citrix/ICAClient/util/storebrowse -a ${ICASERVER} && /opt/Citrix/ICAClient/selfservice'
+Name=Microsoft Excel
+Description=Citrix Microsoft Excel
+Icon=application-msword
+Exec=/usr/local/bin/puavo-ica Excel
 EOF
+
+    cat <<EOF > /usr/local/share/applications/ica-powerpoint.desktop
+#!/bin/sh
+[Desktop Entry]
+Type=Application
+Name=Microsoft Powerpoint
+Description=Citrix Microsoft PowerPoint
+Icon=application-mspowerpoint
+Exec=/usr/local/bin/puavo-ica PowerPoint
+EOF
+
+    cat <<EOF > /usr/local/share/applications/ica-word.desktop
+#!/bin/sh
+[Desktop Entry]
+Type=Application
+Name=Microsoft Word
+Description=Citrix Microsoft Word
+Icon=application-msword
+Exec=/usr/local/bin/puavo-ica Word
+EOF
+
+    cat <<'EOF' > /usr/local/bin/puavo-ica
+#!/bin/sh
+
+set -eu
+set -x
+
+app=${1:-}
+
+icaserver=$(puavo-conf puavo.pkg.icaclient.server)
+
+if [ -z "$icaserver" ]; then
+  echo 'puavo-conf variable puavo.pkg.icaclient.server not set' >&2
+  exit 1
+fi
+
+discovery_url=$(/opt/Citrix/ICAClient/util/storebrowse -a "$icaserver")
+discovery_url=${discovery_url#\'}
+discovery_url=${discovery_url%\'}
+
+list_available_apps() {
+  xml_grep --strict --text_only resource/id \
+           ~/.ICAClient/cache/Stores/Apps\ Cache\ *.ctx 2>/dev/null
+}
+
+if [ -n "$app" ]; then
+  if available_apps=$(list_available_apps); then
+    # try first looking for an exact match
+    app_id=$(printf %s "$available_apps" | grep -Fix -m 1 "$app") || true
+
+    # then try with a fuzzier match if there was no exact match
+    if [ -z "$app_id" ]; then
+      app_id=$(printf %s "$available_apps" | grep -Fi -m 1 "$app") || true
+    fi
+
+    if [ -n "$app_id" ]; then
+      # found an app, start that one
+      exec /opt/Citrix/ICAClient/util/storebrowse -L "$app_id" \
+           "$discovery_url"
+    fi
+  fi
+fi
+
+# fallback to menu
+exec /opt/Citrix/ICAClient/selfservice
+EOF
+    chmod 755 /usr/local/bin/puavo-ica
+
+    exit 0
 
     mv /opt/Citrix/ICAClient/config/wfclient.template /opt/Citrix/ICAClient/config/wfclient.template.orig
     awk '/AllowAudioInput=True/ { print; print "DriveEnabledP=True"; print "DriveWriteAccessP=0"; print "DriveReadAccessP=0"; print "DrivePathP=$HOME/"; next}1' \
@@ -190,13 +256,18 @@ EOF
          --no-cookies                       \
          --output-document "$upstream_pack" \
          --progress=dot:mega "$icaclient_download_url" || {
-           [ $? -eq 4 ] && exit 2 ## Network failure.
-           exit 1
-         }
+      [ $? -eq 4 ] && exit 2 ## Network failure.
+      exit 1
+    }
     ;;
 
   unconfigure)
-    rm -f $links /opt/Citrix/ICAClient/wfica.sh
+    rm -f $links                                               \
+          /opt/Citrix/ICAClient/wfica.sh                       \
+          /usr/local/bin/puavo-ica                             \
+          /usr/local/share/applications/ica-excel.desktop      \
+          /usr/local/share/applications/ica-powerpoint.desktop \
+          /usr/local/share/applications/ica-word.desktop
     ;;
 
   unpack)
