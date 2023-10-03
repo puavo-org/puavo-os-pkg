@@ -141,17 +141,6 @@ case "$command" in
     add_magiccloud_certificates
     add_locale_links
 
-    # XXX is this needed?
-    cat <<'EOF' > /opt/Citrix/ICAClient/wfica.sh
-#!/bin/sh
-ICAROOT=/opt/Citrix/ICAClient
-export ICAROOT
-LD_LIBRARY_PATH=/opt/Citrix/ICAClient/lib
-export LD_LIBRARY_PATH
-$ICAROOT/wfica -file $1
-EOF
-    chmod 755 /opt/Citrix/ICAClient/wfica.sh
-
     cat <<EOF > /usr/local/share/applications/ica-excel.desktop
 #!/bin/sh
 [Desktop Entry]
@@ -263,7 +252,6 @@ EOF
 
   unconfigure)
     rm -f $links                                               \
-          /opt/Citrix/ICAClient/wfica.sh                       \
           /usr/local/bin/puavo-ica                             \
           /usr/local/share/applications/ica-excel.desktop      \
           /usr/local/share/applications/ica-powerpoint.desktop \
