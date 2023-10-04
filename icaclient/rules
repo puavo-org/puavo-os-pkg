@@ -237,6 +237,9 @@ if [ -z "$discovery_url" ]; then
   exit 1
 fi
 
+# enforce client configuration
+cp /opt/Citrix/ICAClient/config/wfclient.template ~/.ICAClient/wfclient.ini
+
 if [ -n "$app" ]; then
   if available_apps=$(list_available_apps); then
     # try first looking for an exact match
@@ -260,13 +263,22 @@ exec /opt/Citrix/ICAClient/selfservice
 EOF
     chmod 755 /usr/local/bin/puavo-ica
 
-    exit 0
-
-    mv /opt/Citrix/ICAClient/config/wfclient.template /opt/Citrix/ICAClient/config/wfclient.template.orig
-    awk '/AllowAudioInput=True/ { print; print "DriveEnabledP=True"; print "DriveWriteAccessP=0"; print "DriveReadAccessP=0"; print "DrivePathP=$HOME/"; next}1' \
-      /opt/Citrix/ICAClient/config/wfclient.template.orig > /opt/Citrix/ICAClient/config/wfclient.template
-
-#############
+    if [ ! -e /opt/Citrix/ICAClient/config/wfclient.template.orig ]; then
+      mv /opt/Citrix/ICAClient/config/wfclient.template \
+         /opt/Citrix/ICAClient/config/wfclient.template.orig
+    fi
+    awk '
+      /^HDXH264InputEnabled=/ {
+        print
+        print "DriveEnabledP=True"
+        print "DriveWriteAccessP=0"
+        print "DriveReadAccessP=0"
+        print "DrivePathP=$HOME/"
+        next
+      }
+      { print }
+    ' /opt/Citrix/ICAClient/config/wfclient.template.orig \
+      > /opt/Citrix/ICAClient/config/wfclient.template
     ;;
 
   download)
