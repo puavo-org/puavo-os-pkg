@@ -141,6 +141,16 @@ case "$command" in
     add_magiccloud_certificates
     add_locale_links
 
+    cat <<EOF > /usr/local/share/applications/ica.desktop
+#!/bin/sh
+[Desktop Entry]
+Type=Application
+Name=Citrix Workspace
+Description=Citrix Workspace
+Icon=/opt/Citrix/ICAClient/icons/receiver.png
+Exec=/usr/local/bin/puavo-ica
+EOF
+
     cat <<EOF > /usr/local/share/applications/ica-excel.desktop
 #!/bin/sh
 [Desktop Entry]
@@ -307,6 +317,7 @@ EOF
   unconfigure)
     rm -f $links                                               \
           /usr/local/bin/puavo-ica                             \
+          /usr/local/share/applications/ica.desktop            \
           /usr/local/share/applications/ica-excel.desktop      \
           /usr/local/share/applications/ica-powerpoint.desktop \
           /usr/local/share/applications/ica-word.desktop
