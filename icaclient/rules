@@ -157,7 +157,7 @@ EOF
 Type=Application
 Name=Microsoft Excel
 Description=Citrix Microsoft Excel
-Icon=application-msword
+Icon=application-msexcel
 Exec=/usr/local/bin/puavo-ica Excel
 EOF
 
