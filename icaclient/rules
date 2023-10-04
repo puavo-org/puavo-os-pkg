@@ -175,25 +175,67 @@ EOF
 #!/bin/sh
 
 set -eu
-set -x
 
 app=${1:-}
 
-icaserver=$(puavo-conf puavo.pkg.icaclient.server)
-
-if [ -z "$icaserver" ]; then
+server=$(puavo-conf puavo.pkg.icaclient.server)
+if [ -z "$server" ]; then
   echo 'puavo-conf variable puavo.pkg.icaclient.server not set' >&2
   exit 1
 fi
 
-discovery_url=$(/opt/Citrix/ICAClient/util/storebrowse -a "$icaserver")
-discovery_url=${discovery_url#\'}
-discovery_url=${discovery_url%\'}
+service=$(puavo-conf puavo.pkg.icaclient.service)
+if [ -z "$service" ]; then
+  echo 'puavo-conf variable puavo.pkg.icaclient.service not set' >&2
+  exit 1
+fi
+
+get_discovery_url() {
+  local awk_script discovery_url storebrowse_output
+
+  # use a variable because of a need to use "'"-character in script
+  awk_script=$(cat <<'AWK_EOF'
+    $2 == ("'" service "'") {
+      split($5, a, /,/)
+      sub(/'$/, "", a[2])
+      if (a[2] == ("https://" server "/")) {
+	sub(/^'/, "", $1)
+	sub(/'$/, "", $1)
+        print $1
+        exit(0)
+      }
+    }
+AWK_EOF
+)
+
+  /opt/Citrix/ICAClient/util/storebrowse -l \
+    | awk -F "\t" -v server="$server" -v service="$service" "$awk_script"
+}
+
+add_store() {
+  local store
+  store="${server}?${service}"
+  /opt/Citrix/ICAClient/util/storebrowse -a "$store" > /dev/null
+}
 
 list_available_apps() {
   xml_grep --strict --text_only resource/id \
            ~/.ICAClient/cache/Stores/Apps\ Cache\ *.ctx 2>/dev/null
 }
+
+discovery_url=$(get_discovery_url)
+if [ -z "$discovery_url" ]; then
+  if ! add_store; then
+    echo 'add store returned failure' >&2
+    exit 1
+  fi
+fi
+
+discovery_url=$(get_discovery_url)
+if [ -z "$discovery_url" ]; then
+  echo 'could not determine the discovery url' >&2
+  exit 1
+fi
 
 if [ -n "$app" ]; then
   if available_apps=$(list_available_apps); then
