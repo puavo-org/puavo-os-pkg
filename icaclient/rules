@@ -19,6 +19,48 @@ links='
   /usr/share/menu/icaclient
 '
 
+add_desktop_files() {
+  cat <<'EOF' > /usr/local/share/applications/ica.desktop
+#!/bin/sh
+[Desktop Entry]
+Type=Application
+Name=Citrix Workspace
+Description=Citrix Workspace
+Icon=/opt/Citrix/ICAClient/icons/receiver.png
+Exec=/usr/local/bin/puavo-ica
+EOF
+
+  cat <<'EOF' > /usr/local/share/applications/ica-excel.desktop
+#!/bin/sh
+[Desktop Entry]
+Type=Application
+Name=Microsoft Excel
+Description=Citrix Microsoft Excel
+Icon=application-msexcel
+Exec=/usr/local/bin/puavo-ica Excel
+EOF
+
+  cat <<'EOF' > /usr/local/share/applications/ica-powerpoint.desktop
+#!/bin/sh
+[Desktop Entry]
+Type=Application
+Name=Microsoft Powerpoint
+Description=Citrix Microsoft PowerPoint
+Icon=application-mspowerpoint
+Exec=/usr/local/bin/puavo-ica PowerPoint
+EOF
+
+  cat <<'EOF' > /usr/local/share/applications/ica-word.desktop
+#!/bin/sh
+[Desktop Entry]
+Type=Application
+Name=Microsoft Word
+Description=Citrix Microsoft Word
+Icon=application-msword
+Exec=/usr/local/bin/puavo-ica Word
+EOF
+}
+
 add_locale_links() {
   local lang
 
@@ -130,58 +172,8 @@ EOF
   su puavo-pkg -s /bin/sh -c /opt/Citrix/ICAClient/util/ctx_rehash >/dev/null
 }
 
-case "$command" in
-  configure)
-    upstream_dir=$1
-    for f in $links; do
-      mkdir -p "$(dirname "$f")"
-      ln -fns -T "${upstream_dir}${f}" "$f"
-    done
-
-    add_magiccloud_certificates
-    add_locale_links
-
-    cat <<EOF > /usr/local/share/applications/ica.desktop
-#!/bin/sh
-[Desktop Entry]
-Type=Application
-Name=Citrix Workspace
-Description=Citrix Workspace
-Icon=/opt/Citrix/ICAClient/icons/receiver.png
-Exec=/usr/local/bin/puavo-ica
-EOF
-
-    cat <<EOF > /usr/local/share/applications/ica-excel.desktop
-#!/bin/sh
-[Desktop Entry]
-Type=Application
-Name=Microsoft Excel
-Description=Citrix Microsoft Excel
-Icon=application-msexcel
-Exec=/usr/local/bin/puavo-ica Excel
-EOF
-
-    cat <<EOF > /usr/local/share/applications/ica-powerpoint.desktop
-#!/bin/sh
-[Desktop Entry]
-Type=Application
-Name=Microsoft Powerpoint
-Description=Citrix Microsoft PowerPoint
-Icon=application-mspowerpoint
-Exec=/usr/local/bin/puavo-ica PowerPoint
-EOF
-
-    cat <<EOF > /usr/local/share/applications/ica-word.desktop
-#!/bin/sh
-[Desktop Entry]
-Type=Application
-Name=Microsoft Word
-Description=Citrix Microsoft Word
-Icon=application-msword
-Exec=/usr/local/bin/puavo-ica Word
-EOF
-
-    cat <<'EOF' > /usr/local/bin/puavo-ica
+add_puavo_ica_script() {
+  cat <<'EOF' > /usr/local/bin/puavo-ica
 #!/bin/sh
 
 set -eu
@@ -233,6 +225,22 @@ list_available_apps() {
            ~/.ICAClient/cache/Stores/Apps\ Cache\ *.ctx 2>/dev/null
 }
 
+setup_wfclient_ini() {
+  awk '
+    /^HDXH264InputEnabled=/ {
+      print
+      print "DriveEnabledP=True"
+      print "DriveWriteAccessP=0"
+      print "DriveReadAccessP=0"
+      print "DrivePathP=$HOME/"
+      next
+    }
+    { print }
+  ' /opt/Citrix/ICAClient/config/wfclient.template \
+    > ~/.ICAClient/wfclient.ini.tmp
+  mv ~/.ICAClient/wfclient.ini.tmp ~/.ICAClient/wfclient.ini
+}
+
 discovery_url=$(get_discovery_url)
 if [ -z "$discovery_url" ]; then
   if ! add_store; then
@@ -248,7 +256,7 @@ if [ -z "$discovery_url" ]; then
 fi
 
 # enforce client configuration
-cp /opt/Citrix/ICAClient/config/wfclient.template ~/.ICAClient/wfclient.ini
+setup_wfclient_ini
 
 if [ -n "$app" ]; then
   if available_apps=$(list_available_apps); then
@@ -271,24 +279,21 @@ fi
 # fallback to menu
 exec /opt/Citrix/ICAClient/selfservice
 EOF
-    chmod 755 /usr/local/bin/puavo-ica
+  chmod 755 /usr/local/bin/puavo-ica
+}
 
-    if [ ! -e /opt/Citrix/ICAClient/config/wfclient.template.orig ]; then
-      mv /opt/Citrix/ICAClient/config/wfclient.template \
-         /opt/Citrix/ICAClient/config/wfclient.template.orig
-    fi
-    awk '
-      /^HDXH264InputEnabled=/ {
-        print
-        print "DriveEnabledP=True"
-        print "DriveWriteAccessP=0"
-        print "DriveReadAccessP=0"
-        print "DrivePathP=$HOME/"
-        next
-      }
-      { print }
-    ' /opt/Citrix/ICAClient/config/wfclient.template.orig \
-      > /opt/Citrix/ICAClient/config/wfclient.template
+case "$command" in
+  configure)
+    upstream_dir=$1
+    for f in $links; do
+      mkdir -p "$(dirname "$f")"
+      ln -fns -T "${upstream_dir}${f}" "$f"
+    done
+
+    add_desktop_files
+    add_magiccloud_certificates
+    add_locale_links
+    add_puavo_ica_script
     ;;
 
   download)
