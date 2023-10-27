@@ -120,6 +120,7 @@ packagedirs += vscode
 packagedirs += webex
 packagedirs += wine-gecko
 packagedirs += wine-mono
+packagedirs += xournalpp
 packagedirs += zoom
 
 packagefiles = $(patsubst %,%.tar.gz,${packagedirs})

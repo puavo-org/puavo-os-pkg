@@ -1,0 +1,83 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+xournalpp_links='
+  /usr/bin/xournalpp
+  /usr/bin/xournalpp-thumbnailer
+  /usr/share/applications/com.github.xournalpp.xournalpp.desktop
+  /usr/share/icons/hicolor/scalable/apps/com.github.xournalpp.xournalpp.svg
+  /usr/share/icons/hicolor/scalable/mimetypes/application-x-xojpp.svg
+  /usr/share/icons/hicolor/scalable/mimetypes/application-x-xopp.svg
+  /usr/share/icons/hicolor/scalable/mimetypes/application-x-xopt.svg
+  /usr/share/icons/hicolor/scalable/mimetypes/gnome-mime-application-x-xopp.svg
+  /usr/share/icons/hicolor/scalable/mimetypes/gnome-mime-application-x-xopt.svg
+  /usr/share/locale/af_ZA/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/ar/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/bn_BD/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/ca/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/cs/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/da/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/de/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/el/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/eo_UY/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/es/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/eu/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/fi/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/fr/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/gl/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/he/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/hi/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/hu/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/id/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/it/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/ja/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/ko/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/nl/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/no/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/pl/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/pt_BR/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/pt_PT/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/ro/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/ru/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/si_LK/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/sv/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/ta_IN/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/th/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/tr/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/uk_UA/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/vi/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/zh_HK/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/zh/LC_MESSAGES/xournalpp.mo
+  /usr/share/locale/zh_TW/LC_MESSAGES/xournalpp.mo
+  /usr/share/man/man1/xournalpp.1.gz
+  /usr/share/man/man1/xournalpp-thumbnailer.1.gz
+  /usr/share/metainfo/com.github.xournalpp.xournalpp.appdata.xml
+  /usr/share/mime/packages/com.github.xournalpp.xournalpp.xml
+  /usr/share/thumbnailers/com.github.xournalpp.xournalpp.thumbnailer
+  /usr/share/xournalpp
+'
+
+case "${command}" in
+  configure)
+    upstream_dir=$1
+    for f in $xournalpp_links; do
+      mkdir -p "$(dirname "$f")"
+      ln -fns -T "${upstream_dir}/${f}" "$f"
+    done
+    echo xournalpp >> /var/lib/puavo-pkg/.update_mime_database
+    ;;
+  unconfigure)
+    rm -f $xournalpp_links
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    dpkg -x "$upstream_pack" "$upstream_dir"
+    ;;
+  *)
+    ;;
+esac
