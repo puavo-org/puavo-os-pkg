@@ -21,9 +21,6 @@ Icon=glade
 StartupNotify=true
 Categories=Education;
 EOF
-
-        chown root:root "${upstream_dir}/GeoGebra-linux-x64/chrome-sandbox"
-        chmod 4755      "${upstream_dir}/GeoGebra-linux-x64/chrome-sandbox"
 	;;
     unconfigure)
 	rm -f /opt/GeoGebra-linux-x64 \
@@ -33,7 +30,8 @@ EOF
 	upstream_pack=$1
 	upstream_dir=$2
 
-        unzip -q -d "${upstream_dir}" "${upstream_pack}"
+        unzip -q -d "$upstream_dir" "$upstream_pack"
+        chmod 755 "${upstream_dir}/GeoGebra-linux-x64"
 	;;
     *)
 	;;
