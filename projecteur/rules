@@ -5,19 +5,39 @@ set -eu
 command=$1
 shift
 
+links='
+  /lib/udev/rules.d/55-projecteur.rules
+  /usr/local/bin/projecteur
+  /usr/local/share/applications/projecteur.desktop
+  /usr/local/share/bash-completion/completions/projecteur
+  /usr/local/share/icons/hicolor/128x128/apps/projecteur.svg
+  /usr/local/share/icons/hicolor/256x256/apps/projecteur.svg
+  /usr/local/share/icons/hicolor/48x48/apps/projecteur.svg
+  /usr/local/share/icons/hicolor/64x64/apps/projecteur.svg
+  /usr/local/share/man/man1/projecteur.1.gz
+  /usr/local/share/metainfo/projecteur.metainfo.xml
+'
+
+
 case "${command}" in
     configure)
-	upstream_dir=$1
-	;;
+        upstream_dir=$1
+        for f in $links; do
+          mkdir -p "$(dirname "$f")"
+          ln -fns -T "${upstream_dir}/${f}" "$f"
+          # Reload udev rules.
+          udevadm control --reload-rules
+          udevadm trigger
+        done
+        ;;
     unconfigure)
-	;;
+        rm -f $links
+        ;;
     unpack)
-	upstream_pack=$1
-	upstream_dir=$2
-
-	;;
-    download)
+        upstream_pack=$1
+        upstream_dir=$2
+        dpkg-deb -x "$upstream_pack" "$upstream_dir"
         ;;
     *)
-	;;
+        ;;
 esac
