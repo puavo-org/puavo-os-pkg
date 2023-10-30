@@ -116,6 +116,7 @@ packagedirs += unityhub
 packagedirs += vagrant
 packagedirs += veracrypt
 packagedirs += vidyo-client
+packagedirs += visualizer
 packagedirs += vscode
 packagedirs += webex
 packagedirs += wine-gecko

@@ -1,0 +1,322 @@
+IPEVO Software End User License Agreement
+BY DOWNLOADING, INSTALLING OR USING THE (A) IPEVO VISUALIZER, (B) IPEVO
+ANNOTATOR, (C) IPEVO WHITEBOARD, (D) IPEVO CAMERAKIT, (E) IPEVO IW DRIVER,
+(F) IPEVO VISUALIZER LTSE, (G) IPEVO IDOCCAM, (H) IPEVO CAMCONTROL, (I) IPEVO
+EYESTAGE, AND (J) IPEVO SNAPCAPTURE OCR (EACH OF WHICH IS DEEMED, AS
+APPLICABLE, THE “SOFTWARE”), YOU AGREE TO BE BOUND BY THIS END USER
+LICENSE AGREEMENT (the “Agreement”). IF YOU DO NOT AGREE, DO NOT INSTALL,
+DOWNLOAD, COPY OR USE THE SOFTWARE AND YOU MUST DELETE OR DESTROY
+ANY COPY IN YOUR POSSESSION OR CONTROL.
+This Agreement is between you (“you” or “your”) and IPEVO, Inc. (“Licensor”), located at
+440 N. Wolfe Road, Sunnyvale, CA 94085, for the use of the Software, including all
+associated media, and printed or electronic documentation. IPEVO’s collection and use of
+personal information in connection with the Software is described in our Privacy Policy,
+found at https://www.ipevo.com/privacy-statement.
+If you are receiving the Software accompanying this Agreement as an update to Software
+previously licensed to you by Licensor, then this Agreement supersedes the terms of any
+prior license granted to you. For the avoidance of doubt, any reference to “Software” under
+this Agreement refers to both the Standard Edition of Software and Premium Edition of
+Software (as those terms are defined below).
+1. License Grants.
+1.1 Free Edition of Software. For editions of the Software that Licensor makes
+available at no charge (“Standard Edition of Software”), subject to your full
+compliance with all of the terms and conditions of this Agreement and any usage
+limitation or other requirements in the App Store Terms (defined below), Licensor
+grants to you a personal, fully paid-up, royalty-free, non-exclusive, non-
+sublicensable, non-transferable, revocable license, at no charge, to install and
+use the Standard Edition of Software in machine-readable object code form on
+your multiple computers (such as workstations, terminals, or other devices) (or, in
+the case of firmware, one copy of the firmware programs and associated files in
+object code form solely on the product relating to the software) solely for your
+own personal use or internal business purposes.
+2
+1.2 Paid Edition of Software. For editions of the Software that Licensor makes
+available for a license fee (“Premium Edition of Software”), subject to your full
+compliance with all of the terms and conditions of this Agreement (including
+payment of the applicable license fees) and any usage limitation or other
+requirements in the App Store Terms, Licensor grants to you a personal, fully
+paid-up, royalty-free, non-exclusive, non-sublicensable, non-transferable,
+revocable license to install and use the Premium Edition of Software in machine-
+readable object code form on your multiple computers (such as workstations,
+terminals, or other devices) solely for your own personal use or internal business
+purposes.
+1.3 Additional License Rights for SDK. In addition to the license granted above in
+Section 1.1, the IPEVO CameraKit Software Development Kit (“CameraKit
+SDK”) is provided to you with additional license rights. Subject to your full
+compliance with all of the terms and conditions of this Agreement and any usage
+limitation or other requirements in the App Store Terms, Licensor grants you a
+personal, fully paid-up, royalty-free, non-exclusive, non-sublicensable, non-
+transferable, revocable license to use, reproduce, incorporate, and distribute the
+CameraKit SDK library in object code form for the purposes of designing,
+integrating, developing, and testing your software products with respect to
+IPEVO’s hardware camera products. This additional license right is conditioned
+upon your compliance with the distribution requirements and license restrictions
+described in Section 2.3 (Distribution Requirements). IPEVO has no obligation to
+provide or to continue to provide any support for the SDK. Further, subject to the
+license restrictions described in Section 2, IPEVO may provide a text-based PDF
+document within the CameraKit SDK which contains source code for
+demonstration purposes only to show the invocation process of calling library
+functions during integration of the CameraKit SDK with other software products.
+1.4 Documentation. Subject to your full compliance with all of the terms and
+conditions of this Agreement, Licensor grants to you a personal, fully paid-up,
+royalty-free, non-exclusive, non-sublicensable, non-transferable, revocable
+license to make and use a reasonable number of copies of documentation
+provided with the Software for your internal use in connection with your use of
+the Software, provided that you reproduce all copyright and other proprietary
+notices that are on the original copies.
+3
+2. License Limitations. The licenses granted in Section 1 are conditioned upon your full
+compliance with the following limitations:
+2.1 Reverse Engineering. You may not decompile, decipher, disassemble, reverse
+engineer or otherwise attempt to derive or gain access to the source code of the
+Software or any part thereof, except as expressly permitted by applicable law
+notwithstanding this limitation.
+2.2 No Distribution, Rental or Transfer. Except as permitted in Section 1.3 and
+Section 2.3, you may not distribute, publish, rent, lease, lend, sell, transfer,
+sublicense, disclose, or otherwise provide the Software to any third party.
+2.3 Distribution Requirements. If you choose to redistribute the CameraKit SDK as
+described in Section 1.3, you agree: (a) you will distribute the CameraKit SDK
+only in object code form and in conjunction with and as a part of a software
+application product developed by you that adds significant and primary
+functionality to the CameraKit SDK (“Licensee Software”); (b) that the
+CameraKit SDK only operates in conjunction with Licensor’s document camera
+products; (c) you will distribute the Licensee Software containing the SDK
+pursuant to an end user license agreement no less protective than those
+contained in this Agreement; (d) not to use Licensor’s name, logo, or trademarks
+to market the Licensee Software; (e) not to remove, alter, or obscure any
+copyright, trademark, patent, or any other proprietary notices that appear on the
+CameraKit SDK as delivered to you; (f) not make any use of the SDK in any
+manner not permitted by this Agreement; (g) to otherwise comply with the terms
+of this Agreement; and (h) that Licensor reserve all rights not expressly granted.
+You will not permit further distribution of the CameraKit SDK by your end-user
+customers except you may permit further redistribution of the CameraKit SDK by
+your distributors to your end-user customers if your distributors only distribute
+the CameraKit SDK in conjunction with, and as part of, the Licensee Software,
+and you comply with all other terms of this Agreement, and your distributors
+comply with all restrictions of this Agreement that apply to you. IPEVO is not
+obligated to provide support or technical assistance to you or any of your
+distributors or end-user customers and you will not represent otherwise.
+2.4 No Modification or Derivative Works. You may not modify or create derivative
+works of the Software, in whole or in part.
+4
+2.5 Proprietary Notices. You may not remove, delete, alter, or obscure any
+trademarks or any copyright, trademark, patent, or other intellectual property or
+proprietary rights notices or labels on the Software or any copy thereof.
+2.6 Rights Management. You may not remove, disable, circumvent, or otherwise
+create or implement any workaround to any copy protection, rights management
+or security features in or protecting the Software.
+2.7 Non-Permitted Uses. Without limiting any of the foregoing, you may not make
+any use of the Software in any manner not expressly permitted by this
+Agreement.
+3. Reservation of Rights and Ownership. Licensor and its parent, affiliates, or
+suppliers own the right, title, and interest in and to the Software, including all
+copyrights, trademarks, and other intellectual property rights in the Software therein or
+relating thereto and reserve all rights not expressly granted to you in this Agreement.
+4. App Store. Your use of the Software may be subject to additional terms separate
+from this Agreement, including, but not limited to terms of the Apple App Store, Google
+Play Store, Google Chrome Web Store, Windows Apps Microsoft Store, or other
+similar service that lawfully enables download of the Licensed Application (each an
+“App Store” and collectively the “App Stores”) (and the applicable terms for each App
+Store are the “App Store Terms"), if you downloaded the Software from an App Store.
+In the event of a conflict between the App Store Terms and this Agreement, the App
+Store Terms will govern your use of the Software only to the extent of the conflict.
+5. Disclaimer of App Store Responsibility. In the event of the following, Licensor, and
+not any App Store operator, will be solely responsible for responding to and resolving
+such claims: (a) any third party claim that the Software or your use or possession of
+the Software infringes that third party’s intellectual property rights; or (b) any claim by
+you or a third party relating to the Software or your use or possession of the Software,
+including but not limited to, (i) any product liability claims, (ii) any claims that the
+Software fails to conform to any applicable legal or regulatory requirement, (iii) any
+claims under consumer protection, privacy, or similar legislation, or (iv) any claims
+attributable to any failure to conform to any warranty. Note that the disclaimer of
+warranties and limitation and exclusion of remedies and damages set forth in Sections
+13, 14, and 15 below apply to any such claims.
+5
+6. Payment Terms. For the Premium Edition of Software, you will pay, during the Term,
+for all fees and at the due dates set forth in the applicable Order for the Premium
+Edition of Software in accordance with this Agreement. “Order” means any order
+placed by you for purchase of a license(s) to the Premium Edition of Software, either
+directly with Licensor (through any process as prescribed by Licensor) or through an
+App Store. If you fail to pay any recurring fees required under the applicable Order,
+then you will not be permitted to use the Premium Edition of Software. Subject to
+Section 7 below, all payment obligations are non-cancelable and all amounts paid are
+non-refundable, except for amounts paid in error that are not actually due under the
+applicable Order. Except as otherwise expressly specified in an applicable Order, fees
+and other charges described in the applicable Order do not include federal, state or
+local sales, foreign withholding, use, property, excise, service, or similar taxes
+(including any sales or value added taxes) (“Taxes”) now or hereafter levied, all of
+which are your responsibility. Licensor will be responsible for all taxes based upon its
+net income.
+7. Refunds through App Store: If you purchased a license for the Premium Edition of
+Software under an applicable Order through an App Store and you are not satisfied
+with the Premium Edition of Software for any reason (including failure of the Software
+to conform to any applicable warranty), you may notify the App Store operator or
+Licensor (as applicable) and obtain a refund of the license fees from Licensor through
+the App Store operator within the refund period set forth in the applicable App Store
+Terms, provided that, such right is provided for in the applicable App Store Terms. You
+acknowledge that that the App Store operator will have no other warranty obligation
+whatsoever with respect to the Software. If such refund right is not provided for under
+the applicable App Store Terms, then you are liable to pay the fees for the Premium
+Edition of Software during the Term, as specified in the applicable Order.
+8. Additional Software or Services. This Agreement also applies to updates,
+enhancements, supplements, and add-on components of the Software that Licensor
+may provide or make available to you after the date you obtain your initial copy of the
+Software (“Update”). If Licensor provides additional terms along with the Software,
+those terms will apply to the Update.
+9. Links to Third Party Sites and Software. The Software may link to websites or
+software applications provided by third parties, including media or social network
+6
+platforms (such as YouTube) (“Third Party Applications”). You may be presented
+with additional terms and conditions from third parties in order to access or use Third
+Party Applications. Licensor is not responsible for Third Party Applications. Licensor
+does not assume and will not have any liability or responsibility to you or to any other
+person or entity for any Third Party Applications. Your access and use of Third Party
+Applications is entirely at your own risk and you must comply with such third parties'
+terms and conditions. Further, IPEVO Annotator and IPEVO Visualizer contains the
+“IPEVO Live Broadcast” functionality, which enables you to stream IPEVO video
+content on your device to YouTube if you connect your YouTube account to the
+“IPEVO Live Broadcast” functionality. You agree to be bound by YouTube’s Terms of
+Service (located at https://www.youtube.com/t/terms) by connecting your YouTube
+account to the “IPEVO Live Broadcast” functionality.
+10. Support. If any technical support is provided with respect to the Software (which will
+be decided at Licensor’s sole discretion), Licensor will be solely responsible for
+providing such technical support. Licensor will provide technical support with respect
+to any Paid Edition of Software purchased through an App Store operator as follows:
+IPEVO will respond to general customer support inquiries within 3 business days and
+any urgent customer support inquiries within 24 hours of receiving such inquiry. If
+technical support is available for the Software, all customer support enquiries by you
+should be made addressed to Licensor via the “Contact Information” set forth below.
+11. Term and Termination.
+11.1 Term. This Agreement commences on the date on which you download, install,
+or use the Software, whichever occurs first (“Effective Date”), and will remain in
+effect until terminated in accordance with the provisions of this Agreement
+(“Term”).
+11.2 Termination. You may terminate this Agreement at any time by ceasing all use
+of the Software and destroying all copies. This Agreement will terminate
+immediately without notice from Licensor to you if you fail to comply with any
+provisions of this Agreement.
+11.3 Effect of Termination. Upon the effective date of termination of this Agreement,
+you must immediately un-install and delete or destroy all copies of the Software
+that remain in your possession or control and cease using the Software.
+7
+11.4 Survival: The following Sections of this Agreement will survive: Sections 2, 3, 11-
+20.
+12. Indemnification. You agree to release, discharge, defend, indemnify and hold
+harmless Licensor and its parents, subsidiaries, officers, directors, employees and
+agents, assigns, licensors and suppliers from and against any claims, actions or
+demands, liabilities and settlements, including, without limitation, legal and accounting
+fees, related to or arising out of use in any way of the Software, your breach of this
+Agreement or the App Store Terms, your failure to comply with applicable law
+(including applicable privacy laws), or your violations of any rights of another. Licensor
+will provide you with prompt notice of any such claim, suit or proceeding and
+reasonably cooperate with you, at your expense, in your defense of any such claim,
+suit or proceeding.
+13. DISCLAIMER OF WARRANTY. TO THE MAXIMUM EXTENT PERMITTED BY
+APPLICABLE LAW, THE SOFTWARE IS PROVIDED “AS IS” WITH ALL FAULTS.
+LICENSOR AND ITS PARENT, AFFILIATES, AND SUPPLIERS HEREBY DISCLAIM
+ALL OTHER WARRANTIES AND CONDITIONS, WHETHER EXPRESS,
+STATUTORY OR IMPLIED, INCLUDING, BUT NOT LIMITED TO ANY IMPLIED
+WARRANTY OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+OR NON-INFRINGEMENT. FURTHER, THERE IS NO WARRANTY OR CONDITION
+OF TITLE, QUIET ENJOYMENT, QUIET POSSESSION, OR NON-INFRINGEMENT,
+LACK OF VIRUSES OR BUGS, ACCURACY OR COMPLETENESS OF
+RESPONSES OR RESULTS WITH REGARD TO THE SOFTWARE, OR THAT THE
+SOFTWARE WILL MEET YOUR REQUIREMENTS. IN PARTICULAR, LICENSOR
+AND ITS PARENT, AFFILIATES, AND SUPPLIERS DO NOT WARRANT THAT THE
+OPERATION OF THE SOFTWARE WILL BE UNINTERRUPTED OR ERROR-FREE
+OR THAT ANY DEFECTS WILL BE CORRECTED. NO ADVICE OR INFORMATION,
+WHETHER WRITTEN OR ORAL, OBTAINED BY YOU FROM LICENSOR OR ITS
+PARENT, AFFILIATES, OR SUPPLIERS, OR OTHERWISE IN CONNECTION WITH
+THE SOFTWARE, WILL CREATE ANY WARRANTY OR OBLIGATION ON BEHALF
+OF LICENSOR OR ITS PARENT, AFFILIATES, OR SUPPLIERS. THE ENTIRE RISK
+ARISING OUT OF THE USE, PERFORMANCE AND QUALITY OF THE SOFTWARE
+REMAINS WITH YOU. THE SOFTWARE IS ACCESSED AND USED AT YOUR OWN
+DISCRETION AND RISK, AND YOU WILL BE SOLELY RESPONSIBLE FOR ANY
+8
+DAMAGE TO YOUR COMPUTER SYSTEM OR OTHER SYSTEMS AND LOSS OF
+DATA IN CONNECTION WITH THE SOFTWARE.
+14. EXCLUSION OF CERTAIN DAMAGES. TO THE MAXIMUM EXTENT PERMITTED
+BY APPLICABLE LAW, IN NO EVENT WILL LICENSOR OR ITS PARENT,
+AFFILIATES, OR SUPPLIERS BE LIABLE FOR ANY SPECIAL, INDIRECT,
+CONSEQUENTIAL, INCIDENTAL OR PUNITIVE DAMAGES (INCLUDING BUT NOT
+LIMITED TO, DAMAGES FOR LOSS OF PROFITS OR REVENUE, DAMAGES TO
+YOUR COMPUTER SYSTEM OR OTHER SYSTEMS, LOSS OF DATA, GOODWILL,
+USE, OR OTHER LOSSES), HOWEVER CAUSED REGARDLESS OF THE THEORY
+OF LIABILITY, ARISING OUT OF OR RELATED TO THE USE OF OR INABILITY TO
+USE THE SOFTWARE OR OTHERWISE IN CONNECTION WITH THE SOFTWARE
+OR THIS AGREEMENT, EVEN IF LICENSOR HAS BEEN ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGES.
+15. LIMITATION OF LIABILITY AND EXCLUSIVE REMEDY. TO THE MAXIMUM
+EXTENT PERMITTED BY APPLICABLE LAW AND NOTWITHSTANDING ANY
+DAMAGES THAT YOU MIGHT INCUR FOR ANY REASON WHATSOEVER,
+LICENSOR’S AND ITS PARENT’S, AFFILIATES’, AND SUPPLIERS’ MAXIMUM
+AGGREGATE LIABILITY AND YOUR EXCLUSIVE REMEDY FOR ALL CLAIMS,
+WHETHER ARISING UNDER CONTRACT, TORT (INCLUDING NEGLIGENCE),
+STATUTE, OR ANY OTHER BASIS, WILL BE LIMITED TO THE ACTUAL DAMAGES
+YOU INCUR IN REASONABLE RELIANCE ON THE SOFTWARE UP TO U.S.$5.00
+OR THE AMOUNT YOU PAID FOR THE SOFTWARE, WHICHEVER IS GREATER.
+NO ACTION, REGARDLESS OF FORM, ARISING OUT OF ANY TRANSACTION
+UNDER THIS AGREEMENT MAY BE BROUGHT BY YOU MORE THAN ONE YEAR
+AFTER YOU HAVE KNOWLEDGE OF THE OCCURRENCE WHICH GIVES RISE TO
+THE CAUSE OF ACTION.
+16. Third Party Beneficiaries. You acknowledge that third party application
+marketplaces (including but not limited to the App Stores) may be third party
+beneficiaries of this Agreement and upon your acceptance of this Agreement the
+operators of such stores or marketplaces, and their affiliates, may have the right to
+enforce this Agreement against you as a third party beneficiary. You further
+acknowledge and agree that such parties are not parties to this Agreement other than
+9
+as third party beneficiaries and are not responsible for providing the Software and
+maintenance and support services with respect to the Software.
+17. U.S. Government Restricted Rights. If the Software is being acquired by or on
+behalf of the U.S. Government or by a U.S. Government prime contractor or
+subcontractor (at any tier), the Software is provided by Licensor as “commercial
+items,” “commercial computer software,” “commercial computer software
+documentation,” and “technical data” with the same rights and restrictions generally
+applicable to the Software as commercial items pursuant to the Federal Acquisition
+Regulation and applicable supplement, if any, and the U.S. Government's rights in the
+Software and accompanying documentation will only be provided with the commercial
+license rights set forth in this Agreement.
+18. Compliance with Law; Export Restrictions. All Software and technical data
+delivered under this Agreement are subject to U.S. export control laws and may be
+subject to export or import regulations in other countries. You agree to comply strictly
+with all applicable laws and regulations, including those relating to import and export,
+and, you acknowledge that you have the responsibility for and will obtain any licenses
+or permissions required to export, re-export, or import the Software. Further, you
+represent and warrant that (a) you are not located in a country that is subject to a U.S.
+Government embargo or that is on the Title 15, Part 740 Supplement 1 Country Group
+E of the U.S. Code of Federal Regulations, and (b) you are not listed on any U.S.
+Governmental list of prohibited or restricted parties.
+19. Governing Law. This Agreement will be governed and construed in accordance with
+the internal laws of the State of California, without giving effect to any choice or
+conflict of law provisions. Each party consents to the exclusive jurisdiction and venue
+in the state and federal courts in Santa Clara, California for any and all disputes,
+claims, and actions arising from or in connection with the Software and this
+Agreement. You waive any and all objections to the exercise of jurisdiction over you
+by such courts and to venue in such courts. The United Nations Convention on
+Contracts for the International Sale of Goods will not apply to this Agreement.
+20. General. The section titles in this Agreement are used solely for the parties’
+convenience and have no legal or contractual significance. Licensor’s failure to
+exercise, or delay in exercising, any right or any power hereunder shall not operate as
+a waiver thereof, nor shall any single or partial exercise of any right or power
+10
+hereunder preclude further exercise of that or any other right hereunder including with
+respect to subsequent or similar breaches. No waiver of any provision of this
+Agreement will be effective unless it is in a signed writing, and no waiver will constitute
+a waiver of any other provision(s) or of the same provision on another occasion. If a
+court of competent jurisdiction holds any term, covenant, or restriction of this
+Agreement to be illegal, invalid, or unenforceable, in whole or in part, the remaining
+terms, covenants, and restrictions will remain in full force and effect and will in no way
+be affected, impaired, or invalidated. You may not assign, transfer, or sublicense this
+Agreement or your rights (if any) under this Agreement. This Agreement will be
+binding upon all successors and assigns. This Agreement constitutes the entire
+agreement between you and Licensor with respect to the Software and merges all
+prior and contemporaneous communications and proposals, whether electronic, oral,
+or written, between you and Licensor with respect to the Software. Licensor may give
+you all notices (including legal process) that Licensor is required to give you by any
+lawful method, including by posting notice on Licensor’s website and by sending it to
+any email or mailing address that you provide to Licensor.
+CONTACT INFORMATION
+If you have any questions, complaints, or claims in connection with this Agreement or the
+Software, or want to contact Licensor for any reason, please direct all correspondence to:
+cs@ipevo.com.

@@ -1,0 +1,58 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+links='
+  /usr/bin/visualizer-1.1.4.39.jar
+  /usr/bin/visualizer.out
+  /usr/share/icons/hicolor/scalable/apps/visualizer_1080.png
+'
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+    for f in $links; do
+      mkdir -p "$(dirname "$f")"
+      ln -fns -T "${upstream_dir}/${f}" "$f"
+    done
+    # 1778 matches IPEVO VZ-R camera vendor, perhaps this rule should be wider?
+    cat <<'EOF' > /etc/udev/rules.d/10-visualizer.rules
+SUBSYSTEM=="usb", ATTRS{idVendor}=="1778", GROUP="plugdev", MODE="0660"
+EOF
+    sed '/^Exec=/s/.out$//' \
+     "${upstream_dir}/usr/share/applications/visualizer.desktop" \
+     > /usr/share/applications/visualizer.desktop
+    cat <<'EOF' > /usr/bin/visualizer
+#!/bin/sh
+
+set -eu
+
+# run visualizer in its own directory so it drops its configuratios here
+mkdir -p ~/.visualizer
+cd ~/.visualizer
+exec /usr/bin/visualizer.out "$@"
+EOF
+    chmod 755 /usr/bin/visualizer
+    ;;
+  unconfigure)
+    rm -f $links \
+          /etc/udev/rules.d/10-visualizer.rules \
+          /usr/bin/visualizer \
+          /usr/share/applications/visualizer.desktop
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    unzip -q "$upstream_pack" -d "$upstream_dir"
+    dpkg-deb -x "${upstream_dir}/Visualizer_linux_1.1.4.39/visualizer_1.1.4.39_all.deb" \
+                "$upstream_dir"
+    rm -f "${upstream_dir}/Visualizer_linux_1.1.4.39/visualizer_1.1.4.39_all.deb" \
+          "${upstream_dir}/Visualizer_linux_1.1.4.39/README.txt"
+    rmdir "${upstream_dir}/Visualizer_linux_1.1.4.39"
+    ;;
+  *)
+    ;;
+esac
