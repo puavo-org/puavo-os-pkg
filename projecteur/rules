@@ -25,9 +25,6 @@ case "${command}" in
         for f in $links; do
           mkdir -p "$(dirname "$f")"
           ln -fns -T "${upstream_dir}/${f}" "$f"
-          # Reload udev rules.
-          udevadm control --reload-rules
-          udevadm trigger
         done
         ;;
     unconfigure)
