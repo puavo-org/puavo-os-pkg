@@ -22,7 +22,7 @@ case "$command" in
     cat <<'EOF' > /etc/udev/rules.d/10-visualizer.rules
 SUBSYSTEM=="usb", ATTRS{idVendor}=="1778", GROUP="plugdev", MODE="0660"
 EOF
-    sed '/^Exec=/s/.out$//' \
+    sed '/^Terminal/s/=true$/=false/; /^Exec=/s/.out$//' \
      "${upstream_dir}/usr/share/applications/visualizer.desktop" \
      > /usr/share/applications/visualizer.desktop
     cat <<'EOF' > /usr/bin/visualizer
