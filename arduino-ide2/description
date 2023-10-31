@@ -1,2 +1,1 @@
-Puavo-pkg template.
-To use, copy the directory, fill in the rules file and upstream_pack_sha384, add upstream_pack_url if relevant, add to ../Makefile.
+Ohjelmointiympäristö Arduino-ohjelmointia varten.
