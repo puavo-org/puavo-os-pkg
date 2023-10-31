@@ -9,6 +9,7 @@ packagedirs += adobe-reader
 packagedirs += airtame
 packagedirs += appinventor
 packagedirs += arduino-ide
+packagedirs += arduino-ide2
 packagedirs += arduino-ottodiylib
 packagedirs += arduino-radiohead
 packagedirs += arduino-tm1637

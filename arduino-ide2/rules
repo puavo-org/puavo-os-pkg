@@ -1,0 +1,47 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+  configure)
+    upstream_dir=$1
+
+    ln -fns "${upstream_dir}" /opt/arduino-ide2
+ls "${upstream_dir}"
+    ln -fns "${upstream_dir}/arduino-ide2/arduino-ide" /usr/bin/arduino-ide
+    ln -fns "${upstream_dir}/arduino-ide2/resources/app/resources/icons/512x512.png" /usr/share/icons/arduino2.png
+
+    cat <<'EOF' > /usr/share/applications/arduino-ide2.desktop
+[Desktop Entry]
+Type=Application
+Name=Arduino IDE 2
+GenericName=Create physical computing projects
+Exec=arduino-ide
+Icon=arduino2
+Terminal=false
+Categories=Development;Engineering;Electronics;
+MimeType=text/x-arduino
+Keywords=embedded electronics;electronics;avr;microcontroller;
+EOF
+
+    ;;
+  unconfigure)
+    rm -f /opt/arduino-ide2
+    rm -f /usr/bin/arduino-ide
+    rm -f /usr/share/applications/arduino-ide2.desktop
+    rm -f /usr/share/icons/arduino2.png
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    unzip -q -d "${upstream_dir}" "${upstream_pack}"
+    zip_top_dir=$(unzip -qql "${upstream_pack}" | head -n1 | awk '{print $4}')
+    mv "${upstream_dir}"/"${zip_top_dir}" "${upstream_dir}"/arduino-ide2
+    ;;
+  *)
+    ;;
+esac
