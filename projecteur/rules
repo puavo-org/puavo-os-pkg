@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -eu
+set -eux
 
 command=$1
 shift
@@ -26,6 +26,7 @@ case "${command}" in
           mkdir -p "$(dirname "$f")"
           ln -fns -T "${upstream_dir}/${f}" "$f"
         done
+        ln -fns "${upstream_dir}"/usr/local/share/icons/hicolor/64x64/apps/projecteur.svg /usr/local/share/icons/hicolor/64x64/apps/projecteur.svg
         ;;
     unconfigure)
         rm -f $links
