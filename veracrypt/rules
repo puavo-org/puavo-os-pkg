@@ -2,33 +2,61 @@
 
 set -eu
 
+tmpdir=''
+
+cleanup() {
+  if [ -n "$tmpdir" ]; then
+    rm -rf "$tmpdir"
+  fi
+}
+
+veracrypt_version='1.26.7'
+
+veracrypt_links='
+  /usr/bin/veracrypt
+  /usr/share/doc/veracrypt
+  /usr/share/veracrypt
+  /usr/share/applications/veracrypt.desktop
+  /usr/share/pixmaps/veracrypt.xpm
+  /usr/share/mime/packages/veracrypt.xml
+  /usr/sbin/mount.veracrypt
+'
+
 command=$1
 shift
 
-case "${command}" in
+case "$command" in
   configure)
     upstream_dir=$1
-
-    ln -fns "${upstream_dir}/usr/bin/veracrypt" \
-            /usr/bin/veracrypt
-    ln -fns "${upstream_dir}/usr/share/applications/veracrypt.desktop" \
-            /usr/share/applications/veracrypt.desktop
-    ln -fns "${upstream_dir}/usr/share/doc/veracrypt" \
-            /usr/share/doc/veracrypt
-    ln -fns "${upstream_dir}/usr/share/pixmaps/veracrypt.xpm" \
-            /usr/share/pixmaps/veracrypt.xpm
+    for f in $veracrypt_links; do
+      mkdir -p "$(dirname "$f")"
+      ln -fns -T "${upstream_dir}/${f}" "$f"
+    done
+    echo veracrypt >> /var/lib/puavo-pkg/.update_mime_database
     ;;
   unconfigure)
-    rm -f /usr/bin/veracrypt \
-          /usr/share/applications/veracrypt.desktop \
-          /usr/share/doc/veracrypt \
-          /usr/share/pixmaps/veracrypt.xpm
+    rm -f $veracrypt_links
     ;;
   unpack)
     upstream_pack=$1
     upstream_dir=$2
 
-    dpkg -x "$upstream_pack" "$upstream_dir"
+    trap cleanup 0 INT TERM
+    tmpdir=$(mktemp -d /tmp/veracrypt_unpack.XXXXXX)
+    tar -C "$tmpdir" -jxf "$upstream_pack"
+    (
+      cd "$tmpdir"
+      "./veracrypt-${veracrypt_version}-setup-gtk3-gui-x64" \
+        --noexec --target installer >/dev/null 2>&1
+      package_start=$(awk -F= '$1 == "PACKAGE_START" { print $2; exit(0) }' \
+                          installer/veracrypt_install_gui_x64.sh)
+      if [ -z "$package_start" ]; then
+        echo "could not unpack Veracrypt ${veracrypt_version}" >&2
+        exit 1
+      fi
+      tail -n "+${package_start}" installer/veracrypt_install_gui_x64.sh \
+        | tar -C "$upstream_dir" -zx
+    )
     ;;
   *)
     ;;
