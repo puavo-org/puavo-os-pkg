@@ -77,6 +77,7 @@ packagedirs += novoconnect
 packagedirs += obsidian-icons
 packagedirs += ohjelmointi-opetuksessa
 packagedirs += openclipart
+packagedirs += openjdk-11-jre
 packagedirs += openscad-nightly
 packagedirs += openshot-appimage
 packagedirs += otto-blockly

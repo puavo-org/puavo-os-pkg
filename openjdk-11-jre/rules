@@ -1,0 +1,79 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+openjdk_links='
+  /etc/java-11-openjdk
+  /usr/lib/jvm/java-11-openjdk-amd64
+  /usr/share/icons/hicolor/16x16/apps/openjdk-11.png
+  /usr/share/icons/hicolor/24x24/apps/openjdk-11.png
+  /usr/share/icons/hicolor/32x32/apps/openjdk-11.png
+  /usr/share/icons/hicolor/48x48/apps/openjdk-11.png
+  /usr/share/mime-info/openjdk-11-archive.keys
+  /usr/share/mime-info/openjdk-11-archive.mime
+  /usr/share/pixmaps/openjdk-11.xpm
+'
+
+urlbase='http://security.debian.org/debian-security/pool/updates/main/o/openjdk-11'
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+    for f in $openjdk_links; do
+      mkdir -p "$(dirname "$f")"
+      ln -fns -T "${upstream_dir}${f}" "$f"
+    done
+    ;;
+  unconfigure)
+    rm -f $openjdk_links
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    tar -C "$upstream_dir" -xf "$upstream_pack"
+    ;;
+  download)
+    upstream_pack=$(readlink -f "$1")
+    tmpdir=
+    trap '[ -n "$tmpdir" ] && rm -rf "$tmpdir"' 0 INT TERM
+    tmpdir=$(mktemp -d)
+
+    (
+      cd "$tmpdir"
+      while read sha384 debpath; do
+        deb=$(basename "$debpath")
+        wget \
+            --no-use-server-timestamps \
+            --no-cookies \
+            --output-document "$deb" \
+            --progress=dot:mega \
+            "${urlbase}/${debpath}" || {
+            [ $? -eq 4 ] && exit 2 ## Network failure.
+            exit 1
+        }
+        if ! printf "%s %s\n" "$sha384" "$deb" | sha384sum --check >/dev/null; then
+          actual_checksum=$(sha384sum "$deb" | awk '{ print $1 }')
+          echo "checksum NOT matching for $deb" >&2
+          echo "expected: ${sha384} / actual: ${actual_checksum}" >&2
+          if [ "${PUAVOPKG_DEVMODE:-}" != 'true' ]; then
+            exit 1
+          fi
+        fi
+        dpkg-deb -x "$deb" openjdk-11-jre || exit 1
+      done <<EOF
+d8b78ad72267ff8d5dde7d0543d2ca14c327c6bfc8e3b897f39c974b3f63b338b474b17e8ae1c9b52066cadbefc93fc8 openjdk-11-jre_11.0.21+9-1~deb11u1_amd64.deb
+30bcfd791f20d834531ab263dafee7eee34d7e19b1b1e7c55e3dcd7940c833efdcd62a6ef328aa90e11a69d21130c8d4 openjdk-11-jre-headless_11.0.21+9-1~deb11u1_amd64.deb
+EOF
+      # Set LC_COLLATE=C so that files always sort in the same
+      # way (so we get the same tar-archive independent of locales).
+      env LC_COLLATE=C \
+        tar -C openjdk-11-jre --mtime='2000-01-01 00:00:00 +00:00' \
+          --sort=name -c -f "$upstream_pack" .
+    )
+    ;;
+  *)
+    ;;
+esac
