@@ -7,31 +7,34 @@ shift
 
 links='
   /opt/EShare
-  /usr/bin/eShare~
   /usr/share/applications/EShare.desktop
   /usr/share/icons/eShare
 '
 
-
 case "${command}" in
-    configure)
-        upstream_dir=$1
-        for f in $links; do
-          mkdir -p "$(dirname "$f")"
-          ln -fns -T "${upstream_dir}/${f}" "$f"
-        #Ugly binary patch to fix the application when using xorg with both gdm and desktop.
-        #Remove this when the upstream application has been fixed.
-        sed -i 's/:0.0/:1.0/g' /opt/EShare/EShare
-        done
-        ;;
-    unconfigure)
-        rm -f $links
-        ;;
-    unpack)
-        upstream_pack=$1
-        upstream_dir=$2
-        dpkg-deb -x "$upstream_pack" "$upstream_dir"
-        ;;
-    *)
-        ;;
+  configure)
+    upstream_dir=$1
+    for f in $links; do
+      mkdir -p "$(dirname "$f")"
+      ln -fns -T "${upstream_dir}/${f}" "$f"
+    done
+    ;;
+  unconfigure)
+    rm -f $links
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    dpkg-deb -x "$upstream_pack" "$upstream_dir"
+
+    # Ugly binary patch to fix the application when using xorg with
+    # both gdm and desktop.  Remove this when the upstream application
+    # has been fixed.
+    sed -i 's/:0.0/:1.0/g' "${upstream_dir}/opt/EShare/EShare"
+
+    # fix permissions of extralib
+    chmod 755 "${upstream_dir}/opt/EShare/extralib"
+    ;;
+  *)
+    ;;
 esac
