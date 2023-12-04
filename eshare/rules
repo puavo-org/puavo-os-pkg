@@ -7,7 +7,7 @@ shift
 
 links='
   /opt/EShare
-  /usr/share/applications/EShare.desktop
+  /usr/share/applications/eshare.desktop
   /usr/share/icons/eShare
 '
 
@@ -26,6 +26,11 @@ case "${command}" in
     upstream_pack=$1
     upstream_dir=$2
     dpkg-deb -x "$upstream_pack" "$upstream_dir"
+
+    # Rename the desktop file to be compatible with older puavo-os
+    # image versions.
+    mv "${upstream_dir}/usr/share/applications/EShare.desktop" \
+       "${upstream_dir}/usr/share/applications/eshare.desktop"
 
     # Ugly binary patch to fix the application when using xorg with
     # both gdm and desktop.  Remove this when the upstream application
