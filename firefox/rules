@@ -29,7 +29,26 @@ esac
 # and such).
 export MOZ_LEGACY_PROFILES=1
 
-exec "${firefox_dir}/firefox" "$@"
+is_libcamerify_installed=false
+if which libcamerify >/dev/null; then
+  is_libcamerify_installed=true
+fi
+
+is_libcamerify_enabled=false
+if puavo_libcamerify_enabled="$(puavo-conf puavo.libcamerify.enabled)"; then
+  if [ "${puavo_libcamerify_enabled}" = 'true' ]; then
+     is_libcamerify_enabled=true
+  fi
+fi
+
+# On hosts which have libcamerify installed and enabled, use it to
+# make complex camera devices available to Firefox via V4L2 compat
+# library (libcamerify defines LD_PRELOAD and execs Firefox).
+if ${is_libcamerify_installed} && ${is_libcamerify_enabled}; then
+  exec libcamerify "${firefox_dir}/firefox" "$@"
+else
+  exec "${firefox_dir}/firefox" "$@"
+fi
 EOF
   chmod 755 /usr/local/bin/firefox
 }
