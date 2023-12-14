@@ -103,7 +103,6 @@ packagedirs += sparkvue
 packagedirs += spotify-client
 packagedirs += structorizer
 packagedirs += supertuxkart
-packagedirs += teams
 packagedirs += teamviewer
 packagedirs += tela-icon-theme
 packagedirs += telegram-desktop
