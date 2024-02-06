@@ -56,6 +56,7 @@ packagedirs += hamstersimulator
 packagedirs += hp-bios-utils
 packagedirs += icaclient
 packagedirs += idid
+packagedirs += kantti
 packagedirs += kdenlive-appimage
 packagedirs += kmbeu
 packagedirs += kojo
