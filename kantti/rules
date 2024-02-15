@@ -5,15 +5,32 @@ set -eu
 command=$1
 shift
 
-case "${command}" in
+case "$command" in
   configure)
     upstream_dir=$1
+    ln -fns "${upstream_dir}/Kantti.x86_64" /usr/local/bin/kantti
+    ln -fns "${upstream_dir}/kantti.png" /usr/share/icons/kantti.png
+    cat <<'EOF' > /usr/share/applications/kantti.desktop
+[Desktop Entry]
+Name=Kantti
+Exec=/usr/local/bin/kantti
+Type=Application
+Terminal=false
+Icon=kantti
+StartupNotify=true
+Categories=Education;
+EOF
     ;;
   unconfigure)
+    rm -f /usr/local/bin/kantti                  \
+          /usr/share/applications/kantti.desktop \
+          /usr/share/icons/kantti.png
     ;;
   unpack)
     upstream_pack=$1
     upstream_dir=$2
+    install -m 755 "$upstream_pack" "${upstream_dir}/Kantti.x86_64"
+    install -m 644 kantti.png "${upstream_dir}/kantti.png"
     ;;
   *)
     ;;
