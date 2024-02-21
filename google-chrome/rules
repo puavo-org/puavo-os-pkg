@@ -203,34 +203,6 @@ StartupNotify=true' "${upstream_dir}/usr/share/applications/google-chrome.deskto
         dpkg -x "$upstream_pack" "$upstream_dir"
         chmod 0755 "$upstream_dir"
         ;;
-    download)
-        # tested with google-chrome-stable_94.0.4606.61-1_amd64.deb
-        upstream_pack=$1
-        baseurl="https://dl.google.com/linux/chrome/deb"
-        tmpfile=$(mktemp)
-
-        wget \
-            --no-use-server-timestamps \
-            --no-cookies \
-            --output-document "${tmpfile}" \
-            --progress=dot:mega \
-            "${baseurl}/dists/stable/main/binary-amd64/Packages" || {
-            wget_err=$?
-            rm -f "$tmpfile" || true
-            [ ${wget_err} -eq 4 ] && exit 2 ## Network failure.
-            exit 1
-        }
-        poolpath=$(sed -r '0,/^Package: google-chrome-stable$/ d' "${tmpfile}" | sed -r -n 's/^Filename: (.*)/\1/p' | head -n1)
-        rm -f "$tmpfile"
-        wget \
-            --no-use-server-timestamps \
-            --no-cookies \
-            --output-document "$upstream_pack" \
-            "${baseurl}/${poolpath}" || {
-            [ $? -eq 4 ] && exit 2 ## Network failure.
-            exit 1
-        }
-        ;;
     *)
         ;;
 esac
