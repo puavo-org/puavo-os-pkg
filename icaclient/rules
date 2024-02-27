@@ -172,116 +172,6 @@ EOF
   su puavo-pkg -s /bin/sh -c /opt/Citrix/ICAClient/util/ctx_rehash >/dev/null
 }
 
-add_puavo_ica_script() {
-  cat <<'EOF' > /usr/local/bin/puavo-ica
-#!/bin/sh
-
-set -eu
-
-app=${1:-}
-
-server=$(puavo-conf puavo.pkg.icaclient.server)
-if [ -z "$server" ]; then
-  echo 'puavo-conf variable puavo.pkg.icaclient.server not set' >&2
-  exit 1
-fi
-
-service=$(puavo-conf puavo.pkg.icaclient.service)
-if [ -z "$service" ]; then
-  echo 'puavo-conf variable puavo.pkg.icaclient.service not set' >&2
-  exit 1
-fi
-
-get_discovery_url() {
-  local awk_script discovery_url storebrowse_output
-
-  # use a variable because of a need to use "'"-character in script
-  awk_script=$(cat <<'AWK_EOF'
-    $2 == ("'" service "'") {
-      split($5, a, /,/)
-      sub(/'$/, "", a[2])
-      if (a[2] == ("https://" server "/")) {
-	sub(/^'/, "", $1)
-	sub(/'$/, "", $1)
-        print $1
-        exit(0)
-      }
-    }
-AWK_EOF
-)
-
-  /opt/Citrix/ICAClient/util/storebrowse -l \
-    | awk -F "\t" -v server="$server" -v service="$service" "$awk_script"
-}
-
-add_store() {
-  local store
-  store="${server}?${service}"
-  /opt/Citrix/ICAClient/util/storebrowse -a "$store" > /dev/null
-}
-
-list_available_apps() {
-  xml_grep --strict --text_only resource/id \
-           ~/.ICAClient/cache/Stores/Apps\ Cache\ *.ctx 2>/dev/null
-}
-
-setup_wfclient_ini() {
-  awk '
-    /^HDXH264InputEnabled=/ {
-      print
-      print "DriveEnabledP=True"
-      print "DriveWriteAccessP=0"
-      print "DriveReadAccessP=0"
-      print "DrivePathP=$HOME/"
-      next
-    }
-    { print }
-  ' /opt/Citrix/ICAClient/config/wfclient.template \
-    > ~/.ICAClient/wfclient.ini.tmp
-  mv ~/.ICAClient/wfclient.ini.tmp ~/.ICAClient/wfclient.ini
-}
-
-discovery_url=$(get_discovery_url)
-if [ -z "$discovery_url" ]; then
-  if ! add_store; then
-    echo 'add store returned failure' >&2
-    exit 1
-  fi
-fi
-
-discovery_url=$(get_discovery_url)
-if [ -z "$discovery_url" ]; then
-  echo 'could not determine the discovery url' >&2
-  exit 1
-fi
-
-# enforce client configuration
-setup_wfclient_ini
-
-if [ -n "$app" ]; then
-  if available_apps=$(list_available_apps); then
-    # try first looking for an exact match
-    app_id=$(printf %s "$available_apps" | grep -Fix -m 1 "$app") || true
-
-    # then try with a fuzzier match if there was no exact match
-    if [ -z "$app_id" ]; then
-      app_id=$(printf %s "$available_apps" | grep -Fi -m 1 "$app") || true
-    fi
-
-    if [ -n "$app_id" ]; then
-      # found an app, start that one
-      exec /opt/Citrix/ICAClient/util/storebrowse -L "$app_id" \
-           "$discovery_url"
-    fi
-  fi
-fi
-
-# fallback to menu
-exec /opt/Citrix/ICAClient/selfservice
-EOF
-  chmod 755 /usr/local/bin/puavo-ica
-}
-
 case "$command" in
   configure)
     upstream_dir=$1
@@ -293,7 +183,7 @@ case "$command" in
     add_desktop_files
     add_magiccloud_certificates
     add_locale_links
-    add_puavo_ica_script
+    install -o root -g root -m 755 puavo-ica /usr/local/bin/puavo-ica
     ;;
 
   download)
