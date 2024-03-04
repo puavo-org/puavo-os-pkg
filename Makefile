@@ -142,7 +142,7 @@ puavo-pkg.json: $(packagefiles)
 	  > $@.tmp
 	mv $@.tmp $@
 
-puavo-pkg-packageconfs.json: $(wildcard */puavo_conf.json)
+puavo-pkg-packageconfs.json: /dev/null $(wildcard */puavo_conf.json)
 	jq --slurp 'reduce .[] as $$item ({}; . + $$item)' $^ > $@.tmp
 	mv $@.tmp $@
 
