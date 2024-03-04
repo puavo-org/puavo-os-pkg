@@ -1,0 +1,39 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+slack_links='
+   /usr/bin/slack
+   /usr/lib/slack
+   /usr/share/applications/slack.desktop
+   /usr/share/doc/slack-desktop
+   /usr/share/lintian/overrides/slack
+   /usr/share/pixmaps/slack.png
+'
+
+case "${command}" in
+    configure)
+	upstream_dir=$1
+        for f in $slack_links; do
+          mkdir -p "$(dirname "$f")"
+          ln -fns -T "${upstream_dir}/${f}" "$f"
+        done
+        # Fix permissions for upstream directory
+        chmod 755 "${upstream_dir}"
+        echo slack >> /var/lib/puavo-pkg/.update_mime_database
+	;;
+    unconfigure)
+	rm -f $slack_links
+	;;
+    unpack)
+	upstream_pack=$1
+	upstream_dir=$2
+
+	dpkg -x "${upstream_pack}" "${upstream_dir}"
+	;;
+    *)
+	;;
+esac

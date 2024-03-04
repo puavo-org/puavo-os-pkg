@@ -98,6 +98,7 @@ packagedirs += scratux
 packagedirs += shotcut
 packagedirs += signal-desktop
 packagedirs += skype
+packagedirs += slack
 packagedirs += smartboard
 packagedirs += sparkvue
 packagedirs += spotify-client
