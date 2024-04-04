@@ -8,8 +8,8 @@ shift
 case "${command}" in
   configure)
     upstream_dir=$1
-    make -C "${upstream_dir}/hpflash-3.22/non-rpms/hpuefi-mod-3.04" default install
-    (cd "${upstream_dir}/hpflash-3.22/non-rpms/hp-flash-3.22_x86_64/" && ./install.sh)
+    make -C "${upstream_dir}/hpflash-3.24/non-rpms/hpuefi-mod-3.05" default install
+    (cd "${upstream_dir}/hpflash-3.24/non-rpms/hp-flash-3.24_x86_64/" && ./install.sh)
     ;;
   unconfigure)
     rm -rf /opt/hp/hp-flash
@@ -20,41 +20,16 @@ case "${command}" in
     upstream_pack=$1
     upstream_dir=$2
 
-    tar --no-same-owner -z -x -f "$upstream_pack" -C "$upstream_dir"
-    mkdir -p "${upstream_dir}/non-rpms/hp-flash" \
-             "${upstream_dir}/non-rpms/hpuefi-mod"
+    mkdir -p "${upstream_dir}/hpflash-3.24"
+    tar --no-same-owner -z -x -f "$upstream_pack" -C "${upstream_dir}/hpflash-3.24"
+    mkdir -p "${upstream_dir}/hpflash-3.24/non-rpms/hp-flash" \
+             "${upstream_dir}/hpflash-3.24/non-rpms/hpuefi-mod"
     tar --no-same-owner -z -x \
-        -f "${upstream_dir}/hpflash-3.22/non-rpms/hp-flash-3.22_x86_64.tgz" \
-        -C "${upstream_dir}/hpflash-3.22/non-rpms"
+        -f "${upstream_dir}/hpflash-3.24/non-rpms/hp-flash-3.24_x86_64.tgz" \
+        -C "${upstream_dir}/hpflash-3.24/non-rpms"
     tar --no-same-owner -z -x \
-        -f "${upstream_dir}/hpflash-3.22/non-rpms/hpuefi-mod-3.04.tgz" \
-        -C "${upstream_dir}/hpflash-3.22/non-rpms"
-    patch "${upstream_dir}/hpflash-3.22/non-rpms/hpuefi-mod-3.04/hpuefi.c" <<'EOF'
---- hpuefi.c    2022-05-24 21:00:00.000000000 +0300
-+++ hpuefi.c    2024-03-21 10:26:06.146308996 +0200
-@@ -37,6 +37,7 @@
- #include <asm/io.h>
- #include "hpuefi.h"
- #include <linux/uaccess.h>
-+#include <linux/version.h>
-
- MODULE_DESCRIPTION("HP UEFI Driver");
- MODULE_LICENSE("GPL");
-@@ -612,7 +613,12 @@
- /* *****Input conditions validation preamble end***** */
-
-    // we do not want to have this area swapped out, lock it
--   vma->vm_flags |= VM_LOCKED;
-+   // Fix module compilation on kernel 6.3+ while keeping compatibility with older kernels.
-+   #if (LINUX_VERSION_CODE < KERNEL_VERSION(6, 3, 0))
-+      vma->vm_flags |= VM_LOCKED;
-+   #else
-+      vm_flags_set(vma, VM_LOCKED);
-+   #endif
-    // create mapping between virtual address supplied by user and physical pages
-    if (PhysBuffer != 0) {
-        if ((remap_pfn_range(vma, vma->vm_start, PhysBuffer >> PAGE_SHIFT, size, vma->vm_page_prot)) != SUCCESS)
-EOF
+        -f "${upstream_dir}/hpflash-3.24/non-rpms/hpuefi-mod-3.05.tgz" \
+        -C "${upstream_dir}/hpflash-3.24/non-rpms"
     ;;
   *)
     ;;
