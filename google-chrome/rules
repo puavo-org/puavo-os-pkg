@@ -101,6 +101,7 @@ set_first_homepage() {
 }
 
 default_args="--disable-infobars --no-default-browser-check --no-first-run"
+extra_args=$(puavo-conf puavo.www.chromium.extra_args 2>/dev/null) || true
 
 if ! fix_browser_lock; then
   exit 1
@@ -129,7 +130,8 @@ if ! browser_running; then
 fi
 
 exec /usr/bin/google-chrome-stable.puavopkg $default_args \
-       --simulate-outdated-no-au='Thu, 31 Dec 2099 23:59:59 GMT' "$@"
+       --simulate-outdated-no-au='Thu, 31 Dec 2099 23:59:59 GMT' \
+       $extra_args "$@"
 EOF
   chmod 755 /usr/bin/google-chrome-stable.tmp
   mv /usr/bin/google-chrome-stable.tmp /usr/bin/google-chrome-stable
