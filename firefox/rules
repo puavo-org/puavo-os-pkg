@@ -125,6 +125,10 @@ EOF
 
     (
       cd "$tmpdir"
+      new_checksums_path="${tmpdir}/new_firefox_checksums.txt"
+      if [ "${PUAVOPKG_DEVMODE:-}" = 'true' ]; then
+        cat /dev/null > "$new_checksums_path"
+      fi
       while read sha384 lang_dir; do
         tarpath="${lang_dir}/firefox-${version}.tar.bz2"
         tarfile="$(basename "$tarpath")"
@@ -139,11 +143,13 @@ EOF
         }
         if ! echo "${sha384} ${tarfile}" | sha384sum --check >/dev/null; then
           actual_checksum=$(sha384sum "$tarfile" | awk '{ print $1 }')
-          echo "checksum NOT matching for $tarpath" >&2
-          echo "expected: ${sha384} / actual: ${actual_checksum}" >&2
           if [ "${PUAVOPKG_DEVMODE:-}" != 'true' ]; then
+            echo "checksum NOT matching for $tarpath" >&2
+            echo "expected: ${sha384} / actual: ${actual_checksum}" >&2
             exit 1
           fi
+          echo "updating ${new_checksums_path} with new checksum" >&2
+          echo "${actual_checksum} ${lang_dir}" >> "$new_checksums_path"
         fi
         firefox_langdir="firefox/$(dirname "$tarpath")"
         mkdir -p "$firefox_langdir"
