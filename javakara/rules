@@ -1,0 +1,32 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+  configure)
+    upstream_dir=$1
+
+    cat <<EOF > /usr/share/applications/javakara.desktop
+[Desktop Entry]
+Type=Application
+Name=JavaKara
+Exec=java -jar $1/javakara.jar
+Icon=application-x-addon
+EOF
+    ;;
+  unconfigure)
+    rm -f /usr/share/applications/javakara.desktop
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    mkdir -p "${upstream_dir}"
+    cp "${upstream_pack}" "${upstream_dir}/javakara.jar"
+    ;;
+  *)
+    ;;
+esac
