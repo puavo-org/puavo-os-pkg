@@ -11,7 +11,7 @@ fi
 
 pkg_installer_id=$(
   find "$puavo_pkg" -type f ! -name .puavo-pkg-version \
-    | sort | xargs -n 1 md5sum \
+    | LC_ALL=C sort | xargs -n 1 md5sum \
     | md5sum \
     | awk '{ print $1 }')
 
