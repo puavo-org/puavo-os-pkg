@@ -96,6 +96,7 @@ packagedirs += qcad-cam
 packagedirs += robboscratch
 packagedirs += robotmeshconnect
 packagedirs += rustdesk
+packagedirs += s4a
 packagedirs += schoolstore-ti-widgets
 packagedirs += scratux
 packagedirs += shotcut

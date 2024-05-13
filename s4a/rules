@@ -1,0 +1,38 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+links='
+   /usr/bin/s4a
+   /usr/bin/s4a_squeak_vm
+   /usr/lib/s4a
+   /usr/share/applications/s4a.desktop
+   /usr/share/icons/hicolor/128x128/mimetypes/gnome-mime-application-x-s4a-project.png
+   /usr/share/icons/hicolor/128x128/apps/s4a.png
+   /usr/share/icons/hicolor/48x48/apps/s4a.png
+   /usr/share/icons/hicolor/48x48/mimetypes/gnome-mime-application-x-s4a-project.png
+   /usr/share/mime/packages/s4a.xml
+'
+
+case "${command}" in
+  configure)
+    upstream_dir=$1
+    for f in $links; do
+      mkdir -p "$(dirname "$f")"
+      ln -fns -T "${upstream_dir}/${f}" "$f"
+    done
+    ;;
+  unconfigure)
+    rm -f $links
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    dpkg-deb -x "$upstream_pack" "$upstream_dir"
+    ;;
+  *)
+    ;;
+esac
