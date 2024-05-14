@@ -127,6 +127,7 @@ packagedirs += vscode
 packagedirs += webex
 packagedirs += wine-gecko
 packagedirs += wine-mono
+packagedirs += wine-mono-bookworm
 packagedirs += xournalpp
 packagedirs += zoom
 
