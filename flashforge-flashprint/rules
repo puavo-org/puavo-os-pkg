@@ -6,7 +6,8 @@ command=$1
 shift
 
 symlink_targets='
-  /etc/udev/rules.d/99-flashforge.rules
+  /etc/udev/rules.d/99-flashforge5.rules
+  /usr/lib/libOCCTWrapper.so.1
   /usr/share/FlashPrint5
   /usr/share/icons/hicolor/64x64/apps/flashforge5.png
 '
