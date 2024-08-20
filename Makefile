@@ -53,6 +53,7 @@ packagedirs += geogebra6
 packagedirs += globilab
 packagedirs += google-chrome
 packagedirs += google-earth
+packagedirs += greenfoot
 packagedirs += hamstersimulator
 packagedirs += hp-bios-utils
 packagedirs += idid
