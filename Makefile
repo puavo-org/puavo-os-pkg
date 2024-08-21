@@ -35,6 +35,7 @@ packagedirs += dragonbox_koulu1
 packagedirs += dragonbox_koulu2
 packagedirs += dragonbox_koulu3
 packagedirs += dragonbox_numbers
+packagedirs += drawio-desktop
 packagedirs += dropbox
 packagedirs += eclipse
 packagedirs += ekapeli-alku
