@@ -2,7 +2,7 @@
 
 set -eu
 
-version=91
+version=100
 
 command=$1
 shift
