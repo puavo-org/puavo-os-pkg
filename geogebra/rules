@@ -5,100 +5,67 @@ set -eu
 command=$1
 shift
 
-links='
-/etc/geogebra
-/usr/lib/jvm/java-geogebra
-/usr/share/applications/geogebra.desktop
-/usr/share/geogebra
-/usr/share/icons/hicolor/128x128/apps/geogebra.png
-/usr/share/icons/hicolor/128x128/mimetypes/application-vnd.geogebra.file.png
-/usr/share/icons/hicolor/128x128/mimetypes/application-vnd.geogebra.tool.png
-/usr/share/icons/hicolor/16x16/apps/geogebra.png
-/usr/share/icons/hicolor/16x16/mimetypes/application-vnd.geogebra.file.png
-/usr/share/icons/hicolor/16x16/mimetypes/application-vnd.geogebra.tool.png
-/usr/share/icons/hicolor/192x192/apps/geogebra.png
-/usr/share/icons/hicolor/192x192/mimetypes/application-vnd.geogebra.file.png
-/usr/share/icons/hicolor/192x192/mimetypes/application-vnd.geogebra.tool.png
-/usr/share/icons/hicolor/22x22/apps/geogebra.png
-/usr/share/icons/hicolor/22x22/mimetypes/application-vnd.geogebra.file.png
-/usr/share/icons/hicolor/22x22/mimetypes/application-vnd.geogebra.tool.png
-/usr/share/icons/hicolor/24x24/apps/geogebra.png
-/usr/share/icons/hicolor/24x24/mimetypes/application-vnd.geogebra.file.png
-/usr/share/icons/hicolor/24x24/mimetypes/application-vnd.geogebra.tool.png
-/usr/share/icons/hicolor/256x256/apps/geogebra.png
-/usr/share/icons/hicolor/256x256/mimetypes/application-vnd.geogebra.file.png
-/usr/share/icons/hicolor/256x256/mimetypes/application-vnd.geogebra.tool.png
-/usr/share/icons/hicolor/32x32/apps/geogebra.png
-/usr/share/icons/hicolor/32x32/mimetypes/application-vnd.geogebra.file.png
-/usr/share/icons/hicolor/32x32/mimetypes/application-vnd.geogebra.tool.png
-/usr/share/icons/hicolor/36x36/apps/geogebra.png
-/usr/share/icons/hicolor/36x36/mimetypes/application-vnd.geogebra.file.png
-/usr/share/icons/hicolor/36x36/mimetypes/application-vnd.geogebra.tool.png
-/usr/share/icons/hicolor/48x48/apps/geogebra.png
-/usr/share/icons/hicolor/48x48/mimetypes/application-vnd.geogebra.file.png
-/usr/share/icons/hicolor/48x48/mimetypes/application-vnd.geogebra.tool.png
-/usr/share/icons/hicolor/64x64/apps/geogebra.png
-/usr/share/icons/hicolor/64x64/mimetypes/application-vnd.geogebra.file.png
-/usr/share/icons/hicolor/64x64/mimetypes/application-vnd.geogebra.tool.png
-/usr/share/icons/hicolor/72x72/apps/geogebra.png
-/usr/share/icons/hicolor/72x72/mimetypes/application-vnd.geogebra.file.png
-/usr/share/icons/hicolor/72x72/mimetypes/application-vnd.geogebra.tool.png
-/usr/share/icons/hicolor/96x96/apps/geogebra.png
-/usr/share/icons/hicolor/96x96/mimetypes/application-vnd.geogebra.file.png
-/usr/share/icons/hicolor/96x96/mimetypes/application-vnd.geogebra.tool.png
-/usr/share/icons/hicolor/scalable/apps/geogebra.svgz
-/usr/share/icons/hicolor/scalable/mimetypes/application-vnd.geogebra.file.svgz
-/usr/share/icons/hicolor/scalable/mimetypes/application-vnd.geogebra.tool.svgz
-/usr/share/man/man1/geogebra.1.gz
-/usr/share/mime/packages/geogebra.xml
-/usr/share/pixmaps/geogebra.png
-'
+case "$command" in
+  configure)
+    upstream_dir=$1
 
-case "${command}" in
-    configure)
-        upstream_dir=$1
+    ln -fns "$upstream_dir" /opt/geogebra
+    cat <<'EOF' > /usr/bin/geogebra
+#!/bin/sh
 
-        for f in ${links}; do
-            dir=$(dirname "${f}")
-            mkdir -p "${dir}"
-            ln -fns -T "${upstream_dir}${f}" "${f}"
-        done
-        echo geogebra >> /var/lib/puavo-pkg/.update_mime_database
-        cat <<'EOF' > /usr/bin/geogebra
-#!/bin/bash
-#---------------------------------------------
-# Script to start GeoGebra
-#---------------------------------------------
-
-#---------------------------------------------
-# Export name of this script
-
-export GG_SCRIPTNAME=$(basename $0)
-
-#---------------------------------------------
-# Export path of system directory containing geogebra.conf
-
-export GG_SYS_CONFIG_PATH='/etc/geogebra'
-
-# Fix 3d view startup on devices where default GL version is too new
-export MESA_GL_VERSION_OVERRIDE=2.0
-
-#---------------------------------------------
-# Run
-
-exec "/usr/share/geogebra/geogebra" "$@"
+# Fix 3d view startup on devices where default GL version is too new.
+# (may not be needed anymore)
+exec env MESA_GL_VERSION_OVERRIDE=2.0 /opt/geogebra/geogebra-portable "$@"
 EOF
-        chmod 0755 /usr/bin/geogebra
-        ;;
-    unconfigure)
-        rm -f ${links}
-        rm -f /usr/bin/geogebra
-        ;;
-    unpack)
-        upstream_pack=$1
-        upstream_dir=$2
-	dpkg -x "${upstream_pack}" "${upstream_dir}"
-        ;;
-    *)
-        ;;
+    chmod 755 /usr/bin/geogebra
+
+    cat <<'EOF' > /usr/local/share/applications/geogebra.desktop
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=GeoGebra
+GenericName=Dynamic mathematics software
+GenericName[cs]=Dynamický matematický software
+GenericName[de]=Dynamische Mathematiksoftware
+GenericName[el]=Λογισμικό δυναμικών μαθηματικών
+GenericName[es]=Programa de matemáticas dinámico
+GenericName[fr]=Logiciel de Mathématiques dynamiques
+GenericName[hi]=सक्रिय गणितीय सॉफ्टवेर
+GenericName[hu]=Dinamikus matematikai szoftver
+GenericName[it]=Software di matematica dinamica
+GenericName[pt_BR]=Programa de Matemática Dinâmica
+Comment=Create interactive mathematical constructions and applets. 
+Comment[cs]=Vytvořte interaktivní konstrukce a aplety.
+Comment[de]=Erstellen Sie interaktive Konstruktionen und Applets.
+Comment[el]=Δημιουργήστε αλληπειδραστικές μαθηματικές κατασκευές και applet.
+Comment[fr]=Créer des constructions mathématiques et des appliquettes.
+Comment[hi]=संवादात्मक गणितीय निर्माण और एप्लेट बनाएँ
+Comment[hu]=Interaktív matematikai szerkesztések és appletek létrehozása.
+Comment[it]=Creazione di costruzioni matematiche e applet interattive.
+Comment[pt_BR]=Crie construções matemáticas interativas e applets.
+TryExec=geogebra
+Exec=geogebra %F
+Icon=geogebra
+Terminal=false
+Type=Application
+StartupNotify=true
+StartupWMClass=geogebra-GeoGebra
+Categories=Education;Math;
+MimeType=application/vnd.geogebra.file;application/vnd.geogebra.tool;
+EOF
+    ln -fns "${upstream_dir}/geogebra.png" /usr/share/pixmaps/geogebra.png
+    ;;
+  unconfigure)
+    rm -f /opt/geogebra \
+          /usr/bin/geogebra \
+          /usr/local/share/applications/geogebra.desktop \
+          /usr/share/pixmaps/geogebra.png
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    tar -C "$upstream_dir" --strip-components=1 -jx -f "$upstream_pack"
+    cp -p geogebra.png "${upstream_dir}/geogebra.png"
+    ;;
+  *)
+    ;;
 esac
