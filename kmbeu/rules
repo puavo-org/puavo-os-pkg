@@ -5,12 +5,32 @@ set -eu
 command=$1
 shift
 
+copy_and_fix_ppd_file() {
+  local orig_path target_path tmp_target_path
+
+  orig_path=$1
+  target_path=$2
+
+  tmp_target_path="${target_path}.tmp"
+  # Without this hack we get:
+  #   FAILED validation for ... failed: "media-type-supported": Bad keyword value "thick-1(-2nd)" - invalid character (RFC 8011 section 5.1.4).
+  # or similar errors with cups version 2.3.3op2-3+deb11u9 and later on the client side
+  # This may be possible to remove once the kmbeu drivers have a fix.
+  sed '
+    /Thick/s/(/_/g; /Thick/s/)/_/g;
+    /Thin/s/(/_/g; /Thin/s/)/_/g;
+    /Recycled/s/(/_/g; /Recycled/s/)/_/g;
+    /User/s/(/_/g; /User/s/)/_/g;
+  ' "$orig_path" > "$tmp_target_path" || return 1
+  mv "$tmp_target_path" "$target_path" || return 1
+}
+
 case "$command" in
   configure)
     upstream_dir=$1
     mkdir -p /usr/share/cups/model
     for ppd in "${upstream_dir}"/*.ppd; do
-      ln -fns "${ppd}" "/usr/share/cups/model/${ppd##*/}"
+      copy_and_fix_ppd_file "$ppd" "/usr/share/cups/model/${ppd##*/}"
     done
     install -o root -g root -m 755 "${upstream_dir}/KMbeuEmpPS.pl" \
                                    /usr/lib/cups/filter/KMbeuEmpPS.pl
