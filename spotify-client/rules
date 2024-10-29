@@ -14,13 +14,13 @@ case "${command}" in
         ln -fns -T "${upstream_dir}/usr/share/doc/spotify-client" \
                     /usr/share/doc/spotify-client
         sed 's/^Icon=.*$/Icon=spotify/' /usr/share/spotify/spotify.desktop \
-            > /usr/share/applications/spotify.desktop
+            > /usr/share/applications/spotify-app.desktop
         ;;
 
     unconfigure)
-        rm -f /usr/bin/spotify                        \
-              /usr/share/applications/spotify.desktop \
-              /usr/share/doc/spotify-client           \
+        rm -f /usr/bin/spotify                            \
+              /usr/share/applications/spotify-app.desktop \
+              /usr/share/doc/spotify-client               \
               /usr/share/spotify
         ;;
 
