@@ -5,7 +5,8 @@ set -eu
 command=$1
 shift
 
-version=132.0.2
+version=133.0
+
 urlbase="https://download-installer.cdn.mozilla.net/pub/firefox/releases/${version}/linux-x86_64"
 
 setup_firefox_wrapper() {
