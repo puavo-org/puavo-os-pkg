@@ -1,38 +1,193 @@
-MICROSOFT VISUAL STUDIO CODE
-These license terms are an agreement between you and Microsoft Corporation (or based on where you live, one of its affiliates). They apply to the software named above. The terms also apply to any Microsoft services or updates for the software, except to the extent those have different terms.
+End-User License Agreement
 
-IF YOU COMPLY WITH THESE LICENSE TERMS, YOU HAVE THE RIGHTS BELOW.
+Mozaik Education (jälempänä: Mozaik) sekä Mozaik-sisältöjen (esim. mozaBook, mozaWeb, mozaLog, mozaBook Editor, Euler3D, Euklides, LabCamera, Fizika, Matek, ClapMotion, Cut n' Learn) Loppukäyttäjä.
 
-INSTALLATION AND USE RIGHTS.
-General. You may use any number of copies of the software to develop and test your applications, including deployment within your internal corporate network.
-Demo use. The uses permitted above include use of the software in demonstrating your applications.
-Third Party Components. The software may include third party components with separate legal notices or governed by other agreements, as may be described in the ThirdPartyNotices file accompanying the software.
-Extensions. The software gives you the option to download other Microsoft and third party software packages from our extension marketplace or package managers. Those packages are under their own licenses, and not this agreement. Microsoft does not distribute, license or provide any warranties for any of the third party packages. By accessing or using our extension marketplace, you agree to the extension marketplace terms located at https://aka.ms/vsmarketplace-ToU.
-DATA.
-Data Collection. The software may collect information about you and your use of the software, and send that to Microsoft. Microsoft may use this information to provide services and improve our products and services. You may opt-out of many of these scenarios, but not all, as described in the product documentation located at https://code.visualstudio.com/docs/supporting/faq#_how-to-disable-telemetry-reporting. There may also be some features in the software that may enable you and Microsoft to collect data from users of your applications. If you use these features, you must comply with applicable law, including providing appropriate notices to users of your applications together with Microsoft’s privacy statement. Our privacy statement is located at https://go.microsoft.com/fwlink/?LinkID=824704. You can learn more about data collection and use in the help documentation and our privacy statement. Your use of the software operates as your consent to these practices.
-Processing of Personal Data. To the extent Microsoft is a processor or subprocessor of personal data in connection with the software, Microsoft makes the commitments in the European Union General Data Protection Regulation Terms of the Online Services Terms to all customers effective May 25, 2018, at https://go.microsoft.com/?linkid=9840733.
-UPDATES. The software may periodically check for updates and download and install them for you. You may obtain updates only from Microsoft or authorized sources. Microsoft may need to update your system to provide you with updates. You agree to receive these automatic updates without any additional notice. Updates may not include or support all existing software features, services, or peripheral devices. If you do not want automatic updates, you may turn them off by following the instructions in the documentation at https://go.microsoft.com/fwlink/?LinkID=616397.
-FEEDBACK. If you give feedback about the software to Microsoft, you give to Microsoft, without charge, the right to use, share and commercialize your feedback in any way and for any purpose. You will not give feedback that is subject to a license that requires Microsoft to license its software or documentation to third parties because we include your feedback in them. These rights survive this agreement.
-SCOPE OF LICENSE. This license applies to the Visual Studio Code product. Source code for Visual Studio Code is available at https://github.com/Microsoft/vscode under the MIT license agreement. The software is licensed, not sold. This agreement only gives you some rights to use the software. Microsoft reserves all other rights. Unless applicable law gives you more rights despite this limitation, you may use the software only as expressly permitted in this agreement. In doing so, you must comply with any technical limitations in the software that only allow you to use it in certain ways. You may not
-reverse engineer, decompile or disassemble the software, or otherwise attempt to derive the source code for the software except and solely to the extent required by third party licensing terms governing use of certain open source components that may be included in the software;
-remove, minimize, block or modify any notices of Microsoft or its suppliers in the software;
-use the software in any way that is against the law;
-share, publish, rent or lease the software, or provide the software as a stand-alone offering for others to use.
-SUPPORT SERVICES. Because this software is “as is,” we may not provide support services for it.
-ENTIRE AGREEMENT. This agreement, and the terms for supplements, updates, Internet-based services and support services that you use, are the entire agreement for the software and support services.
-EXPORT RESTRICTIONS. You must comply with all domestic and international export laws and regulations that apply to the software, which include restrictions on destinations, end-users, and end use. For further information on export restrictions, see https://www.microsoft.com/exporting.
-APPLICABLE LAW. If you acquired the software in the United States, Washington law applies to interpretation of and claims for breach of this agreement, and the laws of the state where you live apply to all other claims. If you acquired the software in any other country, its laws apply.
-CONSUMER RIGHTS; REGIONAL VARIATIONS. This agreement describes certain legal rights. You may have other rights, including consumer rights, under the laws of your state or country. Separate and apart from your relationship with Microsoft, you may also have rights with respect to the party from which you acquired the software. This agreement does not change those other rights if the laws of your state or country do not permit it to do so. For example, if you acquired the software in one of the below regions, or mandatory country law applies, then the following provisions apply to you:
-Australia. You have statutory guarantees under the Australian Consumer Law and nothing in this agreement is intended to affect those rights.
-Canada. If you acquired this software in Canada, you may stop receiving updates by turning off the automatic update feature, disconnecting your device from the Internet (if and when you re-connect to the Internet, however, the software will resume checking for and installing updates), or uninstalling the software. The product documentation, if any, may also specify how to turn off updates for your specific device or software.
-Germany and Austria.
-Warranty. The properly licensed software will perform substantially as described in any Microsoft materials that accompany the software. However, Microsoft gives no contractual guarantee in relation to the licensed software.
-Limitation of Liability. In case of intentional conduct, gross negligence, claims based on the Product Liability Act, as well as, in case of death or personal or physical injury, Microsoft is liable according to the statutory law.
-Subject to the foregoing clause (ii), Microsoft will only be liable for slight negligence if Microsoft is in breach of such material contractual obligations, the fulfillment of which facilitate the due performance of this agreement, the breach of which would endanger the purpose of this agreement and the compliance with which a party may constantly trust in (so-called "cardinal obligations"). In other cases of slight negligence, Microsoft will not be liable for slight negligence.
+If there is no other written agreement between Mozaik and End-User in connection with the use of Mozaik Contents, then the provisions of this End-User License Agreement (EULA) shall govern the use of any Mozaik Contents. Mozaik reserves the right to modify this EULA at any time.
 
-DISCLAIMER OF WARRANTY. The software is licensed “as-is.” You bear the risk of using it. Microsoft gives no express warranties, guarantees or conditions. To the extent permitted under your local laws, Microsoft excludes the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
-LIMITATION ON AND EXCLUSION OF DAMAGES. You can recover from Microsoft and its suppliers only direct damages up to U.S. $5.00. You cannot recover any other damages, including consequential, lost profits, special, indirect or incidental damages.
+1. Definitions
+1.1. Basic End-User Data is information provided to Mozaik by the End-User at the time of registration necessary for the use of Mozaik Contents, including the mozaLogin identifier and other login information. Basic End-User Data shall be in particular: Full Name, E-mail Address, Country, Territorial Unit (country, province, area, etc.), Town/City. Basic End-User Data that can be provided optionally are: Postcode, Full Residential Address, Telephone Number, Name of Educational Institution.
 
-This limitation applies to (a) anything related to the software, services, content (including code) on third party Internet sites, or third party applications; and (b) claims for breach of contract, breach of warranty, guarantee or condition, strict liability, negligence, or other tort to the extent permitted by applicable law.
+1.2. Mozaik Content(s): a complex set of intellectual property produced and developed by Mozaik, with basic but non-exclusive components made up of information, software, data, including among others including among others any hypertext markup language files, command files, computer programs, picture and sound recordings, audio, video, music and graphics files, photos, 3D animations, widgets, the trademarked denomination and the trademarked trade dress and design, particularly but not exclusively the mozaLearn, mozaBook, mozaWeb, mozaLibrary, mozaTools trademarks and the connected logos and trade dress or design elements.
 
-It also applies even if Microsoft knew or should have known about the possibility of the damages. The above limitation or exclusion may not apply to you because your state or country may not allow the exclusion or limitation of incidental, consequential or other damages.
+The End-Users through their Restricted Right to Use reach the Mozaik Content “as is” and “as available”, together with all existing deficiencies and without any warranties or guarantees made by Mozaik.
+
+Mozaik Contents include any updates, amendments or version control of Mozaik Contents. Mozaik shall not be obliged to make updates and version control available to the End-Users.
+
+End-User shall receive hotfixes and updates for Mozaik Contents from Mozaik or from the Operator. End-Users acknowledge that only such End-Users are entitled to receive updates and other Mozaik Services who have valid and effective Restricted Rights to Use Mozaik Contents.
+
+1.3. End-User Content shall mean any data or information in the form of images, pictures, voice recording or audio footage, letters, numbers, signs, characters, and the like created by the End-User in the course of using Mozaik Content.
+
+1.4. Sharing shall mean sending in an electronic mail or other posting (internet publication), transmission, uploading or making available by other means through use of Mozaik Contents by the given End-User.
+
+1.5. Intellectual Property Rights: copyright, moral rights, trademarks, trade dress, patent or any other copyrights or ownership right.
+
+1.6. Law shall mean any applicable law or regulation, generally accepted practice or guideline under any jurisdiction, especially in the protection of intellectual property rights and any regulation pertinent to the sale of Mozaik Contents or the data transfer from and to or within the Geographic Area and Hungary, including the rules of international and EU law.
+
+1.7. Trade Dress shall mean any trademarks, logos and other marks appearing on Mozaik Contents.
+
+1.8. Operator: contracting partner or contractor of Mozaik, with the cooperation of whom the EULA is concluded with the End-Users.
+
+1.9. The Restricted to Use Mozaik Contents shall mean such non-exclusive right to use the above Contents that may not be transferred to Third Parties nor otherwise conceded to them for nay reason, and it shall nto extend to the following rights: multiplication, reverse engineering, modification, processing, or translation of Mozaik Content or any multiplication of the result of the above, not even in the case if the Licensee or the End-User carry out these actions in harmony with the purpose of Mozaik Content.
+
+Furthermore, the Restricted Right to Use shall not extend to the distribution and dissemination, public presentation or performance, broadcast of Mozaik Content to the public through broadcasting or other means or broadcasting through other organizations.
+
+Moreover, the Restricted Right to Use shall not extend to the transfer or concession for any reason to Third Parties of the right to disseminate or distribute, reverse engineer, modify, process, or translate Mozaik Content or multiply the results thereof, neither of the right to the public performance or presentation, or to broadcast Mozaik Content to the public through broadcasting or other means or broadcasting through other organizations.
+
+The Operator and the End-Users shall exclusively entitled to take the following actions with Mozaik Contents within the framework of the Contract: they can upload the Mozaik Contents to their own hardware, display, run, store and obtain user-level knowledge thereon to an extent and in a manner allowed and defined by the Licensor.
+
+End-Users shall not be entitled to display Mozaik Contents in front of Third Parties or End-User Contents for a non-educational purpose, in particular they shall not be entitled to display the above Contents in front of Third Parties in order to present the operation and/or structure of any works of art that form part of Mozaik Contents and therefore are under copyright protection.
+
+1.10. Unauthorized Use: any acts in violation of the restrictions set forth in this EULA on the Restricted Right to Use that thereby infringes or endangers the rights of Mozaik.
+
+1.11. Third Party: any natural or legal persons outside Mozaik, the Operator or End-User.
+
+1.12. In the application and interpretation of this EULA the terms ‘Creation’, ‘create’, ‘created’ and their conjugated forms shall mean – without regard to context – in every case, and particularly but not exclusively, such actions as creating, uploading, publishing, sharing, modifying, editing and the like.
+
+2. Privacy Policy and End-User Consent to the Processing of Basic End-User Data and other End-User Data
+2.1. In terms of the data protection and data collection practice of Mozaik please read our Privacy Policy, the provisions of which form an integral part of this EULA.
+
+By signing this EULA or by commencing the exercise of the Restricted Right to Use Mozaik Contents, the End-Users agree that Mozaik processes their personal data in accordance with the Privacy Policy and the Law.
+
+2.2. By signing this EULA, the End-User specifically agrees that Mozaik shall be entitled to process any data provided by the End-User in harmony with the objectives specified below.
+
+Any processing of personal data by Mozaik may be directed to:
+
+(i) Processing of Basic End-User Data for registration and registering purposes;
+
+(ii) Preparation of Anonymous User Statistics,
+
+(iii) Measuring the use of certain functions,
+
+(iv) Collecting data supporting the necessity to develop the use, dress (look and feel), structure of Mozaik Contents.
+
+3. Conclusion and Termination of EULA
+3.1. The EULA is concluded and enters into force between Mozaik and End-User on the date when the End-User commences the exercise of its Restricted Right to Use, lawfully acquired from the Operator, in terms of any of the Mozaik Contents, irrespective of the fact whether the End-User signs the EULA or not. Any such conduct shall be understood as a commencement of the exercise of the Restricted Right to Use that is realized by the End-User in order to access, install, display or use Mozaik Contents.
+
+By commencing to use any of the Mozaik Contents through their Restricted Right to Use, End-Users accept that the provisions of this EULA are binding on them. Should the End-User not agree with the conditions of the EULA, they are encouraged not to install or use mozaik Contents, and if presented with a choice between “Accept” “Do Not Accept” in terms of the conditions of the EULA, then choose “Do Not Accept”.
+
+3.2. The EULA shall terminate on the date when the Subscription Period of the Operator to use Mozaik Contents expires.
+
+On the date of termination of this EULA, the Restricted Right to Use of End-Users as per Clause 1.9 to use Mozaik Contents shall terminate without any further action; therefore, they shall cease any use of Mozaik Contents.
+
+4. The Use of Mozaik Contents
+4.1. Mozaik shall not be obliged to make the End-Users hardware compatible to receive, run or use the Mozaik Contents.
+
+4.2. If End-User complies with the provisions of this EULA, then any Restricted Rights to Use, as per EULA Clause 1.9, lawfully granted to End-Users in terms of any of the Mozaik Contents shall be considered as permitted by Mozaik as well.  
+
+In relation to copyright issues, the substantive rules of Hungarian copyright law shall be exclusively applicable.
+
+4.3. No rights transferred to the End-User under this EULA shall be transferred nor otherwise conceded for any reason to Third Parties.
+
+4.4. End-User acknowledges that in the course of activating Mozaik Contents, Mozaik Contents send data on the Mozaik Contents and on the computer to Mozaik. Such data include the version number, licence version, language and product key of Mozaik Contents, the IP address of the computer, and data on the hardware configuration of the computer. If the computer, from which the licensed Mozaik Contents, is connected to the internet, the Mozaik Contents automatically connect to the system of Mozaik for the purpose of activation and controlling lawful use.
+
+Activation of Mozaik Contents is unsuccessful if in the course of online activation the licencing or activation services of the Mozaik Contents seem to be fake or not disposing of the necessary End-User rights. Mozaik Contents then shall inform the End-User on the fact that the installed or used copy of Mozaik Contents can be accessed with a Restricted Right to Use or not.
+
+4.4. In relation to Mozaik Content, the End-User agrees:
+
+not to change, copy, modify or transfer Mozaik Content; 
+
+not to transfer or concede, lease, rent or sell the right to access and use the Mozaik Content to Third Parties, and not to display Mozaik Contents in front of Third Parties or End-User Contents for non-educational purposes, in particular, not to display the above Contents in front of Third Parties in order to present the operation and/or structure of any works of art that form part of Mozaik Contents and therefore are under copyright protection. 
+
+not to copy or imitate the copyright protected design, appearance, look and feel, trade dress of Mozaik Contents or any part thereof; 
+
+to use Mozaik Contents in a manner and to the extent permitted by this EULA and the Law; and 
+
+that certain Mozaik Contents are only available upon the payment of certain fees or upon providing Basic End-User Data. 
+
+5. Basic End-User Data and other Data
+5.1. End-User shall cause the Basic End-User Data and other Data to be full, complete, correct and up-to-date at all times.
+
+5.2. End-User shall be responsible to treat any data relevant to access (password and login identifiers) as confidential at all times. End-Users shall be liable to Mozaik for all their activities carried out in contractual manner under the EULA or in breach thereof. End-Users shall be obliged to compensate any and all damages to Mozaik arising out of any breach of the EULA.
+
+End-Users shall do everything in their power to protect the rights of Mozaik, and if they detect that anyone infringes the rights of Mozaik or any danger thereof, then they shall promptly inform Operator and Mozaik thereon. Failing to do so results in an obligation to pay damages to Mozaik.
+
+End-Users shall take every necessary and possible measure to obstruct unlawful and unauthorized access to their End-User Account. Should anyone access their End-User Account in an unauthorized manner, then the End-User shall be obliged to pay full damages to Mozaik for any damages arising out of such event.
+
+End-User Account shall mean the technical access point, through which the End-User can lawfully access Mozaik Contents.
+
+6. End-User Obligations
+6.1. End-User agrees not to use Mozaik Contents to realize either of the following:
+
+to share End-User Content that is unlawful, harmful, threatening, offensive, defamatory, incendiary, vulgar, obscene, pornographic, lewd, profane, violative of privacy, incites ethnic, religious or racial hatred or is suitable to achieve such goals, or is otherwise objectionable.  
+
+to stalk, harass or intimidate others 
+
+to incite other to commit violence 
+
+to cause harm to minors in any way 
+
+to share End-User Content that it could otherwise not share due to lack of authorization under the Law or other contractual or fiduciary obligations 
+
+to share Content in violation of the ownership rights, copyrights or trademarks of anyone 
+
+to share End-User Content containing viruses or any other code, files or programs that can be used to destroy or disrupt or restrict the operation of any software, hardware or telecommunication equipment, or to the unauthorized tampering or surveillance of the above. 
+
+to access and use Mozaik Contents in a manner that might cause harm to, render dysfunctional, override, surge or otherwise limit any Mozaik servers or adjacent networks 
+
+to deliberately or negligently disturb or interrupt the functioning of Mozaik Contents, to act in a manner prohibited by this EULA in violation of any requirements, procedures or regulations relevant to provisions applicable to access or use Mozaik Contents or to networks adjacent to Mozaik Contents. 
+
+to obstruct, disturb or interrupt other End-Users in using Mozaik Contents or any relevant site, Mozaik Contents. 
+
+to reproduce, sell, distribute, resale or otherwise market Mozaik Content, to access Mozaik Content in an unauthorized manner or to use Mozaik Products and Content in an unlawful fashion 
+
+6.2. End-User shall not use the Mozaik Contents for unlawful or unauthorized purposes. End-User agrees to observe the provisions of any Laws, including, without limitations, laws on copyright pertinent to the use of Mozaik Content by the End-User.
+
+6.3. End-User shall not create access to use Mozaik Contents through unauthorized means, including, but not exclusively, automated means, scripts, bots, spiders, crawlers or scrapers.
+
+If and when materials are multiplied, modified, published or distributed via Mozaik Contents then these may only be such materials that are not protected by copyright, and the End-User disposes of any copyrights in those, or with a lawful permit to copy, modify, publish or distribute them.
+
+6.4. End-User shall be liable for any copyright claims by Third Parties based on any End-User Content created, downloaded, multiplied, adapted, published, distributed, shared via or by Mozaik Contents. In terms of all elements of End-User Content the End-User shall exclusively be liable that no elements fall under copyright protection, or if so, then the End-User shall dispose of the entirety of those rights that make the End-User entitled beyond doubt under the relevant Law to use the given Content. In the case of any breach of this provision, in case Third Parties shall have claims against Mozaik, then Mozaik shall be exempt from any of these claims by naming the End-User, and the End-User shall promptly remedy the situation of Mozaik as if none of the above claims were asserted against it.
+
+7. Use Rights
+7.1. Every right in Mozaik Contents as intellectual properties shall lie with Mozaik.
+
+In a subscription construction, the Restructed Right to Use Mozaik Contents entitles the End-User based on this EULA for the Subscription Period, on the term of which the End-User may request information from the Licensee. Trial (demo) versions of the Mozaik Contents may be used within the trial period.
+
+Mozaik shall not be liable for any damages arising out of the use Mozaik Contents, or for any deficiencies they might have, or any consequences thereof.
+
+7.2. If the End-Users license Mozaik Contents on a subscription basis, then their rights shall be limited to the term of the Subscription Period. End-Users shall have the right to renew their subscription. Should End-Users renew their subscriptions, they shall be entitled to continue using Mozaik Contents until the end of the renewed Subscription Period. Information on the detail of the subscription may be acquired on the activation screens of Mozaik Contents, on other accompanying material or at the service provider. Following the expiry of subscription, the functions of Mozaik Contents shall no longer be available as per this EULA.
+
+7.3. It might occur that any or all Mozaik Contents are used on a trial basis. The use of the trial version shall be limited to the trial period. The trial version and the length of the trial run are described in the course of the activation process. End-Users shall have the right to convert any right to use the trial version into subscription rights. Notifications on this possibility to convert are issued at the end of the trial period. Following the expiry of the trial period, if no conversion was made, most of the functions of the trial version shall cease to operate.
+
+The use permit shall ensure rights to the End-Users for the trial use of the Mozaik Content “as is”. The Ends-Users shall bear all the risks arising out of the use of Mozaik Contents as a trial version. Mozaik shall not make any explicit or express warranties or guarantees.
+
+7.4. If the End-User is informed on Unauthorized Use by Third Parties then it shall be obliged to take every step to terminate such use and shall inform Mozaik in writing – through Operator – on any information relevant to Unauthorized Use. The Operator manages the administration surfaces accessible by End-Users, thus End-Users shall make the above notification to the Operator. End-Users shall be entitled to contact the Operator with problems in the use of Mozaik Contents.
+
+7.5. Mozaik shall have no ownership claims to End-User Content created by the End-User through Mozaik Contents. Instead, by signing this EULA, the End-User grants Mozaik a free of charge, non-exclusive right to use such End-User Content, transferable for use in an unlimited fashion.
+
+7.6. The Mozaik name and logo are the trademarks of Mozaik Publishing House Ltd and any copying, imitation or use of these or any part thereof shall be prohibited absent the prior written consent of Mozaik.
+
+7.7. Mozaik shall take every reasonable step to guarantee the availability and accessibility of Mozaik Contents for a daily twenty-four (24) hours on all seven (7) days of the week. However, there will be occasions, when Mozaik Contents will be interrupted due to maintenance, update or repairs, or it might be interrupted due to the failure of telecommunication equipment or connections beyond the control and competence of Mozaik. Within its control and competence, Mozaik shall take every reasonable step to minimize such interruptions in operation.
+
+7.8. With or without notification, Mozaik shall be entitled to modify or permanently or temporarily terminate the service of Mozaik Content. End-User accepts that Mozaik shall not be liable to End-Users or others, if acting according to the above.
+
+7.9. Mozaik encourages the End-User to make a backup copy on any End-User Content used or managed. Mozaik Contents are not services through which backup copies could be made, and End-Users shall not rely on Mozaik Contents for the purposes of making backup copies or to store data. Mozaik shall not be liable for any change, suspension, termination or loss of End-User Content.
+
+7.10. End-User declares that Mozaik shall not be liable for End-User Content created through Mozaik Contents. Mozaik shall not be obliged to filter, monitor, edit or remove any Mozaik Content and/or End-User Content.
+
+If End-User Content violates the provisions of this EULA, then the End-User shall exclusively be legally liable for said End-User Content.
+
+7.11. Mozaik respects the rights of others; the End-User is expected to do so as well.
+
+8. Warranties and Liability Disclaimers
+8.1. Mozaik does not warrant the error-freeness, the functionality, the capacity of Mozaik Contents and in particular the compatibility thereof with End-User hardware. Neither Mozaik, nor its employees, executives, officers or agents (jointly: Mozaik) are entitled to make express or implied warranties in terms of Mozaik Contents and/or End-User Content and in relation to the safety of information provided to Mozaik through Mozaik Contents.
+
+8.2. Mozaik does not warrant that Mozaik Contents are error-free or able to operate in an uninterrupted manner. Mozaik does not warrant that errors will be corrected or that the server enabling access to Mozaik Contents is free from harmful components, including, without limitations, viruses.
+
+8.3. Mozaik does not warrant that information relevant to Mozaik Contents (including any instructions) are correct, comprehensive or useful. End-Users acknowledge that they use Mozaik Contents at their own risk.
+
+8.4. Through the installation and/or use of Mozaik Contents, the End-Users acknowledge and assure that their activities are lawful in any such territory where they have access Mozaik Contents or use them.
+
+8.5. Mozaik shall not assume financial liability and refuses any other responsibility to anyone for any loss or damage, be it actual, incidental, consequential or punitive damages, including but not limited to damages arising out of loss of profts, data loss or data corruption, any errors in sending or receiving data, or other liability, or personal injury, claim, payment obligation or other reason, arising from or under the Mozaik Contents or in connection therewith.
+
+The extent of the full liability of Mozaik shall in no case exceed two hundred euros (200 EUR) to a given End-User.
+
+8.6. Should the End-User breach any of the provisions of this EULA in a repeated fashion or in a material manner, or otherwise be liable to Mozaik to pay damages, then Mozaik shall be entitled to immediately terminate the Restricted Right to Use of the End-User and to immediately preclude End-User from further use of Mozaik Products through the application of technical tools. Should the End-User remedy the breach of contract and compensate for any harmful consequences as per an agreement with Mozaik, then Mozaik shows a willingness to make arrangements for restitution.
+
+8.7. Mozaik shall take any necessary measures against any actual or assumed attack on Mozaik Contents or the suspicion thereof in order to prevent harm, and as part of such activity, there might be occasions, when the End-Users’ rights are temporarily limited. End-Users acknowledge the above and at the same time waive any compensation claims they might have due to the above against Mozaik.
+
+9. Applicable Law
+9.1. The substantive rules of the Hungarian Civil Code shall be applied to this EULA. The General Terms and Conditions of the License Contract between Operator and Mozaik may be used in the interpretation of this EULA.
+
+
+Date: 15/12/2013
