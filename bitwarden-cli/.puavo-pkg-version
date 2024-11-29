@@ -1,5 +1,5 @@
 name bitwarden-cli
-package-id f7502549b9a169f4c486567c2f1bcf61
+package-id 0c356fc90b0878d1a0b6304a40931c79
 pkg-format 2
-timestamp 2024-11-15T09:41:12+02:00
-version 27
+timestamp 2024-11-29T10:15:51+02:00
+version 28
