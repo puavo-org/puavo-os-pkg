@@ -68,6 +68,7 @@ packagedirs += launcherone
 packagedirs += lmaths
 packagedirs += logicsim3
 packagedirs += lumidesktop
+packagedirs += m3dviewer
 packagedirs += mafynetti
 packagedirs += marvinsketch
 packagedirs += mathpix

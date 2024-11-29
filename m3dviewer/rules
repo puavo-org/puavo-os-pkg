@@ -1,0 +1,49 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+links='
+   /opt/mozaik
+   /usr/share/applications/m3d.desktop
+   /usr/share/mime/packages/code-workspace.xml
+   /usr/share/pixmaps/m3dviewer.png
+'
+
+
+case "${command}" in
+    configure)
+        upstream_dir=$1
+        for f in $links; do
+          mkdir -p "$(dirname "$f")"
+          ln -fns -T "${upstream_dir}/${f}" "$f"
+        done
+        ln -s -f /opt/mozaik/m3dviewer/m3dviewer.amd64 /usr/bin/m3dviewer
+        ;;
+    download)
+        upstream_pack=$1
+        download_url='https://download.mozaweb.com/m3dviewer/m3dViewer_2.0.633_x64.deb'
+        wget --user-agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" \
+             --no-use-server-timestamps         \
+             --no-cookies                       \
+             --output-document "$upstream_pack" \
+             --progress=dot:mega "$download_url" || {
+          [ $? -eq 4 ] && exit 2 ## Network failure.
+          exit 1
+        }
+        ;;
+
+    unconfigure)
+        rm -f $links
+        ;;
+    unpack)
+        upstream_pack=$1
+        upstream_dir=$2
+
+        dpkg -x "$upstream_pack" "$upstream_dir"
+        ;;
+    *)
+        ;;
+esac
