@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -eu
+
+configfile="$HOME/.config/discord/settings.json"
+tmpfile="${configfile}.tmp"
+
+if ! { [ -e "$configfile" ] && [ "$(json_pp < "$configfile")" ]; }; then
+  jq --null-input '.SKIP_HOST_UPDATE=true' > "$tmpfile"
+else
+  jq '.SKIP_HOST_UPDATE=true' "$configfile" > "$tmpfile"
+fi
+mv "$tmpfile" "$configfile"
+
+exec /usr/share/discord/Discord.orig "$@"
