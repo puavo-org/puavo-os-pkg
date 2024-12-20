@@ -8,12 +8,15 @@ baseurl='https://dl.google.com/linux/chrome/deb'
 url=$(
   wget -q -O - "${baseurl}/dists/stable/main/binary-amd64/Packages" \
     | awk -v "baseurl=${baseurl}" '
+       BEGIN { found = 0 }
        $1 == "Package:" && $2 == "google-chrome-stable" {
          in_stable_section = 1
        }
        in_stable_section && $1 == "Filename:" {
-         print baseurl "/" $2
-         exit(0)
+         if (!found) {
+           print baseurl "/" $2
+           found = 1
+         }
       }')
 
 if [ -z "$url" ]; then
