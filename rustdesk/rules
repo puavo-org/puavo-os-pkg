@@ -10,21 +10,18 @@ case "${command}" in
     configure)
     upstream_dir=$1
 
-    mkdir -p /usr/lib/rustdesk
-    ln -fns "${upstream_dir}/usr/lib/rustdesk" /usr/lib/rustdesk
-    ln -fns "${upstream_dir}/usr/lib/rustdesk/rustdesk" /usr/bin/rustdesk
+    ln -fns "${upstream_dir}/usr/share/rustdesk" /usr/share/rustdesk
+    ln -fns "${upstream_dir}/usr/share/rustdesk/rustdesk" /usr/bin/rustdesk
     ln -fns "${upstream_dir}/usr/share/applications/rustdesk.desktop" /usr/share/applications/rustdesk.desktop
-    mkdir -p /usr/share/rustdesk/files/
     ln -fns "${upstream_dir}/usr/share/icons/hicolor/256x256/apps/rustdesk.png" /usr/share/icons/hicolor/256x256/apps/rustdesk.png
     ln -fns "${upstream_dir}/usr/share/icons/hicolor/scalable/apps/rustdesk.svg" /usr/share/icons/hicolor/scalable/apps/rustdesk.svg
     ;;
     unconfigure)
     rm -f /usr/bin/rustdesk \
-          /usr/lib/rustdesk/rustdesk \
           /usr/share/applications/rustdesk.desktop \
           /usr/share/icons/hicolor/256x256/apps/rustdesk.png \
-          /usr/share/icons/hicolor/scalable/apps/rustdesk.svg
-    rmdir /usr/share/rustdesk/files /usr/share/rustdesk /usr/lib/rustdesk
+          /usr/share/icons/hicolor/scalable/apps/rustdesk.svg \
+          /usr/share/rustdesk
     ;;
 
     unpack)
