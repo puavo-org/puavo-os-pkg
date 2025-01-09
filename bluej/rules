@@ -25,7 +25,7 @@ case "${command}" in
     done
 
     # use system openjdk for Java
-    sed '/^JAVAPATH/s|/usr/share/bluej/jdk|/usr/lib/jvm/java-11-openjdk-amd64|' \
+    sed '/^JAVAPATH/s|/usr/share/bluej/jdk|/usr/lib/jvm/default-java|' \
       "${upstream_dir}/usr/bin/bluej" > /usr/local/bin/bluej.tmp
     chmod 755 /usr/local/bin/bluej.tmp
     mv /usr/local/bin/bluej.tmp /usr/local/bin/bluej
