@@ -9,12 +9,13 @@ case "$command" in
   configure)
     upstream_dir=$1
     ln -fns "${upstream_dir}/Nextcloud Talk-linux-x64" /opt/nextcloud-talk
+    ln -fns "/opt/nextcloud-talk/Nextcloud Talk" /usr/bin/nextcloud-talk
     ln -fns "${upstream_dir}/nextcloud-talk.png" /usr/share/icons/nextcloud-talk.png
 
     cat <<'EOF' > /usr/share/applications/nextcloud-talk.desktop
 [Desktop Entry]
 Name=Nextcloud Talk
-Exec=/opt/nextcloud-nextcloud-talk/Nextcloud Talk
+Exec=/usr/bin/nextcloud-talk
 Type=Application
 Terminal=false
 Icon=nextcloud-talk
@@ -25,13 +26,15 @@ EOF
   unconfigure)
     rm -f /opt/nextcloud-talk \
           /usr/share/applications/nextcloud-talk.desktop \
-          /usr/share/icons/nextcloud-talk.png
+          /usr/share/icons/nextcloud-talk.png \
+          /usr/bin/nextcloud-talk
     ;;
   unpack)
     upstream_pack=$1
     upstream_dir=$2
     unzip -q -d "$upstream_dir" "$upstream_pack"
     chmod 755 "${upstream_dir}/Nextcloud Talk-linux-x64"
+    cp -p nextcloud-talk.png "$upstream_dir"
     ;;
   *)
     ;;
