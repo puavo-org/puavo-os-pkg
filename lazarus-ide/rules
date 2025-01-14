@@ -8,122 +8,121 @@ shift
 urlbase='https://deac-fra.dl.sourceforge.net/project/lazarus/Lazarus%20Linux%20amd64%20DEB/Lazarus%203.6/'
 
 links='
-/usr/bin/mkx86ins
-/usr/bin/fp
-/usr/bin/ptop
-/usr/bin/fppkg
-/usr/bin/fd2pascal
-/usr/bin/fpcres
-/usr/bin/fpclasschart
-/usr/bin/rstconv
-/usr/bin/ppufiles
-/usr/bin/fpcmkcfg
-/usr/bin/postw32
-/usr/bin/makeskel
-/usr/bin/chmls
-/usr/bin/fpcjres
-/usr/bin/pas2ut
-/usr/bin/fpdoc
-/usr/bin/ppudump
-/usr/bin/chmcmd
-/usr/bin/mkarmins
-/usr/bin/lazarus-ide
-/usr/bin/delp
-/usr/bin/h2pas
-/usr/bin/cldrparser
-/usr/bin/ppdep
-/usr/bin/json2pas
-/usr/bin/instantfpc
-/usr/bin/h2paspp
-/usr/bin/plex
-/usr/bin/webidl2pas
-/usr/bin/mka64ins
-/usr/bin/pyacc
-/usr/bin/data2inc
-/usr/bin/pas2js
-/usr/bin/startlazarus
-/usr/bin/unihelper
-/usr/bin/mkinsadd
-/usr/bin/rmcvsdir
-/usr/bin/lazbuild
-/usr/bin/bin2obj
-/usr/bin/unitdiff
-/usr/bin/fpc
-/usr/bin/fpcmake
-/usr/bin/grab_vcsa
-/usr/bin/fprcp
-/usr/bin/ppumove
-/usr/bin/compileserver
-/usr/bin/pas2jni
-/usr/bin/pas2fpm
-/usr/bin/fpcsubst
-/usr/lib/fpc
-/etc/lazarus
-/usr/lib/fpc
-/usr/share/applications/lazarus.desktop
-/usr/share/doc/fpc-3.2.2
-/usr/share/doc/fpc-laz
-/usr/share/doc/fpc-src
-/usr/share/doc/lazarus-project
-/usr/share/fpcsrc
-/usr/share/lazarus
-/usr/share/lintian/overrides/fpc-laz
-/usr/share/lintian/overrides/fpc-src
-/usr/share/lintian/overrides/fpc-src
-/usr/share/man/man1/grab_vcsa.1.gz
-/usr/share/man/man1/svn2revisioninc.1.gz
-/usr/share/man/man1/lazres.1.gz
-/usr/share/man/man1/h2pas.1.gz
-/usr/share/man/man1/rstconv.1.gz
-/usr/share/man/man1/fpcsubst.1.gz
-/usr/share/man/man1/fpc.1.gz
-/usr/share/man/man1/ppcx64.1.gz
-/usr/share/man/man1/ppc386.1.gz
-/usr/share/man/man1/fppkg.1.gz
-/usr/share/man/man1/ppcppc.1.gz
-/usr/share/man/man1/fprcp.1.gz
-/usr/share/man/man1/pas2ut.1.gz
-/usr/share/man/man1/chmls.1.gz
-/usr/share/man/man1/fpdoc.1.gz
-/usr/share/man/man1/ppcsparc.1.gz
-/usr/share/man/man1/fpclasschart.1.gz
-/usr/share/man/man1/fpcmkcfg.1.gz
-/usr/share/man/man1/lazbuild.1.gz
-/usr/share/man/man1/fpcjres.1.gz
-/usr/share/man/man1/ppdep.1.gz
-/usr/share/man/man1/unitdiff.1.gz
-/usr/share/man/man1/pas2fpm.1.gz
-/usr/share/man/man1/startlazarus.1.gz
-/usr/share/man/man1/ppumove.1.gz
-/usr/share/man/man1/chmcmd.1.gz
-/usr/share/man/man1/postw32.1.gz
-/usr/share/man/man1/h2paspp.1.gz
-/usr/share/man/man1/rmcvsdir.1.gz
-/usr/share/man/man1/fp.1.gz
-/usr/share/man/man1/makeskel.1.gz
-/usr/share/man/man1/delp.1.gz
-/usr/share/man/man1/ppudump.1.gz
-/usr/share/man/man1/updatepofiles.1.gz
-/usr/share/man/man1/ppcarm.1.gz
-/usr/share/man/man1/bin2obj.1.gz
-/usr/share/man/man1/ppufiles.1.gz
-/usr/share/man/man1/fpcres.1.gz
-/usr/share/man/man1/pas2jni.1.gz
-/usr/share/man/man1/fd2pascal.1.gz
-/usr/share/man/man1/lazarus-ide.1.gz
-/usr/share/man/man1/pyacc.1.gz
-/usr/share/man/man1/ptop.1.gz
-/usr/share/man/man1/data2inc.1.gz
-/usr/share/man/man1/plex.1.gz
-/usr/share/man/man1/fpcmake.1.gz
-/usr/share/mime/packages/lazarus.xml
-/usr/share/pixmaps/lazarus.png'
+  /etc/lazarus
+  /usr/bin/bin2obj
+  /usr/bin/chmcmd
+  /usr/bin/chmls
+  /usr/bin/cldrparser
+  /usr/bin/compileserver
+  /usr/bin/data2inc
+  /usr/bin/delp
+  /usr/bin/fd2pascal
+  /usr/bin/fp
+  /usr/bin/fpc
+  /usr/bin/fpcjres
+  /usr/bin/fpclasschart
+  /usr/bin/fpcmake
+  /usr/bin/fpcmkcfg
+  /usr/bin/fpcres
+  /usr/bin/fpcsubst
+  /usr/bin/fpdoc
+  /usr/bin/fppkg
+  /usr/bin/fprcp
+  /usr/bin/grab_vcsa
+  /usr/bin/h2pas
+  /usr/bin/h2paspp
+  /usr/bin/instantfpc
+  /usr/bin/json2pas
+  /usr/bin/lazarus-ide
+  /usr/bin/lazbuild
+  /usr/bin/makeskel
+  /usr/bin/mka64ins
+  /usr/bin/mkarmins
+  /usr/bin/mkinsadd
+  /usr/bin/mkx86ins
+  /usr/bin/pas2fpm
+  /usr/bin/pas2jni
+  /usr/bin/pas2js
+  /usr/bin/pas2ut
+  /usr/bin/plex
+  /usr/bin/postw32
+  /usr/bin/ppdep
+  /usr/bin/ppudump
+  /usr/bin/ppufiles
+  /usr/bin/ppumove
+  /usr/bin/ptop
+  /usr/bin/pyacc
+  /usr/bin/rmcvsdir
+  /usr/bin/rstconv
+  /usr/bin/startlazarus
+  /usr/bin/unihelper
+  /usr/bin/unitdiff
+  /usr/bin/webidl2pas
+  /usr/lib/fpc
+  /usr/lib/fpc
+  /usr/share/applications/lazarus.desktop
+  /usr/share/doc/fpc-3.2.2
+  /usr/share/doc/fpc-laz
+  /usr/share/doc/fpc-src
+  /usr/share/doc/lazarus-project
+  /usr/share/fpcsrc
+  /usr/share/lazarus
+  /usr/share/lintian/overrides/fpc-laz
+  /usr/share/lintian/overrides/fpc-src
+  /usr/share/lintian/overrides/fpc-src
+  /usr/share/man/man1/bin2obj.1.gz
+  /usr/share/man/man1/chmcmd.1.gz
+  /usr/share/man/man1/chmls.1.gz
+  /usr/share/man/man1/data2inc.1.gz
+  /usr/share/man/man1/delp.1.gz
+  /usr/share/man/man1/fd2pascal.1.gz
+  /usr/share/man/man1/fp.1.gz
+  /usr/share/man/man1/fpc.1.gz
+  /usr/share/man/man1/fpcjres.1.gz
+  /usr/share/man/man1/fpclasschart.1.gz
+  /usr/share/man/man1/fpcmake.1.gz
+  /usr/share/man/man1/fpcmkcfg.1.gz
+  /usr/share/man/man1/fpcres.1.gz
+  /usr/share/man/man1/fpcsubst.1.gz
+  /usr/share/man/man1/fpdoc.1.gz
+  /usr/share/man/man1/fppkg.1.gz
+  /usr/share/man/man1/fprcp.1.gz
+  /usr/share/man/man1/grab_vcsa.1.gz
+  /usr/share/man/man1/h2pas.1.gz
+  /usr/share/man/man1/h2paspp.1.gz
+  /usr/share/man/man1/lazarus-ide.1.gz
+  /usr/share/man/man1/lazbuild.1.gz
+  /usr/share/man/man1/lazres.1.gz
+  /usr/share/man/man1/makeskel.1.gz
+  /usr/share/man/man1/pas2fpm.1.gz
+  /usr/share/man/man1/pas2jni.1.gz
+  /usr/share/man/man1/pas2ut.1.gz
+  /usr/share/man/man1/plex.1.gz
+  /usr/share/man/man1/postw32.1.gz
+  /usr/share/man/man1/ppc386.1.gz
+  /usr/share/man/man1/ppcarm.1.gz
+  /usr/share/man/man1/ppcppc.1.gz
+  /usr/share/man/man1/ppcsparc.1.gz
+  /usr/share/man/man1/ppcx64.1.gz
+  /usr/share/man/man1/ppdep.1.gz
+  /usr/share/man/man1/ppudump.1.gz
+  /usr/share/man/man1/ppufiles.1.gz
+  /usr/share/man/man1/ppumove.1.gz
+  /usr/share/man/man1/ptop.1.gz
+  /usr/share/man/man1/pyacc.1.gz
+  /usr/share/man/man1/rmcvsdir.1.gz
+  /usr/share/man/man1/rstconv.1.gz
+  /usr/share/man/man1/startlazarus.1.gz
+  /usr/share/man/man1/svn2revisioninc.1.gz
+  /usr/share/man/man1/unitdiff.1.gz
+  /usr/share/man/man1/updatepofiles.1.gz
+  /usr/share/mime/packages/lazarus.xml
+  /usr/share/pixmaps/lazarus.png
+'
 
 case "$command" in
   configure)
     upstream_dir=$1
-    IFS='
-'
     for f in $links; do
       mkdir -p "$(dirname "$f")"
       ln -fns -T "${upstream_dir}${f}" "$f"
@@ -142,8 +141,6 @@ FPCCFG
     ;;
 
   unconfigure)
-    IFS='
-'
     rm -f $links
     ;;
 
