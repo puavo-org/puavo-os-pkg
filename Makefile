@@ -65,6 +65,7 @@ packagedirs += kdenlive-appimage
 packagedirs += kmbeu
 packagedirs += kojo
 packagedirs += launcherone
+packagedirs += lazarus-ide
 packagedirs += lmaths
 packagedirs += logicsim3
 packagedirs += lumidesktop

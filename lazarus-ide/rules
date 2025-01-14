@@ -1,0 +1,189 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+urlbase='https://deac-fra.dl.sourceforge.net/project/lazarus/Lazarus%20Linux%20amd64%20DEB/Lazarus%203.6/'
+
+links='
+/usr/bin/mkx86ins
+/usr/bin/fp
+/usr/bin/ptop
+/usr/bin/fppkg
+/usr/bin/fd2pascal
+/usr/bin/fpcres
+/usr/bin/fpclasschart
+/usr/bin/rstconv
+/usr/bin/ppufiles
+/usr/bin/fpcmkcfg
+/usr/bin/postw32
+/usr/bin/makeskel
+/usr/bin/chmls
+/usr/bin/fpcjres
+/usr/bin/pas2ut
+/usr/bin/fpdoc
+/usr/bin/ppudump
+/usr/bin/chmcmd
+/usr/bin/mkarmins
+/usr/bin/lazarus-ide
+/usr/bin/delp
+/usr/bin/h2pas
+/usr/bin/cldrparser
+/usr/bin/ppdep
+/usr/bin/json2pas
+/usr/bin/instantfpc
+/usr/bin/h2paspp
+/usr/bin/plex
+/usr/bin/webidl2pas
+/usr/bin/mka64ins
+/usr/bin/pyacc
+/usr/bin/data2inc
+/usr/bin/pas2js
+/usr/bin/startlazarus
+/usr/bin/unihelper
+/usr/bin/mkinsadd
+/usr/bin/rmcvsdir
+/usr/bin/lazbuild
+/usr/bin/bin2obj
+/usr/bin/unitdiff
+/usr/bin/fpc
+/usr/bin/fpcmake
+/usr/bin/grab_vcsa
+/usr/bin/fprcp
+/usr/bin/ppumove
+/usr/bin/compileserver
+/usr/bin/pas2jni
+/usr/bin/pas2fpm
+/usr/bin/fpcsubst
+/usr/lib/fpc
+/etc/lazarus
+/usr/lib/fpc
+/usr/share/applications/lazarus.desktop
+/usr/share/doc/fpc-3.2.2
+/usr/share/doc/fpc-laz
+/usr/share/doc/fpc-src
+/usr/share/doc/lazarus-project
+/usr/share/fpcsrc
+/usr/share/lazarus
+/usr/share/lintian/overrides/fpc-laz
+/usr/share/lintian/overrides/fpc-src
+/usr/share/lintian/overrides/fpc-src
+/usr/share/man/man1/grab_vcsa.1.gz
+/usr/share/man/man1/svn2revisioninc.1.gz
+/usr/share/man/man1/lazres.1.gz
+/usr/share/man/man1/h2pas.1.gz
+/usr/share/man/man1/rstconv.1.gz
+/usr/share/man/man1/fpcsubst.1.gz
+/usr/share/man/man1/fpc.1.gz
+/usr/share/man/man1/ppcx64.1.gz
+/usr/share/man/man1/ppc386.1.gz
+/usr/share/man/man1/fppkg.1.gz
+/usr/share/man/man1/ppcppc.1.gz
+/usr/share/man/man1/fprcp.1.gz
+/usr/share/man/man1/pas2ut.1.gz
+/usr/share/man/man1/chmls.1.gz
+/usr/share/man/man1/fpdoc.1.gz
+/usr/share/man/man1/ppcsparc.1.gz
+/usr/share/man/man1/fpclasschart.1.gz
+/usr/share/man/man1/fpcmkcfg.1.gz
+/usr/share/man/man1/lazbuild.1.gz
+/usr/share/man/man1/fpcjres.1.gz
+/usr/share/man/man1/ppdep.1.gz
+/usr/share/man/man1/unitdiff.1.gz
+/usr/share/man/man1/pas2fpm.1.gz
+/usr/share/man/man1/startlazarus.1.gz
+/usr/share/man/man1/ppumove.1.gz
+/usr/share/man/man1/chmcmd.1.gz
+/usr/share/man/man1/postw32.1.gz
+/usr/share/man/man1/h2paspp.1.gz
+/usr/share/man/man1/rmcvsdir.1.gz
+/usr/share/man/man1/fp.1.gz
+/usr/share/man/man1/makeskel.1.gz
+/usr/share/man/man1/delp.1.gz
+/usr/share/man/man1/ppudump.1.gz
+/usr/share/man/man1/updatepofiles.1.gz
+/usr/share/man/man1/ppcarm.1.gz
+/usr/share/man/man1/bin2obj.1.gz
+/usr/share/man/man1/ppufiles.1.gz
+/usr/share/man/man1/fpcres.1.gz
+/usr/share/man/man1/pas2jni.1.gz
+/usr/share/man/man1/fd2pascal.1.gz
+/usr/share/man/man1/lazarus-ide.1.gz
+/usr/share/man/man1/pyacc.1.gz
+/usr/share/man/man1/ptop.1.gz
+/usr/share/man/man1/data2inc.1.gz
+/usr/share/man/man1/plex.1.gz
+/usr/share/man/man1/fpcmake.1.gz
+/usr/share/mime/packages/lazarus.xml
+/usr/share/pixmaps/lazarus.png'
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+    IFS='
+'
+    for f in $links; do
+      mkdir -p "$(dirname "$f")"
+      ln -fns -T "${upstream_dir}${f}" "$f"
+    done
+    
+
+    ln -sf /usr/lib/fpc/3.2.2/ppcx64 /usr/bin/ppcx64
+    sh /usr/lib/fpc/3.2.2/samplecfg /usr/lib/fpc/\$fpcversion/ /etc
+    touch /usr/lib/fpc/3.2.2/fpc-cross.cfg
+    sed -i -e "/^#if 2.3.1 /{:eat;s/.*//;N;/#end/d;beat}" /usr/lib/fpc/3.2.2/fpc-cross.cfg
+    cat >> /usr/lib/fpc/3.2.2/fpc-cross.cfg << FPCCFG
+#if 3.2.2 = \$fpcversion
+#include /usr/lib/fpc/3.2.2/fpc-cross.cfg
+#end
+FPCCFG
+    ;;
+
+  unconfigure)
+    IFS='
+'
+    rm -f $links
+    ;;
+
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    tar -x -f "$upstream_pack" -C "$upstream_dir"
+    ;;
+
+  download)
+    upstream_pack=$(readlink -f "$1")
+    tmpdir=
+    trap '[ -n "$tmpdir" ] && rm -rf "$tmpdir"' 0 INT TERM
+    tmpdir=$(mktemp -d)
+
+    (
+      cd "$tmpdir"
+      while read sha384 debpath; do
+        deb=$(basename "$debpath")
+        wget \
+            --no-use-server-timestamps \
+            --no-cookies \
+            --output-document "$deb" \
+            --progress=dot:mega \
+            "${urlbase}/${debpath}" || {
+            [ $? -eq 4 ] && exit 2 ## Network failure.
+            exit 1
+        }
+        echo "${sha384} ${deb}" | sha384sum --check >/dev/null || exit 1
+        dpkg-deb -x "$deb" lazarus || exit 1
+      done <<EOF
+cbe937a63b864da1297d2ceecaf45ff4fae4d171811a4e2d513b86d166bc82c7ed82287743da748986fa3e3f896bc95b  fpc-laz_3.2.2-210709_amd64.deb
+6e95071c28f2e2befba9cbc97f3bb060a2acdbf919dd1cbaa0466e5564a153d11dbd28ba0d705a2701d10b3003eb7a62  fpc-src_3.2.2-210709_amd64.deb
+de5a611ca263ecf1d3b5be28f641bb644ea1948b1da87fbb0a596a4ebe89f070205de0ed3e1389395ff99b9813ac1b08  lazarus-project_3.6.0-0_amd64.deb
+EOF
+      # Set LC_COLLATE=C so that files always sort in the same
+      # way (so we get the same tar-archive independent of locales).
+      env LC_COLLATE=C \
+        tar -C lazarus --mtime='2000-01-01 00:00:00 +00:00' --sort=name -c \
+          -f "$upstream_pack" .
+    )
+    ;;
+esac
