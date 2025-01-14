@@ -71,6 +71,7 @@ packagedirs += logicsim3
 packagedirs += lumidesktop
 packagedirs += m3dviewer
 packagedirs += mafynetti
+packagedirs += mandelbulber
 packagedirs += marvinsketch
 packagedirs += mathpix
 packagedirs += mattermost-desktop
