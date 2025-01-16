@@ -8,9 +8,6 @@ shift
 urlbase='https://deac-fra.dl.sourceforge.net/project/lazarus/Lazarus%20Linux%20amd64%20DEB/Lazarus%203.6/'
 
 links='
-  /etc/fpc.cfg
-  /etc/fppkg.cfg
-  /etc/fppkg/default
   /etc/lazarus
   /usr/bin/bin2obj
   /usr/bin/chmcmd
@@ -130,9 +127,15 @@ case "$command" in
       mkdir -p "$(dirname "$f")"
       ln -fns -T "${upstream_dir}${f}" "$f"
     done
-    
 
+    # XXX We run code coming from the fpc-package as root here.
+    # XXX This is just wrong and should not be done on a package
+    # XXX which is supposed to be a user application.  If upgrading
+    # XXX this package, please check out that samplecfg does not contain
+    # XXX anything nasty and considering doing this in unpack phase
+    # XXX (which is not run as root).
     ln -sf /usr/lib/fpc/3.2.2/ppcx64 /usr/bin/ppcx64
+    sh /usr/lib/fpc/3.2.2/samplecfg /usr/lib/fpc/\$fpcversion/ /etc
     touch /usr/lib/fpc/3.2.2/fpc-cross.cfg
     sed -i -e "/^#if 2.3.1 /{:eat;s/.*//;N;/#end/d;beat}" /usr/lib/fpc/3.2.2/fpc-cross.cfg
     cat >> /usr/lib/fpc/3.2.2/fpc-cross.cfg << FPCCFG
@@ -150,9 +153,6 @@ FPCCFG
     upstream_pack=$1
     upstream_dir=$2
     tar -z -x -f "$upstream_pack" -C "$upstream_dir"
-    mkdir -p "${upstream_dir}/etc"
-    sh "${upstream_dir}/usr/lib/fpc/3.2.2/samplecfg" '/usr/lib/fpc/$fpcversion/' "${upstream_dir}/etc"
-    sed -i 's|/upstream.tmp/|/upstream/|g' "${upstream_dir}/etc/fppkg.cfg"
     ;;
 
   download)
