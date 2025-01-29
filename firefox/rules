@@ -103,6 +103,11 @@ EOF
     ;;
 
   unconfigure)
+    if pgrep -f '/opt/firefox/.*/firefox' > /dev/null 2>&1; then
+      echo 'firefox in running, will not unconfigure' >&2
+      # 4 == application is busy
+      exit 4
+    fi
     update-alternatives --remove x-www-browser /usr/local/bin/firefox
     rm -f /opt/firefox \
           /usr/local/bin/firefox \
