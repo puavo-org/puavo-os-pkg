@@ -132,6 +132,7 @@ packagedirs += vidyo-client
 packagedirs += visualizer
 packagedirs += vscode
 packagedirs += webex
+packagedirs += wifiman-desktop
 packagedirs += wine-gecko
 packagedirs += wine-mono
 packagedirs += wine-mono-bookworm
