@@ -1,5 +1,5 @@
 name balena-etcher
-package-id 9e23fd23e8b7ae128260a4eead46f2c1
+package-id da1fd382ade1e45a70c5b19fde1b01f4
 pkg-format 2
-timestamp 2025-02-12T15:44:21+02:00
-version 2
+timestamp 2025-02-28T14:23:47+02:00
+version 3
