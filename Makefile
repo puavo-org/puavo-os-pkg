@@ -111,6 +111,7 @@ packagedirs += signal-desktop
 packagedirs += skype
 packagedirs += slack
 packagedirs += smartboard
+packagedirs += sonobus
 packagedirs += sparkvue
 packagedirs += spotify-client
 packagedirs += structorizer
