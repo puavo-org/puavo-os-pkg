@@ -28,6 +28,7 @@ packagedirs += cmaptools
 packagedirs += cnijfilter2
 packagedirs += cryptomator
 packagedirs += cura-appimage
+packagedirs += docker-compose-plugin
 packagedirs += discord
 packagedirs += dragonbox_algebra_5
 packagedirs += dragonbox_algebra_12
