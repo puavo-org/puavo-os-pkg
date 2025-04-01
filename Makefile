@@ -6,6 +6,7 @@ INSTALL_DATA = $(INSTALL) -m 644
 
 packagedirs  = abicus
 packagedirs += abitti-naksu
+packagedirs += abitti-naksu2
 packagedirs += adobe-reader
 packagedirs += airtame
 packagedirs += appinventor
