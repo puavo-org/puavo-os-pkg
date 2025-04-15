@@ -5,17 +5,38 @@ set -eu
 command=$1
 shift
 
+wifiman_links='
+  /usr/bin/wi-fiman-desktop
+  /usr/lib/wi-fiman-desktop/.env
+  /usr/lib/wi-fiman-desktop/wg
+  /usr/lib/wi-fiman-desktop/wg-quick
+  /usr/lib/wi-fiman-desktop/wifiman-desktopd
+  /usr/lib/wi-fiman-desktop/wifiman-desktop.service
+  /usr/lib/wi-fiman-desktop/wireguard-gousr/lib/wi-fiman-desktop
+  /usr/share/applications/wi-fiman-desktop.desktop
+  /usr/share/icons/hicolor/128x128/apps/wi-fiman-desktop.png
+  /usr/share/icons/hicolor/256x256@2/apps/wi-fiman-desktop.png
+  /usr/share/icons/hicolor/32x32/apps/wi-fiman-desktop.png'
+
 case "${command}" in
   configure)
     upstream_dir=$1
+    for f in $wifiman_links; do
+      mkdir -p "$(dirname "$f")"
+      ln -fns -T "${upstream_dir}/${f}" "$f"
+    done
+    ### From postinst
+    cp -f /usr/lib/wi-fiman-desktop/wifiman-desktop.service /etc/systemd/system/
     ;;
   unconfigure)
+    rm -f $wifiman_links
+    rm -f /etc/systemd/system/wifiman-desktop.service
     ;;
   unpack)
     upstream_pack=$1
     upstream_dir=$2
-    ;;
-  download)
+
+    dpkg -x "${upstream_pack}" "${upstream_dir}"
     ;;
   *)
     ;;
