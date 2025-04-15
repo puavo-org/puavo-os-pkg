@@ -6,7 +6,8 @@ command=$1
 shift
 
 links='
-/usr/local/lib/docker/cli-plugins/docker-compose'
+  /usr/local/lib/docker/cli-plugins/docker-compose
+'
 
 case "${command}" in
     configure)
