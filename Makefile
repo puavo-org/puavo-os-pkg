@@ -92,6 +92,7 @@ packagedirs += openjdk-11-jre
 packagedirs += openscad-nightly
 packagedirs += openshot-appimage
 packagedirs += otto-blockly
+packagedirs += phywe-measureapp
 packagedirs += processing
 packagedirs += projecteur
 packagedirs += projectlibre
