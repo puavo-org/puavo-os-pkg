@@ -5,7 +5,7 @@ set -eu
 command=$1
 shift
 
-version=138.0
+version=138.0.1
 
 urlbase="https://download-installer.cdn.mozilla.net/pub/firefox/releases/${version}/linux-x86_64"
 
