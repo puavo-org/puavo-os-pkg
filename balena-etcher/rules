@@ -8,13 +8,13 @@ shift
 case "${command}" in
   configure)
     upstream_dir=$1
-    ln -fns "${upstream_dir}/balena-etcher.AppImage" /usr/local/bin/balena-etcher.AppImage
-    ln -fns "${upstream_dir}/balena-etcher.png" /usr/share/icons/balena-etcher.png
+    ln -fns "${upstream_dir}/balenaEtcher-linux-x64/balena-etcher" /usr/local/bin/balena-etcher
+    ln -fns "${upstream_dir}/balenaEtcher-linux-x64/balena-etcher.png" /usr/share/icons/balena-etcher.png
 
     cat <<'EOF' > /usr/share/applications/balena-etcher.desktop
 [Desktop Entry]
 Name=balenaEtcher
-Exec=balena-etcher.AppImage
+Exec=balena-etcher
 Terminal=false
 Type=Application
 Icon=balena-etcher
@@ -24,15 +24,17 @@ Categories=Utility;
 EOF
     ;;
   unconfigure)
-    rm -f /usr/local/bin/balena-etcher.AppImage \
+    rm -f /usr/local/bin/balena-etcher \
           /usr/share/applications/balena-etcher.desktop \
           /usr/share/icons/balena-etcher.png
     ;;
   unpack)
     upstream_pack=$1
     upstream_dir=$2
-    install -m 755 "$upstream_pack" "${upstream_dir}/balena-etcher.AppImage"
-    install -m 644 balena-etcher.png "${upstream_dir}/balena-etcher.png"
+    unzip -q -d "$upstream_dir" "$upstream_pack"
+    chmod 755 "${upstream_dir}/balenaEtcher-linux-x64"
+    chmod 755 "${upstream_dir}/balenaEtcher-linux-x64/balena-etcher"
+    cp -p balena-etcher.png "$upstream_dir/balenaEtcher-linux-x64"
     ;;
   *)
     ;;
