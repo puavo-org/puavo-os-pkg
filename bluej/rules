@@ -6,6 +6,7 @@ command=$1
 shift
 
 links='
+  /usr/bin/bluej
   /usr/share/applications/bluej.desktop
   /usr/share/bluej
   /usr/share/doc/BlueJ
@@ -25,10 +26,10 @@ case "${command}" in
     done
 
     # use system openjdk for Java
-    sed '/^JAVAPATH/s|/usr/share/bluej/jdk|/usr/lib/jvm/default-java|' \
-      "${upstream_dir}/usr/bin/bluej" > /usr/local/bin/bluej.tmp
-    chmod 755 /usr/local/bin/bluej.tmp
-    mv /usr/local/bin/bluej.tmp /usr/local/bin/bluej
+    #sed '/^JAVAPATH/s|/usr/share/bluej/jdk|/usr/lib/jvm/default-java|' \
+    #  "${upstream_dir}/usr/bin/bluej" > /usr/local/bin/bluej.tmp
+    #chmod 755 /usr/local/bin/bluej.tmp
+    #mv /usr/local/bin/bluej.tmp /usr/local/bin/bluej
     ;;
   unconfigure)
     rm -f /usr/local/bin/bluej $links
@@ -36,8 +37,9 @@ case "${command}" in
   unpack)
     upstream_pack=$1
     upstream_dir=$2
-    dpkg-deb --fsys-tarfile "$upstream_pack" \
-      | tar -C "$upstream_dir" --exclude=usr/share/bluej/jdk -x
+    #dpkg-deb --fsys-tarfile "$upstream_pack" \
+    #  | tar -C "$upstream_dir" --exclude=usr/share/bluej/jdk -x
+    dpkg-deb -x "$upstream_pack" "$upstream_dir"
     ;;
   *)
     ;;
