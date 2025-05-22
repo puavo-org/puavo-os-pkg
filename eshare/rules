@@ -7,8 +7,6 @@ shift
 
 links='
   /opt/EShare
-  /usr/share/applications/eshare.desktop
-  /usr/share/icons/eShare
 '
 
 case "${command}" in
@@ -18,6 +16,11 @@ case "${command}" in
       mkdir -p "$(dirname "$f")"
       ln -fns -T "${upstream_dir}/${f}" "$f"
     done
+    # Link and rename the desktop file to be compatible with older puavo-os
+    # image versions.
+    ln -fns "${upstream_dir}/opt/EShare/EShare.desktop" /usr/share/applications/eshare.desktop
+    ln -fns "${upstream_dir}/opt/EShare/org.gnome.audio-recorder.gschema.xml" /usr/share/glib-2.0/schemas/org.gnome.audio-recorder.gschema.xml
+    glib-compile-schemas /usr/share/glib-2.0/schemas
     ;;
   unconfigure)
     rm -f $links
@@ -26,19 +29,6 @@ case "${command}" in
     upstream_pack=$1
     upstream_dir=$2
     dpkg-deb -x "$upstream_pack" "$upstream_dir"
-
-    # Rename the desktop file to be compatible with older puavo-os
-    # image versions.
-    mv "${upstream_dir}/usr/share/applications/EShare.desktop" \
-       "${upstream_dir}/usr/share/applications/eshare.desktop"
-
-    # Ugly binary patch to fix the application when using xorg with
-    # both gdm and desktop.  Remove this when the upstream application
-    # has been fixed.
-    sed -i 's/:0.0/:1.0/g' "${upstream_dir}/opt/EShare/EShare"
-
-    # fix permissions of extralib
-    chmod 755 "${upstream_dir}/opt/EShare/extralib"
     ;;
   *)
     ;;
