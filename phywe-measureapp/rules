@@ -5,18 +5,31 @@ set -eu
 command=$1
 shift
 
+links='
+  /opt/measureAPP
+  /usr/share/applications/measureapp.desktop
+  /usr/share/doc/measureapp
+  /usr/share/icons/hicolor/0x0/apps/measureapp.png'
+
+
 case "${command}" in
-  configure)
-    upstream_dir=$1
-    ;;
-  unconfigure)
-    ;;
-  unpack)
-    upstream_pack=$1
-    upstream_dir=$2
-    ;;
-  download)
-    ;;
-  *)
-    ;;
+    configure)
+	upstream_dir=$1
+        for f in $links; do
+          mkdir -p "$(dirname "$f")"
+          ln -fns -T "${upstream_dir}/${f}" "$f"
+        done
+        chmod 4755 '/opt/measureAPP/chrome-sandbox'
+	;;
+    unconfigure)
+	rm -f $links
+	;;
+    unpack)
+	upstream_pack=$1
+	upstream_dir=$2
+
+	dpkg -x "${upstream_pack}" "${upstream_dir}"
+	;;
+    *)
+	;;
 esac
