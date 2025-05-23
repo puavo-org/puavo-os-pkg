@@ -5,25 +5,23 @@ set -eu
 command=$1
 shift
 
-links='
-  /opt/EShare
-'
-
 case "${command}" in
   configure)
     upstream_dir=$1
-    for f in $links; do
-      mkdir -p "$(dirname "$f")"
-      ln -fns -T "${upstream_dir}/${f}" "$f"
-    done
+    ln -fns "${upstream_dir}/opt/EShare" /opt/EShare
+
     # Link and rename the desktop file to be compatible with older puavo-os
     # image versions.
-    ln -fns "${upstream_dir}/opt/EShare/EShare.desktop" /usr/share/applications/eshare.desktop
-    ln -fns "${upstream_dir}/opt/EShare/org.gnome.audio-recorder.gschema.xml" /usr/share/glib-2.0/schemas/org.gnome.audio-recorder.gschema.xml
+    ln -fns "${upstream_dir}/opt/EShare/EShare.desktop" \
+            /usr/share/applications/eshare.desktop
+    ln -fns "${upstream_dir}/opt/EShare/org.gnome.audio-recorder.gschema.xml" \
+            /usr/share/glib-2.0/schemas/org.gnome.audio-recorder.gschema.xml
     glib-compile-schemas /usr/share/glib-2.0/schemas
     ;;
   unconfigure)
-    rm -f $links
+    rm -f /opt/EShare                            \
+          /usr/share/applications/eshare.desktop \
+          /usr/share/glib-2.0/schemas/org.gnome.audio-recorder.gschema.xml
     ;;
   unpack)
     upstream_pack=$1
