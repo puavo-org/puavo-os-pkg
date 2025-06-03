@@ -7,7 +7,6 @@ shift
 
 links='
   /opt/drawio
-  /usr/share/applications/drawio.desktop
   /usr/share/doc/draw.io
   /usr/share/icons/hicolor/1024x1024/apps/drawio.png
   /usr/share/icons/hicolor/128x128/apps/drawio.png
@@ -31,9 +30,14 @@ case "${command}" in
           ln -fns -T "${upstream_dir}${f}" "$f"
         done
         ln -fns -T "/opt/drawio/drawio" "/usr/bin/drawio"
+
+        sed '/^Exec=/s|/opt/drawio/drawio %U$|/opt/drawio/drawio --disable-update %U|' \
+          "${upstream_dir}/usr/share/applications/drawio.desktop" \
+          > /usr/share/applications/drawio.desktop.tmp
+        mv /usr/share/applications/drawio.desktop.tmp /usr/share/applications/drawio.desktop
         ;;
     unconfigure)
-        rm -f $links
+        rm -f $links /usr/share/applications/drawio.desktop
         ;;
     unpack)
         upstream_pack=$1
