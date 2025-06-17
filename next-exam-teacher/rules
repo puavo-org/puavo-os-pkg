@@ -1,0 +1,40 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+    configure)
+        upstream_dir=$1
+
+        ln -fns "$upstream_dir" /opt/next-exam-teacher
+        ln -fns "${upstream_dir}/next-exam-teacher.png" /usr/share/icons/next-exam-teacher.png
+        cat <<EOF > /usr/share/applications/next-exam-teacher.desktop
+[Desktop Entry]
+Name=Next-Exam teacher
+Exec=/opt/next-exam-teacher/Next-Exam-Teacher.AppImage
+Type=Application
+Terminal=false
+Icon=next-exam-teacher
+StartupNotify=true
+Categories=Internet;
+EOF
+        ;;
+    unconfigure)
+        rm -f /opt/next-exam-teacher \
+              /usr/share/applications/next-exam-teacher.desktop \
+              /usr/share/icons/next-exam-teacher.png
+        ;;
+    unpack)
+        upstream_pack=$1
+        upstream_dir=$2
+
+        cp "$upstream_pack" "${upstream_dir}/Next-Exam-Teacher.AppImage"
+        chmod 755 "${upstream_dir}/Next-Exam-Teacher.AppImage"
+        cp -p next-exam-teacher.png "$upstream_dir"
+        ;;
+    *)
+        ;;
+esac
