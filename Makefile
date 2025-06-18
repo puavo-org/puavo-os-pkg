@@ -87,6 +87,7 @@ packagedirs += nightcode
 packagedirs += nightcode
 packagedirs += next-exam-student
 packagedirs += next-exam-teacher
+packagedirs += novoconnect
 packagedirs += obsidian-icons
 packagedirs += ohjelmointi-opetuksessa
 packagedirs += openclipart
