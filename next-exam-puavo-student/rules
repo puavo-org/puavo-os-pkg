@@ -5,22 +5,29 @@ set -eu
 command=$1
 shift
 
-case "${command}" in
+case "$command" in
     configure)
         upstream_dir=$1
 
         ln -fns "$upstream_dir" /opt/next-exam-puavo-student
+        appimage_path='/opt/next-exam-puavo-student/Next-Exam-Puavo-Student.AppImage'
         ln -fns "${upstream_dir}/next-exam-puavo-student.png" /usr/share/icons/next-exam-puavo-student.png
         cat <<EOF > /usr/share/applications/next-exam-puavo-student.desktop
 [Desktop Entry]
 Name=Next-Exam Student
-Exec=/opt/next-exam-puavo-student/Next-Exam-Puavo-Student.AppImage
+Exec=${appimage_path}
 Type=Application
 Terminal=false
 Icon=next-exam-puavo-student
 StartupNotify=true
 Categories=Internet;
 EOF
+
+        # A bit ugly because we are changing the group ownership
+        # and permissions of a file owned by "puavo-pkg"-user.
+        # Do here because this can not be done in the "unpack"-phase.
+        chgrp puavo-examuser "$appimage_path"
+        chmod 750 "$appimage_path"
         ;;
     unconfigure)
         rm -f /opt/next-exam-puavo-student \
@@ -31,8 +38,11 @@ EOF
         upstream_pack=$1
         upstream_dir=$2
 
-        cp "$upstream_pack" "${upstream_dir}/Next-Exam-Puavo-Student.AppImage"
-        chmod 755 "${upstream_dir}/Next-Exam-Puavo-Student.AppImage"
+        # Use mode 700 because this should be usable only in the examination
+        # mode (but smart students can work around this though).
+        chmod 700 "$upstream_pack"
+        install -o puavo-pkg -g puavo-pkg -m 700 "$upstream_pack" \
+                "${upstream_dir}/Next-Exam-Puavo-Student.AppImage"
         cp -p next-exam-puavo-student.png "$upstream_dir"
         ;;
     *)
