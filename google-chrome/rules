@@ -40,18 +40,24 @@ apply_sso_workaround() {
 }
 
 browser_is_active() {
-  # this checks browser activity on any host sharing the home directory
-  local browser_dir latest_modified
+  # This checks browser activity on any host sharing the home directory.
+  # If there are files in the browser directory which are modified
+  # in the last minute, there must be an active session on some host.
+  local browser_dir
 
   browser_dir=$1
-  latest_modified_file=$(find "$browser_dir" -printf '%Ts\n' \
-                           | sort -nr | head -1) || return 1
-  if [ -z "$latest_modified_file" ]; then
-    echo 'latest modified file timestamp could not be found' >&2
-    return 1
-  fi
-
-  [ "$(date +%s)" -lt "$(($latest_modified_file + 60))" ]
+  find "$browser_dir" -printf '%Ts\n' \
+    | awk '
+        BEGIN {
+          current_time = strftime("%s")
+          is_active = 1
+        }
+        # consider that browser is active (on some host), in case there is
+        # any file that were modified in the last minute (but ignore files
+        # that are were modified later than a minute in the future)
+        ((current_time - 60) <= $1) && ($1 <= (current_time + 60)) { is_active = 0 }
+        END { exit(is_active) }
+      '
 }
 
 fix_browser_lock() {
