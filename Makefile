@@ -63,6 +63,7 @@ packagedirs += hp-bios-utils
 packagedirs += idid
 packagedirs += javakara
 packagedirs += kantti
+packagedirs += kara-x
 packagedirs += kdenlive-appimage
 packagedirs += kmbeu
 packagedirs += kojo

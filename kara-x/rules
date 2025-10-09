@@ -1,0 +1,120 @@
+#!/bin/sh
+
+set -eux
+
+command=$1
+shift
+
+links="
+  javascriptkara-x.jar
+  kara-x.jar
+  multikara-x.jar
+  pythonkara-x.jar
+  rubykara-x.jar
+  turingkara-x.jar
+"
+
+case "${command}" in
+    configure)
+        upstream_dir=$1
+        mkdir -p /opt/kara-x
+        for f in $links; do
+      mkdir -p "$(dirname "$f")"
+      ln -fns -T "${upstream_dir}"/"${f}" /opt/kara-x/"$f"
+    done
+
+    desktops=$(cat <<'EOF'
+javascriptkara-x.jar|JavaScriptKara X|javascriptkara-x
+kara-x.jar|Kara X|kara-x
+multikara-x.jar|MultiKara X|multikara-x
+pythonkara-x.jar|PythonKara X|pythonkara-x
+rubykara-x.jar|RubyKara X|rubykara-x
+turingkara-x.jar|TuringKara X|turingkara-x
+EOF
+)
+
+ printf '%s\n' "$desktops" | while IFS= read -r SPEC; do
+    [ -n "$SPEC" ] || continue
+    OIFS=$IFS
+    IFS='|'
+    set -- $SPEC
+    IFS=$OIFS
+    JAR="$1"
+    DNAME="$2"
+    DID="$3"
+    [ -n "$JAR" ] && [ -n "$DNAME" ] && [ -n "$DID" ] || continue
+
+    cat > "/usr/share/applications/$DID.desktop" <<EOF
+[Desktop Entry]
+Type=Application
+Name=$DNAME
+Exec=java -jar /opt/kara-x/$JAR
+Icon=application-x-addon
+Terminal=false
+Categories=Education;
+EOF
+  done
+
+    ;;
+    unconfigure)
+        rm -rf /opt/kara-x
+        rm /usr/share/applications/javascriptkara-x.desktop
+        rm /usr/share/applications/kara-x.desktop
+        rm /usr/share/applications/multikara-x.desktop
+        rm /usr/share/applications/pythonkara-x.desktop
+        rm /usr/share/applications/rubykara-x.desktop
+        rm /usr/share/applications/turingkara-x.desktop
+    ;;
+    unpack)
+        upstream_pack=$1
+        upstream_dir=$2
+
+        tar -x -f "$upstream_pack" -C "$upstream_dir"
+    ;;
+    download) #based on ubuntu-wallpapers-bullseye
+        upstream_pack=$(readlink -f "$1")
+        tmpdir=
+        trap '[ -n "$tmpdir" ] && rm -rf "$tmpdir"' 0 INT TERM
+        tmpdir=$(mktemp -d)
+
+        (
+        cd "$tmpdir"
+        mkdir -p kara-x-pack
+        while read sha384 fwfilepath; do
+            fwfile=$(basename "$fwfilepath")
+            wget \
+                --no-use-server-timestamps \
+                --no-cookies \
+                --output-document "$fwfile" \
+                --progress=dot:mega \
+                "${fwfilepath}" || {
+                [ $? -eq 4 ] && exit 2 ## Network failure.
+                exit 1
+            }
+            if ! echo "${sha384} $(basename $fwfilepath)" | sha384sum --check >/dev/null; then
+            actual_checksum=$(sha384sum "$fwfile" | awk '{ print $1 }')
+            echo "checksum NOT matching for $fwfilepath" >&2
+            echo "expected: ${sha384} / actual: ${actual_checksum}" >&2
+            exit 1
+            fi
+            mv "$fwfile" kara-x-pack/ || exit 1
+        done <<EOF
+b3c83654729f5a80db262f7e62f91abad4a35686c40306d45eaad6bca064d425ff7dd5fdfeb3651f201c34f3d51a6c0c  https://www.swisseduc.ch/informatik/karatojava/javascriptkara/classes/java17/javascriptkara-x.jar
+6cc13262cafa5909aebd4934178c58291e9e712ac231c36b544441fcf97442f3502f573d01d6ef67a5c2e44ea7baf3a0  https://www.swisseduc.ch/informatik/karatojava/kara/classes/java17/kara-x.jar
+b2329f4af83fb1d4fd1b61484b85ffde4a2444ef063279ca8ad8bc18d1dc05a161796095471c430606bbb1176e02af1a  https://www.swisseduc.ch/informatik/karatojava/multikara/classes/java17/multikara-x.jar
+881d60e6d5fe29949f35bd8a31a1bbccbb450da9ce93a8810cbdda0a3b4a1d20ec61ee353554911c6d88be04199ea60d  https://www.swisseduc.ch/informatik/karatojava/pythonkara/classes/java17/pythonkara-x.jar
+7ebf7b8ca50155b876f095bf11b91d05816735694d0bc2167d699c1c3187b2ebf9532de83405b68623057dbee4f77904  https://www.swisseduc.ch/informatik/karatojava/rubykara/classes/java17/rubykara-x.jar
+5cc50d851682b319c58c1ab979cf830ccca28009c417beab8762576b33c0a0761d78815a3df632bbeed89eb25334fb2f  https://www.swisseduc.ch/informatik/karatojava/turingkara/classes/java17/turingkara-x.jar
+EOF
+      # Set LC_COLLATE=C so that files always sort in the same
+      # way (so we get the same tar-archive independent of locales).
+      env LC_COLLATE=C \
+        tar -C kara-x-pack --mtime='2000-01-01 00:00:00 +00:00' --sort=name -c \
+          -f "$upstream_pack" .
+       
+        )
+    ;;
+
+    *)
+    ;;
+esac
