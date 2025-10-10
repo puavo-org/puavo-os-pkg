@@ -59,12 +59,12 @@ EOF
 
   unconfigure)
     rm -rf /opt/kara-x
-    rm /usr/share/applications/javascriptkara-x.desktop
-    rm /usr/share/applications/kara-x.desktop
-    rm /usr/share/applications/multikara-x.desktop
-    rm /usr/share/applications/pythonkara-x.desktop
-    rm /usr/share/applications/rubykara-x.desktop
-    rm /usr/share/applications/turingkara-x.desktop
+    rm -f /usr/share/applications/javascriptkara-x.desktop \
+          /usr/share/applications/kara-x.desktop           \
+          /usr/share/applications/multikara-x.desktop      \
+          /usr/share/applications/pythonkara-x.desktop     \
+          /usr/share/applications/rubykara-x.desktop       \
+          /usr/share/applications/turingkara-x.desktop
     ;;
 
   unpack)
