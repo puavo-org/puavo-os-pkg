@@ -162,9 +162,6 @@ case "$command" in
   configure)
     upstream_dir=$1
 
-    chown root:root "${upstream_dir}/opt/google/chrome/chrome-sandbox"
-    chmod 4755 "${upstream_dir}/opt/google/chrome/chrome-sandbox"
-
     mkdir -p /usr/bin                              \
              /usr/share/applications               \
              /usr/share/man/man1                   \
