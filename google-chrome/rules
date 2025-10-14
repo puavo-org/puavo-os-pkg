@@ -204,6 +204,11 @@ StartupNotify=true' "${upstream_dir}/usr/share/applications/google-chrome.deskto
     ;;
 
   unconfigure)
+    if pgrep -f '/opt/google/chrome/chrome' > /dev/null 2>&1; then
+      echo 'Google Chrome is running, will not unconfigure' >&2
+      # 4 == application is busy
+      exit 4
+    fi
     rm -f /etc/X11/Xsession.d/70fix-chrome-desktop-files          \
           /usr/bin/google-chrome-stable                           \
           /usr/bin/google-chrome-stable.puavopkg                  \
