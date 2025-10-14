@@ -32,7 +32,7 @@ case "$command" in
 Type=Application
 Name=${name}
 Exec=java -jar /opt/kara-x/${jar}
-Icon=application-x-addon
+Icon=default-application
 Terminal=false
 Categories=Education;
 EOF
@@ -83,6 +83,7 @@ EOF
         mv "$fwfile" kara-x-pack/ || exit 1
       done <<EOF
 b3c83654729f5a80db262f7e62f91abad4a35686c40306d45eaad6bca064d425ff7dd5fdfeb3651f201c34f3d51a6c0c  https://www.swisseduc.ch/informatik/karatojava/javascriptkara/classes/java17/javascriptkara-x.jar
+fbbe280a713cfe1a04330e1229377df0174f98b22bceecd4bbcf5006c6f800eeddc0a9725b8096e01846ee4fbd1360ab  https://www.swisseduc.ch/informatik/karatojava/javakara/classes/java17/javakara-x.jar
 6cc13262cafa5909aebd4934178c58291e9e712ac231c36b544441fcf97442f3502f573d01d6ef67a5c2e44ea7baf3a0  https://www.swisseduc.ch/informatik/karatojava/kara/classes/java17/kara-x.jar
 b2329f4af83fb1d4fd1b61484b85ffde4a2444ef063279ca8ad8bc18d1dc05a161796095471c430606bbb1176e02af1a  https://www.swisseduc.ch/informatik/karatojava/multikara/classes/java17/multikara-x.jar
 881d60e6d5fe29949f35bd8a31a1bbccbb450da9ce93a8810cbdda0a3b4a1d20ec61ee353554911c6d88be04199ea60d  https://www.swisseduc.ch/informatik/karatojava/pythonkara/classes/java17/pythonkara-x.jar
