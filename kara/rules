@@ -1,0 +1,104 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+spec_list='
+javascriptkara.jar|JavaScriptKara|javascriptkara
+kara.jar|Kara|kara
+multikara.jar|MultiKara|multikara
+pythonkara.jar|PythonKara|pythonkara
+rubykara.jar|RubyKara|rubykara
+turingkara.jar|TuringKara|turingkara
+'
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+    mkdir -p /opt/kara
+    printf %s "$spec_list" | while IFS= read -r spec; do
+      test -n "$spec" || continue
+      jar=$(         printf %s "$spec" | cut -d '|' -f 1)
+      name=$(        printf %s "$spec" | cut -d '|' -f 2)
+      desktop_name=$(printf %s "$spec" | cut -d '|' -f 3)
+
+      mkdir -p "$(dirname "$jar")"
+      ln -fns -T "${upstream_dir}/${jar}" "/opt/kara/${jar}"
+
+      cat > "/usr/share/applications/${desktop_name}.desktop" <<EOF
+[Desktop Entry]
+Type=Application
+Name=${name}
+Exec=java -jar /opt/kara/${jar}
+Icon=application-default-icon
+Terminal=false
+Categories=Education;
+EOF
+    done
+
+    ;;
+
+  unconfigure)
+    printf %s "$spec_list" | while IFS= read -r spec; do
+      test -n "$spec" || continue
+      jar=$(         printf %s "$spec" | cut -d '|' -f 1)
+      desktop_name=$(printf %s "$spec" | cut -d '|' -f 3)
+      rm -f "/opt/kara/${jar}" \
+             /usr/share/applications/${desktop_name}.desktop
+    done
+    rmdir --ignore-fail-on-non-empty /opt/kara
+    ;;
+
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    tar -x -f "$upstream_pack" -C "$upstream_dir"
+    ;;
+
+  download) #based on ubuntu-wallpapers-bullseye
+    upstream_pack=$(readlink -f "$1")
+    tmpdir=
+    trap '[ -n "$tmpdir" ] && rm -rf "$tmpdir"' 0 INT TERM
+    tmpdir=$(mktemp -d)
+
+    (
+      cd "$tmpdir"
+      mkdir -p kara-pack
+      while read sha384 fwfilepath; do
+        fwfile=$(basename "$fwfilepath")
+        wget --no-use-server-timestamps --no-cookies \
+             --output-document "$fwfile" --progress=dot:mega \
+             "$fwfilepath" || {
+               [ $? -eq 4 ] && exit 2 ## Network failure.
+               exit 1
+             }
+        if ! echo "${sha384} $(basename $fwfilepath)" | sha384sum --check >/dev/null; then
+          actual_checksum=$(sha384sum "$fwfile" | awk '{ print $1 }')
+          echo "checksum NOT matching for ${fwfilepath}" >&2
+          echo "expected: ${sha384} / actual: ${actual_checksum}" >&2
+          exit 1
+        fi
+        mv "$fwfile" kara-pack/ || exit 1
+      done <<EOF
+774bd9c1c84ff12f3c7dabe154d35da1b22117f206f2811cb4ff3b45fa236ea6aee6c8f2a84ed05b5c40679e5f403f90  https://www.swisseduc.ch/informatik/karatojava/javascriptkara/classes/java17/javascriptkara.jar
+a0b1000f7bd533e55ce0947806cb715b12cba74ba78411aac3da38d12152511fd648cb54476185fb19bad444ff53b488  https://www.swisseduc.ch/informatik/karatojava/javakara/classes/java17/javakara.jar
+497f3590158b2086e48b9d6c0b4ba1ddee933cfca78f9d46e41e716ee8960c67bc85f9cba6fb6579a7a4f2c0274a8519  https://www.swisseduc.ch/informatik/karatojava/kara/classes/java17/kara.jar
+0f9e896d6a731dfb75881dfccafd5de1131a7d6f7305127e6e3f8def2ee4f87cf743fea5620348d7103f8d4c69f43aa5  https://www.swisseduc.ch/informatik/karatojava/multikara/classes/java17/multikara.jar
+bf15931473a27aac5779ff2f6741cc11654f39346161a632a492eddde664901d0138ef57792cb21f8d7701e54add51d6  https://www.swisseduc.ch/informatik/karatojava/pythonkara/classes/java17/pythonkara.jar
+23bbf7dcdda008bf860df60e8fda8d85cb7bd8c52681b83f63dac28e241457b5ce33b8eb89c7727a420f631d9c37233e  https://www.swisseduc.ch/informatik/karatojava/rubykara/classes/java17/rubykara.jar
+5abc309b90a39a727ce7db8e8ecb0977bb0afb0f54f4bec799b3cb28e6a7334eda7965c8a694d18dbc23aa37e4a25827  https://www.swisseduc.ch/informatik/karatojava/turingkara/classes/java17/turingkara.jar
+EOF
+      # Set LC_COLLATE=C so that files always sort in the same
+      # way (so we get the same tar-archive independent of locales).
+      env LC_COLLATE=C \
+        tar -C kara-pack --mtime='2000-01-01 00:00:00 +00:00' --sort=name -c \
+          -f "$upstream_pack" .
+       
+    )
+    ;;
+
+  *)
+    ;;
+esac
