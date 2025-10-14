@@ -158,74 +158,77 @@ EOF
   mv /usr/bin/google-chrome-stable.tmp /usr/bin/google-chrome-stable
 }
 
-case "${command}" in
-    configure)
-        upstream_dir=$1
+case "$command" in
+  configure)
+    upstream_dir=$1
 
-        chown root:root "${upstream_dir}/opt/google/chrome/chrome-sandbox"
-        chmod 4755 "${upstream_dir}/opt/google/chrome/chrome-sandbox"
+    chown root:root "${upstream_dir}/opt/google/chrome/chrome-sandbox"
+    chmod 4755 "${upstream_dir}/opt/google/chrome/chrome-sandbox"
 
-        mkdir -p /usr/bin
-        mkdir -p /usr/share/applications
-        mkdir -p /usr/share/man/man1
-        mkdir -p /usr/share/icons/hicolor/16x16/apps
-        mkdir -p /usr/share/icons/hicolor/22x22/apps
-        mkdir -p /usr/share/icons/hicolor/24x24/apps
-        mkdir -p /usr/share/icons/hicolor/32x32/apps
-        mkdir -p /usr/share/icons/hicolor/48x48/apps
-        mkdir -p /usr/share/icons/hicolor/64x64/apps
-        mkdir -p /usr/share/icons/hicolor/128x128/apps
-        mkdir -p /usr/share/icons/hicolor/256x256/apps
+    mkdir -p /usr/bin                              \
+             /usr/share/applications               \
+             /usr/share/man/man1                   \
+             /usr/share/icons/hicolor/16x16/apps   \
+             /usr/share/icons/hicolor/22x22/apps   \
+             /usr/share/icons/hicolor/24x24/apps   \
+             /usr/share/icons/hicolor/32x32/apps   \
+             /usr/share/icons/hicolor/48x48/apps   \
+             /usr/share/icons/hicolor/64x64/apps   \
+             /usr/share/icons/hicolor/128x128/apps \
+             /usr/share/icons/hicolor/256x256/apps
 
-        ln -fns "${upstream_dir}/opt/google/chrome/product_logo_16.png" \
+    ln -fns "${upstream_dir}/opt/google/chrome/product_logo_16.png" \
             /usr/share/icons/hicolor/16x16/apps/google-chrome.png
-        ln -fns "${upstream_dir}/opt/google/chrome/product_logo_22.png" \
+    ln -fns "${upstream_dir}/opt/google/chrome/product_logo_22.png" \
             /usr/share/icons/hicolor/22x22/apps/google-chrome.png
-        ln -fns "${upstream_dir}/opt/google/chrome/product_logo_24.png" \
+    ln -fns "${upstream_dir}/opt/google/chrome/product_logo_24.png" \
             /usr/share/icons/hicolor/24x24/apps/google-chrome.png
-        ln -fns "${upstream_dir}/opt/google/chrome/product_logo_32.png" \
+    ln -fns "${upstream_dir}/opt/google/chrome/product_logo_32.png" \
             /usr/share/icons/hicolor/32x32/apps/google-chrome.png
-        ln -fns "${upstream_dir}/opt/google/chrome/product_logo_48.png" \
+    ln -fns "${upstream_dir}/opt/google/chrome/product_logo_48.png" \
             /usr/share/icons/hicolor/48x48/apps/google-chrome.png
-        ln -fns "${upstream_dir}/opt/google/chrome/product_logo_64.png" \
+    ln -fns "${upstream_dir}/opt/google/chrome/product_logo_64.png" \
             /usr/share/icons/hicolor/64x64/apps/google-chrome.png
-        ln -fns "${upstream_dir}/opt/google/chrome/product_logo_128.png" \
+    ln -fns "${upstream_dir}/opt/google/chrome/product_logo_128.png" \
             /usr/share/icons/hicolor/128x128/apps/google-chrome.png
-        ln -fns "${upstream_dir}/opt/google/chrome/product_logo_256.png" \
+    ln -fns "${upstream_dir}/opt/google/chrome/product_logo_256.png" \
             /usr/share/icons/hicolor/256x256/apps/google-chrome.png
-        ln -fns "${upstream_dir}/usr/share/man/man1/google-chrome.1" \
+    ln -fns "${upstream_dir}/usr/share/man/man1/google-chrome.1" \
             /usr/share/man/man1/google-chrome.1
 
-        ln -fns "${upstream_dir}/opt/google/chrome/google-chrome" \
+    ln -fns "${upstream_dir}/opt/google/chrome/google-chrome" \
             /usr/bin/google-chrome-stable.puavopkg
-        write_startup_wrapper
-        add_desktop_file_fixer
+    write_startup_wrapper
+    add_desktop_file_fixer
 
-        sed '/^MimeType=/a\
+    sed '/^MimeType=/a\
 StartupNotify=true' "${upstream_dir}/usr/share/applications/google-chrome.desktop" \
-            > /usr/share/applications/google-chrome.desktop
-        ;;
-    unconfigure)
-        rm -f /etc/X11/Xsession.d/70fix-chrome-desktop-files          \
-              /usr/bin/google-chrome-stable                           \
-              /usr/bin/google-chrome-stable.puavopkg                  \
-              /usr/share/applications/google-chrome.desktop           \
-              /usr/share/man/man1/google-chrome.1                     \
-              /usr/share/icons/hicolor/256x256/apps/google-chrome.png \
-              /usr/share/icons/hicolor/128x128/apps/google-chrome.png \
-              /usr/share/icons/hicolor/64x64/apps/google-chrome.png   \
-              /usr/share/icons/hicolor/48x48/apps/google-chrome.png   \
-              /usr/share/icons/hicolor/32x32/apps/google-chrome.png   \
-              /usr/share/icons/hicolor/24x24/apps/google-chrome.png   \
-              /usr/share/icons/hicolor/22x22/apps/google-chrome.png   \
-              /usr/share/icons/hicolor/16x16/apps/google-chrome.png
-        ;;
-    unpack)
-        upstream_pack=$1
-        upstream_dir=$2
-        dpkg -x "$upstream_pack" "$upstream_dir"
-        chmod 0755 "$upstream_dir"
-        ;;
-    *)
-        ;;
+      > /usr/share/applications/google-chrome.desktop
+    ;;
+
+  unconfigure)
+    rm -f /etc/X11/Xsession.d/70fix-chrome-desktop-files          \
+          /usr/bin/google-chrome-stable                           \
+          /usr/bin/google-chrome-stable.puavopkg                  \
+          /usr/share/applications/google-chrome.desktop           \
+          /usr/share/icons/hicolor/16x16/apps/google-chrome.png   \
+          /usr/share/icons/hicolor/22x22/apps/google-chrome.png   \
+          /usr/share/icons/hicolor/24x24/apps/google-chrome.png   \
+          /usr/share/icons/hicolor/32x32/apps/google-chrome.png   \
+          /usr/share/icons/hicolor/48x48/apps/google-chrome.png   \
+          /usr/share/icons/hicolor/64x64/apps/google-chrome.png   \
+          /usr/share/icons/hicolor/128x128/apps/google-chrome.png \
+          /usr/share/icons/hicolor/256x256/apps/google-chrome.png \
+          /usr/share/man/man1/google-chrome.1
+    ;;
+
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    dpkg -x "$upstream_pack" "$upstream_dir"
+    chmod 0755 "$upstream_dir"
+    ;;
+
+  *)
+    ;;
 esac
