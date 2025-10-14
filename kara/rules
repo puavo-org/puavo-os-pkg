@@ -6,6 +6,7 @@ command=$1
 shift
 
 spec_list='
+javakara.jar|JavaKara|javakara
 javascriptkara.jar|JavaScriptKara|javascriptkara
 kara.jar|Kara|kara
 multikara.jar|MultiKara|multikara
