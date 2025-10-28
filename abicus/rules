@@ -6,34 +6,41 @@ command=$1
 shift
 
 links='
-/usr/bin/abicus
-/usr/share/icons/hicolor/128x128/apps/abicus.png
-/usr/share/icons/hicolor/256x256@2/apps/abicus.png
-/usr/share/icons/hicolor/32x32/apps/abicus.png
-/usr/share/applications/abicus.desktop'
+/usr/bin/Abicus
+/usr/share/icons/hicolor/128x128/apps/Abicus.png
+/usr/share/icons/hicolor/256x256/apps/Abicus.png
+/usr/share/icons/hicolor/32x32/apps/Abicus.png
+/usr/share/applications/Abicus.desktop'
 
 case "${command}" in
-    configure)
-	if [ "$(lsb_release -cs)" = 'bullseye' ]; then
-		echo 'This pkg is no longer supported on bullseye' >&2
-		exit 1
-	fi
+  configure)
+		if [ "$(lsb_release -cs)" = 'bullseye' ]; then
+			echo 'This pkg is no longer supported on bullseye' >&2
+			exit 1
+		fi
 
-	upstream_dir=$1
-        for f in $links; do
-          mkdir -p "$(dirname "$f")"
-          ln -fns -T "${upstream_dir}/${f}" "$f"
-        done
-	;;
-    unconfigure)
-	rm -f $links
-	;;
-    unpack)
-	upstream_pack=$1
-	upstream_dir=$2
+		upstream_dir=$1
+		for f in $links; do
+			mkdir -p "$(dirname "$f")"
+			ln -fns -T "${upstream_dir}/${f}" "$f"
+		done
 
-	dpkg -x "${upstream_pack}" "${upstream_dir}"
-	;;
-    *)
-	;;
+		# Extra link for compatibility
+		ln -fns /usr/bin/Abicus /usr/bin/abicus
+
+		# Fix icon path in desktop file
+		sed -i "s|Icon=Abicus|Icon=/usr/share/icons/hicolor/128x128/apps/Abicus.png|" "${upstream_dir}/usr/share/applications/Abicus.desktop"
+		;;
+  unconfigure)
+		rm -f $links
+		rm -f /usr/bin/abicus
+		;;
+  unpack)
+		upstream_pack=$1
+		upstream_dir=$2
+
+		dpkg -x "${upstream_pack}" "${upstream_dir}"
+		;;
+  *)
+		;;
 esac
