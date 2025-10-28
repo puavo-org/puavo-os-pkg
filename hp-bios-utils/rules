@@ -5,11 +5,18 @@ set -eu
 command=$1
 shift
 
+
+### These version numbers are used below and thus must be
+### updated to reflect the structure inside the upstream tarball.
+hpf_ver="3.25"
+hpum_ver="3.06"
+
 case "${command}" in
   configure)
     upstream_dir=$1
-    make -C "${upstream_dir}/hpflash-3.24/non-rpms/hpuefi-mod-3.05" default install
-    (cd "${upstream_dir}/hpflash-3.24/non-rpms/hp-flash-3.24_x86_64/" && ./install.sh)
+    sed -i '/^KHPATHS/s/KVERS"$/\KVERS \/lib\/modules\/$KVERS\/source"/' "${upstream_dir}/hpflash-${hpf_ver}/non-rpms/hpuefi-mod-${hpum_ver}/hpuefi-vm-flags.sh"
+    make -C "${upstream_dir}/hpflash-${hpf_ver}/non-rpms/hpuefi-mod-${hpum_ver}" default install
+    (cd "${upstream_dir}/hpflash-${hpf_ver}/non-rpms/hp-flash-${hpf_ver}_x86_64/" && ./install.sh)
     ;;
   unconfigure)
     rm -rf /opt/hp/hp-flash
@@ -20,16 +27,16 @@ case "${command}" in
     upstream_pack=$1
     upstream_dir=$2
 
-    mkdir -p "${upstream_dir}/hpflash-3.24"
-    tar --no-same-owner -z -x -f "$upstream_pack" -C "${upstream_dir}/hpflash-3.24"
-    mkdir -p "${upstream_dir}/hpflash-3.24/non-rpms/hp-flash" \
-             "${upstream_dir}/hpflash-3.24/non-rpms/hpuefi-mod"
+    mkdir -p "${upstream_dir}/hpflash-${hpf_ver}"
+    tar --no-same-owner -z -x -f "$upstream_pack" -C "${upstream_dir}/hpflash-${hpf_ver}"
+    mkdir -p "${upstream_dir}/hpflash-${hpf_ver}/non-rpms/hp-flash" \
+             "${upstream_dir}/hpflash-${hpf_ver}/non-rpms/hpuefi-mod"
     tar --no-same-owner -z -x \
-        -f "${upstream_dir}/hpflash-3.24/non-rpms/hp-flash-3.24_x86_64.tgz" \
-        -C "${upstream_dir}/hpflash-3.24/non-rpms"
+        -f "${upstream_dir}/hpflash-${hpf_ver}/non-rpms/hp-flash-${hpf_ver}_x86_64.tgz" \
+        -C "${upstream_dir}/hpflash-${hpf_ver}/non-rpms"
     tar --no-same-owner -z -x \
-        -f "${upstream_dir}/hpflash-3.24/non-rpms/hpuefi-mod-3.05.tgz" \
-        -C "${upstream_dir}/hpflash-3.24/non-rpms"
+        -f "${upstream_dir}/hpflash-${hpf_ver}/non-rpms/hpuefi-mod-${hpum_ver}.tgz" \
+        -C "${upstream_dir}/hpflash-${hpf_ver}/non-rpms"
     ;;
   *)
     ;;
