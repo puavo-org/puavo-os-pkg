@@ -9,35 +9,13 @@ case "$command" in
   configure)
     upstream_dir=$1
     mkdir -p /opt/trusty/lib
+    ln -fns "$upstream_dir"/i386-linux-gnu   /opt/trusty/lib/i386-linux-gnu
     ln -fns "$upstream_dir"/x86_64-linux-gnu /opt/trusty/lib/x86_64-linux-gnu
-    ln -fns "$upstream_dir"/x86_64-linux-gnu/libgiomm-2.4.so.1.3.0 /opt/trusty/lib/x86_64-linux-gnu/libgiomm-2.4.so.1
-    ln -fns "$upstream_dir"/x86_64-linux-gnu/libgdkmm-2.4.so.1.1.0 /opt/trusty/lib/x86_64-linux-gnu/libgdkmm-2.4.so.1
-    ln -fns "$upstream_dir"/x86_64-linux-gnu/libglibmm-2.4.so.1.3.0 /opt/trusty/lib/x86_64-linux-gnu/libglibmm-2.4.so.1
-    ln -fns "$upstream_dir"/x86_64-linux-gnu/libgtkmm-2.4.so.1.1.0 /opt/trusty/lib/x86_64-linux-gnu/libgtkmm-2.4.so.1
-    ln -fns "$upstream_dir"/x86_64-linux-gnu/libatkmm-1.6.so.1.1.0 /opt/trusty/lib/x86_64-linux-gnu/libatkmm-1.6.so.1
-    ln -fns "$upstream_dir"/x86_64-linux-gnu/libcairomm-1.0.so.1.4.0 /opt/trusty/lib/x86_64-linux-gnu/libcairomm-1.0.so.1
-    ln -fns "$upstream_dir"/x86_64-linux-gnu/libpangomm-1.4.so.1.0.30 /opt/trusty/lib/x86_64-linux-gnu/libpangomm-1.4.so.1
-    ln -fns "$upstream_dir"/i386-linux-gnu /opt/trusty/lib/i386-linux-gnu
-    ln -fns "$upstream_dir"/i386-linux-gnu/libgiomm-2.4.so.1 /opt/trusty/lib/i386-linux-gnu/libgiomm-2.4.so.1.3.0
-    ln -fns "$upstream_dir"/i386-linux-gnu/libgdkmm-2.4.so.1 /opt/trusty/lib/i386-linux-gnu/libgdkmm-2.4.so.1.1.0
-    ln -fns "$upstream_dir"/i386-linux-gnu/libpng12.so.0.54.0 /opt/trusty/lib/i386-linux-gnu/libpng12.so.0
     ;;
 
   unconfigure)
-    rm -f /opt/trusty/lib/x86_64-linux-gnu/libgiomm-2.4.so.1
-    rm -f /opt/trusty/lib/x86_64-linux-gnu/libgtkmm-2.4.so.1
-    rm -f /opt/trusty/lib/x86_64-linux-gnu/libgdkmm-2.4.so.1
-    rm -f /opt/trusty/lib/x86_64-linux-gnu/libglibmm-2.4.so.1
-    rm -f /opt/trusty/lib/x86_64-linux-gnu/libatkmm-1.6.so.1
-    rm -f /opt/trusty/lib/x86_64-linux-gnu/libcairomm-1.0.so.1
-    rm -f /opt/trusty/lib/x86_64-linux-gnu/libpangomm-1.4.so.1
-
-    rm -f /opt/trusty/lib/x86_64-linux-gnu
-    rm -f /opt/trusty/lib/i386-linux-gnu/libgiomm-2.4.so.1.3.0
-    rm -f /opt/trusty/lib/i386-linux-gnu/libgdkmm-2.4.so.1.1.0
-    rm -f /opt/trusty/lib/i386-linux-gnu/libpng12.so.0
-    rm -f /opt/trusty/lib/i386-linux-gnu
-    rmdir /opt/trusty/lib /opt/trusty
+    rm -f /opt/trusty/lib/i386-linux-gnu /opt/trusty/lib/x86_64-linux-gnu
+    rmdir --ignore-fail-on-non-empty /opt/trusty/lib /opt/trusty
     ;;
 
   unpack)
@@ -78,9 +56,20 @@ case "$command" in
                 ubuntu-trusty-libs/i386-linux-gnu/
         done
       done <<EOF
-1e214ec9447bc6fa97e2eefa0e40c3939417b316b9e9a3d79fcb4b8cd1cf0ae98d4afb8d6ba41ce028723af3427f9c81 ${trusty_mirror_base}/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1.1_i386.deb           ../../../lib/i386-linux-gnu/libpng12.so.0.54.0
-ac8318798a7c965703b55b61f4ae538ff5a69d96ac33cbe593f1d35076233a829ae1ba950ee9e59a08fce3ca5a099530 ${trusty_mirror_base}/ubuntu/pool/main/g/glibmm2.4/libglibmm-2.4-1c2a_2.39.93-0ubuntu1_i386.deb    libgiomm-2.4.so.1
-adaaa3ad4d78579fd38193fdf797cb817f181563c1e6e8437cd2f6a13f35c646f6a787bba79c0d25b6f201aba7ae457b ${trusty_mirror_base}/ubuntu/pool/main/g/gtkmm2.4/libgtkmm-2.4-1c2a_2.24.4-1ubuntu1_i386.deb       libgdkmm-2.4.so.1
+ac8318798a7c965703b55b61f4ae538ff5a69d96ac33cbe593f1d35076233a829ae1ba950ee9e59a08fce3ca5a099530 ${trusty_mirror_base}/ubuntu/pool/main/g/glibmm2.4/libglibmm-2.4-1c2a_2.39.93-0ubuntu1_i386.deb               libgiomm-2.4.so.1
+adaaa3ad4d78579fd38193fdf797cb817f181563c1e6e8437cd2f6a13f35c646f6a787bba79c0d25b6f201aba7ae457b ${trusty_mirror_base}/ubuntu/pool/main/g/gtkmm2.4/libgtkmm-2.4-1c2a_2.24.4-1ubuntu1_i386.deb                  libgdkmm-2.4.so.1
+9fdd158f8eabae5bac5d8f0b11ca9f927dc8913313e85a3f9d607d71587585fe447440fac46fe5df9d653f0b92500f25 ${trusty_mirror_base}/ubuntu/pool/main/libj/libjpeg-turbo/libjpeg-turbo8_1.3.0-0ubuntu2.1_i386.deb            libjpeg.so.8.0.2
+1e214ec9447bc6fa97e2eefa0e40c3939417b316b9e9a3d79fcb4b8cd1cf0ae98d4afb8d6ba41ce028723af3427f9c81 ${trusty_mirror_base}/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1.1_i386.deb                      ../../../lib/i386-linux-gnu/libpng12.so.0.54.0
+197457822fef6eed0e25bb0c6e19ed99cd7c891895602006d8334dd06b5a558f1b298e74c5309041c26f0c3163c60df8 ${trusty_mirror_base}/ubuntu/pool/main/libx/libxt/libxt6_1.2.1-1_i386.deb                                     libXt.so.6.0.0
+2678077bc91183d996cd4cb58a37f5ac0f58a5f16b5c2ab7eb9625d07747e8c187f262617708949318a112305d40d0f2 ${trusty_mirror_base}/ubuntu/pool/main/n/nas/libaudio2_1.9.4-6_i386.deb                                       libaudio.so.2.4
+641bfe6dd790bcd8950f50a1dc0291676a4db8671f5a5d7c2a65bc135476e4c9f6c9b44a3156c916fad45d63f41ccb9e ${trusty_mirror_base}/ubuntu/pool/main/q/qt4-x11/libqt4-network_4.8.7%2Bdfsg-7ubuntu1_i386.deb                libQtNetwork.so.4.8.7
+89f9a66e3e2943be19a72eb47614d35d72a98c3473334b5f3462281cf02d42bc2a6fba3e0a3dd89832014aa45637bde4 ${trusty_mirror_base}/ubuntu/pool/main/q/qt4-x11/libqt4-opengl_4.8.7%2Bdfsg-7ubuntu1_i386.deb                 libQtOpenGL.so.4.8.7
+c9ba0e1cec6f8ee45783fb7d2a2891fd99818de4d82c1a5b09b54d70c9ad8e9845e0d766b707b8460e3b21d9795f04f0 ${trusty_mirror_base}/ubuntu/pool/main/q/qt4-x11/libqt4-svg_4.8.5%2Bgit192-g085f851%2Bdfsg-2ubuntu4_i386.deb  libQtSvg.so.4.8.6
+1b3e6e8b175edeaeca26ffd80910292edfdac62e47640bd978125e14eed7a48f9944785e2000a4ab8960da455501955a ${trusty_mirror_base}/ubuntu/pool/main/q/qt4-x11/libqt4-xml_4.8.7%2Bdfsg-7ubuntu1_i386.deb                    libQtXml.so.4.8.7
+3a2fb75a89f5acdf5168327eb83ddb195a4afe531af540832b0846b347d1b321fecd0dc21f3f034a7b6cd2a770f63075 ${trusty_mirror_base}/ubuntu/pool/main/q/qt4-x11/libqtcore4_4.8.7%2Bdfsg-7ubuntu1_i386.deb                    libQtCore.so.4.8.7
+57b52906614fbaa215a77cd1e1c0052b76ddf82630de94d46fec67c11608566532017e2a6d10fc7999dc5d591025b363 ${trusty_mirror_base}/ubuntu/pool/main/q/qt4-x11/libqtgui4_4.8.7%2Bdfsg-7ubuntu1_i386.deb                     libQtGui.so.4.8
+3cdd609e7313b5ed7598d38d58d262f0a3980231d6fc2f38c57ba5977d1a303e16247df06a1e01076e43e81819bc3768 ${trusty_mirror_base}/ubuntu/pool/main/q/qtwebkit-source/libqtwebkit4_2.3.2-0ubuntu11_i386.deb                libQtWebKit.so.4.10.2
+e72c1923f5ae8ec77b171584b3d6334e3a83e01a4ba45af74e578d8b50ebc7d43f0059b4a491eb2ab6bef61bf5340d37 ${trusty_mirror_base}/ubuntu/pool/main/q/qwt/libqwt6_6.0.0-1.2_i386.deb                                       ../../lib/libqwt.so.6.0
 EOF
       while read sha384 deburl files; do
         deb=$(basename "$deburl")
@@ -108,6 +97,25 @@ f3959cf128db908cdfdd4bee95ffdac604f24baafafc2b6776b86f38fb2254b2c4120fefe4d8a43f
 f3959cf128db908cdfdd4bee95ffdac604f24baafafc2b6776b86f38fb2254b2c4120fefe4d8a43ffd41b697d9dffffa ${trusty_mirror_base}/ubuntu/pool/main/g/gtkmm2.4/libgtkmm-2.4-1c2a_2.24.4-1ubuntu1_amd64.deb      libgtkmm-2.4.so.1.1.0
 c4bea9aa637dd5702075723b4e58782687967f37f81ea5540646f3768733ae7ea1834860c324655a82c64a32c0ce1aab ${trusty_mirror_base}/ubuntu/pool/main/p/pangomm/libpangomm-1.4-1_2.34.0-1ubuntu1_amd64.deb        libpangomm-1.4.so.1.0.30
 EOF
+
+      ln -fns libgdkmm-2.4.so.1        "ubuntu-trusty-libs/i386-linux-gnu/libgdkmm-2.4.so.1.1.0"
+      ln -fns libgiomm-2.4.so.1        "ubuntu-trusty-libs/i386-linux-gnu/libgiomm-2.4.so.1.3.0"
+      ln -fns libpng12.so.0.54.0       "ubuntu-trusty-libs/i386-linux-gnu/libpng12.so.0"
+      ln -fns libQtCore.so.4.8.7       "ubuntu-trusty-libs/i386-linux-gnu/libQtCore.so.4"
+      ln -fns libQtGui.so.4.8          "ubuntu-trusty-libs/i386-linux-gnu/libQtGui.so.4"
+      ln -fns libQtOpenGL.so.4.8.7     "ubuntu-trusty-libs/i386-linux-gnu/libQtOpenGL.so.4"
+      ln -fns libQtSvg.so.4.8.6        "ubuntu-trusty-libs/i386-linux-gnu/libQtSvg.so.4"
+      ln -fns libQtWebKit.so.4.10.2    "ubuntu-trusty-libs/i386-linux-gnu/libQtWebKit.so.4"
+      ln -fns libQtXml.so.4.8.7        "ubuntu-trusty-libs/i386-linux-gnu/libQtXml.so.4"
+      ln -fns libqwt.so.6.0            "ubuntu-trusty-libs/i386-linux-gnu/libqwt.so.6"
+      ln -fns libatkmm-1.6.so.1.1.0    "ubuntu-trusty-libs/x86_64-linux-gnu/libatkmm-1.6.so.1"
+      ln -fns libcairomm-1.0.so.1.4.0  "ubuntu-trusty-libs/x86_64-linux-gnu/libcairomm-1.0.so.1"
+      ln -fns libgdkmm-2.4.so.1.1.0    "ubuntu-trusty-libs/x86_64-linux-gnu/libgdkmm-2.4.so.1"
+      ln -fns libgiomm-2.4.so.1.3.0    "ubuntu-trusty-libs/x86_64-linux-gnu/libgiomm-2.4.so.1"
+      ln -fns libglibmm-2.4.so.1.3.0   "ubuntu-trusty-libs/x86_64-linux-gnu/libglibmm-2.4.so.1"
+      ln -fns libgtkmm-2.4.so.1.1.0    "ubuntu-trusty-libs/x86_64-linux-gnu/libgtkmm-2.4.so.1"
+      ln -fns libpangomm-1.4.so.1.0.30 "ubuntu-trusty-libs/x86_64-linux-gnu/libpangomm-1.4.so.1"
+
       # Set LC_COLLATE=C so that files always sort in the same
       # way (so we get the same tar-archive independent of locales).
       env LC_COLLATE=C \
