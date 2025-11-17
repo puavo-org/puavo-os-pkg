@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+  configure)
+    upstream_dir=$1
+    mkdir -p /opt/PerformanceTest
+    ln -fns "${upstream_dir}/PerformanceTest/PerformanceTest_Linux_x86-64" \
+             /opt/PerformanceTest/PerformanceTest
+    ;;
+  unconfigure)
+    rm -f /opt/PerformanceTest/PerformanceTest
+    rmdir --ignore-fail-on-non-empty /opt/PerformanceTest
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    unzip -q -d "${upstream_dir}/" "$upstream_pack"
+    ;;
+  *)
+    ;;
+esac

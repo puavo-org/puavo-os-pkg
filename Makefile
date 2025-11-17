@@ -95,6 +95,7 @@ packagedirs += openjdk-11-jre
 packagedirs += openscad-nightly
 packagedirs += openshot-appimage
 packagedirs += otto-blockly
+packagedirs += passmark-performance-test
 packagedirs += phywe-measureapp
 packagedirs += processing
 packagedirs += projecteur
