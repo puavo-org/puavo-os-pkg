@@ -51,6 +51,7 @@ packagedirs += filius
 packagedirs += firefox
 packagedirs += firmware-sof-signed
 packagedirs += flashforge-flashprint
+packagedirs += fonts-poppins
 packagedirs += gdevelop
 packagedirs += geogebra
 packagedirs += geogebra6
