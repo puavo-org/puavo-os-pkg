@@ -12,15 +12,31 @@ case "${command}" in
     ln -fns "${upstream_dir}/PerformanceTest/PerformanceTest_Linux_x86-64" \
              /opt/PerformanceTest/PerformanceTest
     ;;
+
   unconfigure)
     rm -f /opt/PerformanceTest/PerformanceTest
     rmdir --ignore-fail-on-non-empty /opt/PerformanceTest
     ;;
+
   unpack)
     upstream_pack=$1
     upstream_dir=$2
     unzip -q -d "${upstream_dir}/" "$upstream_pack"
     ;;
+
+  download)
+    upstream_pack=$1
+    download_url='https://www.passmark.com/downloads/PerformanceTest_Linux_x86-64.zip'
+    wget --user-agent='Puavo OS Advanced Robotics' \
+         --no-use-server-timestamps                \
+         --no-cookies                              \
+         --output-document "$upstream_pack"        \
+         --progress=dot:mega "$download_url" || {
+      [ $? -eq 4 ] && exit 2 ## Network failure.
+      exit 1
+    }
+    ;;
+
   *)
     ;;
 esac
