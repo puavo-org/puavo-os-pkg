@@ -9,8 +9,7 @@ links='
 /usr/bin/Abicus
 /usr/share/icons/hicolor/128x128/apps/Abicus.png
 /usr/share/icons/hicolor/256x256/apps/Abicus.png
-/usr/share/icons/hicolor/32x32/apps/Abicus.png
-/usr/share/applications/Abicus.desktop'
+/usr/share/icons/hicolor/32x32/apps/Abicus.png'
 
 case "${command}" in
   configure)
@@ -25,6 +24,9 @@ case "${command}" in
 			ln -fns -T "${upstream_dir}/${f}" "$f"
 		done
 
+		# Fix desktop file link to lower case name
+		ln -fns -T "${upstream_dir}/usr/share/applications/Abicus.desktop" /usr/share/applications/abicus.desktop
+
 		# Extra link for compatibility
 		ln -fns /usr/bin/Abicus /usr/bin/abicus
 
@@ -34,6 +36,7 @@ case "${command}" in
   unconfigure)
 		rm -f $links
 		rm -f /usr/bin/abicus
+		rm -f /usr/share/applications/abicus.desktop
 		;;
   unpack)
 		upstream_pack=$1
