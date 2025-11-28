@@ -10,7 +10,7 @@ cleanup() {
   fi
 }
 
-veracrypt_version='1.26.7'
+veracrypt_version='1.26.24'
 
 veracrypt_links='
   /usr/bin/veracrypt
@@ -46,7 +46,7 @@ case "$command" in
     tar -C "$tmpdir" -jxf "$upstream_pack"
     (
       cd "$tmpdir"
-      "./veracrypt-${veracrypt_version}-setup-gtk3-gui-x64" \
+      "./veracrypt-${veracrypt_version}-setup-gui-x64" \
         --noexec --target installer >/dev/null 2>&1
       package_start=$(awk -F= '$1 == "PACKAGE_START" { print $2; exit(0) }' \
                           installer/veracrypt_install_gui_x64.sh)
