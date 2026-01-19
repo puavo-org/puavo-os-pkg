@@ -52,7 +52,7 @@ startsecs=10
 
 [program:naksu2]
 command=/usr/bin/puavo-ers-naksu2
-autostart=true
+autostart=false
 autorestart=true
 stopasgroup=true
 killasgroup=true
@@ -60,14 +60,14 @@ startsecs=30
 
 [program:abitti2server]
 command=/usr/bin/puavo-ers-abitti2server
-autostart=true
+autostart=false
 autorestart=true
 stopasgroup=true
 killasgroup=true
 startsecs=30
 
 [eventlistener:chainer]
-command='%(here)s/ktp-controller' chainer '%(here)s/puavo_os-prod-run.conf' migratedb WAIT redis api agent
+command='%(here)s/ktp-controller' chainer '%(here)s/puavo_os-prod-run.conf' migratedb WAIT abitti2server naksu2 redis api agent
 events=PROCESS_STATE_RUNNING,PROCESS_STATE_EXITED,PROCESS_STATE_STOPPED,PROCESS_STATE_FATAL
 EOF
 }
