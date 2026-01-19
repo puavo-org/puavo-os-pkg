@@ -5,6 +5,73 @@ set -eu
 command=$1
 shift
 
+write_supervisord_conf() {
+  local path
+  path=$1
+  cat <<'EOF' > "$path"
+[supervisord]
+logfile = logs/supervisord.log
+pidfile = supervisord.pid
+childlogdir = logs
+nodaemon=True
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[unix_http_server]
+file=ktp_controller_supervisor_sock
+chmod=0700
+
+[supervisorctl]
+serverurl=unix://ktp_controller_supervisor_sock
+
+[program:migratedb]
+command='%(here)s/ktp-controller' alembic -c '%(here)s/alembic.ini' upgrade head
+autostart=true
+autorestart=false
+startsecs=0
+exitcodes=0
+
+[program:redis]
+command=redis-server
+autostart=false
+autorestart=false
+startsecs=10
+
+[program:api]
+command='%(here)s/ktp-controller' api
+autostart=false
+autorestart=false
+startsecs=10
+
+[program:agent]
+command=sudo -g puavo -n '%(here)s/ktp-controller' agent
+autostart=false
+autorestart=false
+startsecs=10
+
+[program:naksu2]
+command=/usr/bin/puavo-ers-naksu2
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+startsecs=30
+
+[program:abitti2server]
+command=/usr/bin/puavo-ers-abitti2server
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+startsecs=30
+
+[eventlistener:chainer]
+command='%(here)s/ktp-controller' chainer '%(here)s/puavo_os-prod-run.conf' migratedb WAIT redis api agent
+events=PROCESS_STATE_RUNNING,PROCESS_STATE_EXITED,PROCESS_STATE_STOPPED,PROCESS_STATE_FATAL
+EOF
+}
+
 case "${command}" in
   configure)
     upstream_dir=$1
@@ -20,6 +87,10 @@ EOF
     upstream_pack=$1
     upstream_dir=$2
     unzip -q -d "$upstream_dir" "$upstream_pack"
+    mv "${upstream_dir}/ktp-controller/puavo_os-prod-run.conf" \
+       "${upstream_dir}/ktp-controller/puavo_os-prod-run.conf.orig"
+    write_supervisord_conf \
+      "${upstream_dir}/ktp-controller/puavo_os-prod-run.conf"
     ;;
   *)
     ;;
