@@ -9,9 +9,12 @@ case "${command}" in
   configure)
     upstream_dir=$1
     ln -fns "${upstream_dir}/ktp-controller" /opt/ktp-controller
+    cat <<'EOF' > /etc/sudoers.d/puavo-ers-ktp-controller
+%puavo-ers      ALL = (:puavo) NOPASSWD: /opt/ktp-controller/ktp-controller
+EOF
     ;;
   unconfigure)
-    rm -f /opt/ktp-controller
+    rm -f /etc/sudoers.d/puavo-ers-ktp-controller /opt/ktp-controller
     ;;
   unpack)
     upstream_pack=$1
