@@ -68,6 +68,7 @@ packagedirs += kara-x
 packagedirs += kdenlive-appimage
 packagedirs += kmbeu
 packagedirs += kojo
+packagedirs += ktp-controller
 packagedirs += launcherone
 packagedirs += lazarus-ide
 packagedirs += lmaths

@@ -1,0 +1,23 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+  configure)
+    upstream_dir=$1
+    ln -fns "${upstream_dir}/ktp-controller" /opt/ktp-controller
+    ;;
+  unconfigure)
+    rm -f /opt/ktp-controller
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    unzip -q -d "$upstream_dir" "$upstream_pack"
+    ;;
+  *)
+    ;;
+esac
