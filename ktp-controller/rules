@@ -75,7 +75,7 @@ killasgroup=true
 startsecs=30
 
 [eventlistener:chainer]
-command='%(here)s/ktp-controller' chainer '%(here)s/puavo_os-prod-run.conf' migratedb WAIT naksu2 abitti2server redis api agent
+command='%(here)s/ktp-controller' chainer '%(here)s/puavo_os-prod-run.conf' migratedb WAIT abitti2server naksu2 redis api agent
 events=PROCESS_STATE_RUNNING,PROCESS_STATE_EXITED,PROCESS_STATE_STOPPED,PROCESS_STATE_FATAL
 EOF
 }
