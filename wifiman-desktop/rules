@@ -27,10 +27,13 @@ case "${command}" in
     done
     ### From postinst
     cp -f /usr/lib/wi-fiman-desktop/wifiman-desktop.service /etc/systemd/system/
+    if ! [ -L "/etc/systemd/system/multi-user.target.wants/wifiman-desktop.service" ]; then
+      ln -s /etc/systemd/system/wifiman-desktop.service /etc/systemd/system/multi-user.target.wants/
+    fi
     ;;
   unconfigure)
     rm -f $wifiman_links
-    rm -f /etc/systemd/system/wifiman-desktop.service
+    rm -f /etc/systemd/system/multi-user.target.wants/wifiman-desktop.service /etc/systemd/system/wifiman-desktop.service
     ;;
   unpack)
     upstream_pack=$1
