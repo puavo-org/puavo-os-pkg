@@ -12,7 +12,7 @@ wifiman_links='
   /usr/lib/wi-fiman-desktop/wg-quick
   /usr/lib/wi-fiman-desktop/wifiman-desktopd
   /usr/lib/wi-fiman-desktop/wifiman-desktop.service
-  /usr/lib/wi-fiman-desktop/wireguard-gousr/lib/wi-fiman-desktop
+  /usr/lib/wi-fiman-desktop/wireguard-go
   /usr/share/applications/wi-fiman-desktop.desktop
   /usr/share/icons/hicolor/128x128/apps/wi-fiman-desktop.png
   /usr/share/icons/hicolor/256x256@2/apps/wi-fiman-desktop.png
