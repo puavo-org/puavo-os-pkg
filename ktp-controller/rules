@@ -14,6 +14,12 @@ case "${command}" in
 EOF
     ;;
   unconfigure)
+    if pgrep -f /opt/ktp-controller/ktp-controller > /dev/null 2>&1; then
+      echo 'ktp-controller is running, will not unconfigure' >&2
+      # 4 == application is busy
+      exit 4
+    fi
+
     rm -f /etc/sudoers.d/puavo-ers-ktp-controller /opt/ktp-controller
     ;;
   unpack)
