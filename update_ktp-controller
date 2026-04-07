@@ -1,0 +1,84 @@
+#!/bin/bash
+
+set -eu
+
+on_exit()
+{
+    set +e
+
+    # Erroneous exits do not leave downloaded, possibly invalid, files
+    # lying around.
+    if [ $exitval -ne 0 ]; then
+        if [ -n "${upstream_file}" ]; then
+            rm -f "${upstream_file}"
+        fi
+    fi
+
+    exit $exitval
+}
+
+case "$#" in
+    1)
+        version=${1,,}
+        shift
+        sha256=
+        ;;
+    2)
+        version=${1,,}
+        shift
+        sha256=${1,,}
+        shift
+        ;;
+    *)
+        echo "ERROR: invalid number of args ($#), expected 1 or 2" >&2
+        echo "Usage: $0 VERSION [SHA256]" >&2
+        exit 1
+        ;;
+esac
+
+if ! [[ "${version}" =~ ^[0-9]+\.[0-9]+\.[0-9]+(rc[1-9][0-9]*)?$ ]]; then
+    echo "ERROR: invalid VERSION" >&1
+    exit 1
+fi
+
+if [ -n "$sha256" ] && ! [[ "${sha256}" =~ ^[0-9a-f]{64}$ ]]; then
+    echo "ERROR: invalid SHA256" >&1
+    exit 1
+fi
+
+this=$(readlink -e "$0")
+thisdir=$(dirname "$this")
+
+exitval=1
+upstream_file=
+
+trap on_exit EXIT
+
+cd "$thisdir"
+
+upstream_file="ktp_controller-prodbundle-$version.zip"
+
+cat >ktp-controller/upstream_pack_url <<EOF
+https://github.com/puavo-org/ktp-controller/releases/download/v$version/${upstream_file}
+EOF
+wget -O "${upstream_file}" -i "ktp-controller/upstream_pack_url"
+if [ -n "$sha256" ]; then
+    sha256sum --strict --check <<EOF
+${sha256}  ${upstream_file}
+EOF
+else
+    echo
+    echo "SHA256:"
+    sha256sum "${upstream_file}"
+    echo
+fi
+sha384sum "${upstream_file}" | cut -d' ' -f1 >ktp-controller/upstream_pack_sha384sum
+make ktp-controller.tar.gz
+
+git commit \
+    ktp-controller/upstream_pack_url \
+    ktp-controller/upstream_pack_sha384sum \
+    ktp-controller/.puavo-pkg-version \
+    -m "ktp-controller: update to $version"
+
+exitval=0
