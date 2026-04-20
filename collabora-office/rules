@@ -1,0 +1,52 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+appimage_name="collabora-office.AppImage"
+icon_name="com.collaboraoffice.Office.startcenter"
+desktop_name="collabora-office.desktop"
+
+case "${command}" in
+    configure)
+        upstream_directory=$1
+        appimage_path="${upstream_directory}/${appimage_name}"
+
+        # Symlink for CLI invocation
+        ln -fns "${appimage_path}" /usr/bin/collabora-office
+
+        # Extract icon and desktop file from the AppImage
+        "${appimage_path}" --appimage-extract \
+            "${icon_name}.svg"
+        "${appimage_path}" --appimage-extract \
+            "${desktop_name}"
+
+        install -Dm644 \
+            "squashfs-root/${icon_name}.svg" \
+            "/usr/share/icons/hicolor/scalable/apps/${icon_name}.svg"
+
+        # Replace upstream Exec command with our symlink
+        sed 's/Exec=coda-qt/Exec=collabora-office/g' \
+            "squashfs-root/${desktop_name}" \
+            > "/usr/share/applications/${desktop_name}"
+
+        rm -rf squashfs-root
+        ;;
+    unconfigure)
+        rm -f /usr/bin/collabora-office \
+              "/usr/share/applications/${desktop_name}" \
+              "/usr/share/icons/hicolor/scalable/apps/${icon_name}.svg"
+        ;;
+    unpack)
+        upstream_pack=$1
+        upstream_directory=$2
+
+        cp "${upstream_pack}" \
+            "${upstream_directory}/${appimage_name}"
+        chmod 755 "${upstream_directory}/${appimage_name}"
+        ;;
+    *)
+        ;;
+esac
