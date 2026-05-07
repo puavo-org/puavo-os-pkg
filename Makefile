@@ -27,6 +27,7 @@ packagedirs += celestia
 packagedirs += clevertouch-lynx
 packagedirs += cmaptools
 packagedirs += cnijfilter2
+packagedirs += collabora
 packagedirs += cryptomator
 packagedirs += cura-appimage
 packagedirs += discord
