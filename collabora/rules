@@ -1,0 +1,31 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+links='
+  /opt/collabora-office
+  /usr/bin/collabora-office
+'
+
+case "${command}" in
+  configure)
+    upstream_dir=$1
+    for f in $links; do
+      mkdir -p "$(dirname "$f")"
+      ln -fns -T "${upstream_dir}/${f}" "$f"
+    done
+    ;;
+  unconfigure)
+    rm -f $links
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    dpkg-deb -x "$upstream_pack" "$upstream_dir"
+    ;;
+  *)
+    ;;
+esac
