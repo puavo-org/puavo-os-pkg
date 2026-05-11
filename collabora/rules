@@ -5,6 +5,10 @@ set -eu
 command=$1
 shift
 
+appimage_name='collabora-office.AppImage'
+desktop_file='collabora-office.desktop'
+icon_file='com.collaboraoffice.Office.startcenter.svg'
+
 links='
   /opt/collabora-office
   /usr/bin/collabora-office
@@ -17,14 +21,35 @@ case "${command}" in
       mkdir -p "$(dirname "$f")"
       ln -fns -T "${upstream_dir}/${f}" "$f"
     done
+
+    sed 's/Exec=coda-qt/Exec=collabora-office/g' \
+      "${upstream_dir}/${desktop_file}" \
+      > "/usr/share/applications/${desktop_file}"
+    ln -fns "${upstream_dir}/${icon_file}" \
+            "/usr/share/icons/hicolor/scalable/apps/${icon_file}"
     ;;
   unconfigure)
-    rm -f $links
+    rm -f $links \
+          "/usr/share/applications/${desktop_file}" \
+          "/usr/share/icons/hicolor/scalable/apps/${icon_file}"
     ;;
   unpack)
     upstream_pack=$1
     upstream_dir=$2
     dpkg-deb -x "$upstream_pack" "$upstream_dir"
+    appimage_path="${upstream_dir}/opt/collabora-office/${appimage_name}"
+    # XXX It would be nicer if the Debian package would contain
+    # XXX $icon_file and $desktop_file without needing to extract
+    # XXX them separately as is done here.  (That way the .deb package would
+    # XXX be more usable in itself).
+    (
+      cd "$upstream_dir"
+      "$appimage_path" --appimage-extract "$icon_file"
+      "$appimage_path" --appimage-extract "$desktop_file"
+      mv "squashfs-root/${icon_file}" "squashfs-root/${desktop_file}" \
+         "$upstream_dir"
+      rmdir squashfs-root
+    )
     ;;
   *)
     ;;
