@@ -56,7 +56,7 @@ case "${command}" in
 
         (
         cd "$tmpdir"
-        mkdir -p puavo-firmware
+        mkdir -p puavo-firmware-bookworm
         while read sha384 fwfilepath; do
             fwfile=$(basename "${fwfilepath%\?*}")
             wget \
@@ -74,7 +74,7 @@ case "${command}" in
             echo "expected: ${sha384} / actual: ${actual_checksum}" >&2
             exit 1
         fi
-        mv "$fwfile" puavo-firmware/ || exit 1
+        mv "$fwfile" puavo-firmware-bookworm/ || exit 1
       done <<EOF
 874557b285f087de0a1f1d0d26d7483aef6190ce267bb82734a303a4adcadcafc92459840f86e05bd53f42b5d8403a07  iwlwifi-so-a0-gf-a0.pnvm?id=48407ffd7adb9511701547068b1e6f0956bd1c94
 b1e31efc3506cb20ca9c27c33c66cb6f063a7ef7d8f8c8f1bf8a9c0b05cba658d0767f5b89c8ffec92dfb10b90b24305  iwlwifi-so-a0-gf-a0-71.ucode?id=48407ffd7adb9511701547068b1e6f0956bd1c94
@@ -89,7 +89,7 @@ EOF
     # Set LC_COLLATE=C so that files always sort in the same
     # way (so we get the same tar-archive independent of locales).
         env LC_COLLATE=C \
-            tar -C puavo-firmware --mtime='2000-01-01 00:00:00 +00:00' --sort=name -c \
+            tar -C puavo-firmware-bookworm --mtime='2000-01-01 00:00:00 +00:00' --sort=name -c \
             -f "$upstream_pack" .
         )
         ;;
