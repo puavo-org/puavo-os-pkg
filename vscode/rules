@@ -14,6 +14,7 @@ vscode_links='
    /usr/share/mime/packages/code-workspace.xml
    /usr/share/pixmaps/com.visualstudio.code.png
    /usr/share/zsh/vendor-completions/_code
+   /etc/vscode
 '
 
 
@@ -37,6 +38,9 @@ case "${command}" in
         # remove the setuid bit, this is run with --no-sandbox anyway
         # (and owner is "puavo-pkg" so it does not help)
         chmod 755 "${upstream_dir}/usr/share/code/chrome-sandbox"
+        # copy the customized policy.json
+        mkdir -p "${upstream_dir}/etc/vscode"
+        cp -p policy.json "${upstream_dir}/etc/vscode/policy.json"
         ;;
     *)
         ;;

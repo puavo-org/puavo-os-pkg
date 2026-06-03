@@ -5,7 +5,6 @@ set -eu
 command=$1
 shift
 
-
 urlbase='https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/plain'
 
 case "${command}" in
@@ -25,6 +24,14 @@ case "${command}" in
         mkdir -p /lib/firmware/qca
         ln -fns "${upstream_dir}/rampatch_usb_00130200.bin" /lib/firmware/qca/rampatch_usb_00130200.bin
         ln -fns "${upstream_dir}/nvm_usb_00130200.bin" /lib/firmware/qca/nvm_usb_00130200.bin
+
+        mkdir -p /lib/firmware/mediatek/mt7925
+        ln -fns "${upstream_dir}/BT_RAM_CODE_MT7925_1_1_hdr.bin" \
+                /lib/firmware/mediatek/mt7925/BT_RAM_CODE_MT7925_1_1_hdr.bin
+        ln -fns "${upstream_dir}/WIFI_RAM_CODE_MT7925_1_1.bin" \
+                /lib/firmware/mediatek/mt7925/WIFI_RAM_CODE_MT7925_1_1.bin
+        ln -fns "${upstream_dir}/WIFI_MT7925_PATCH_MCU_1_1_hdr.bin" \
+                /lib/firmware/mediatek/mt7925/WIFI_MT7925_PATCH_MCU_1_1_hdr.bin
         ;;
     unconfigure)
         rm -f /lib/firmware/iwlwifi-so-a0-gf-a0.pnvm
@@ -40,6 +47,10 @@ case "${command}" in
 
         rm -f /lib/firmware/qca/rampatch_usb_00130200.bin
         rm -f /lib/firmware/qca/nvm_usb_00130200.bin
+
+        rm -f /lib/firmware/mediatek/mt7925/BT_RAM_CODE_MT7925_1_1_hdr.bin    \
+              /lib/firmware/mediatek/mt7925/WIFI_MT7925_PATCH_MCU_1_1_hdr.bin \
+              /lib/firmware/mediatek/mt7925/WIFI_RAM_CODE_MT7925_1_1.bin
         ;;
     unpack)
         upstream_pack=$1
@@ -56,7 +67,7 @@ case "${command}" in
 
         (
         cd "$tmpdir"
-        mkdir -p puavo-firmware
+        mkdir -p puavo-firmware-bookworm
         while read sha384 fwfilepath; do
             fwfile=$(basename "${fwfilepath%\?*}")
             wget \
@@ -74,22 +85,25 @@ case "${command}" in
             echo "expected: ${sha384} / actual: ${actual_checksum}" >&2
             exit 1
         fi
-        mv "$fwfile" puavo-firmware/ || exit 1
+        mv "$fwfile" puavo-firmware-bookworm/ || exit 1
       done <<EOF
-874557b285f087de0a1f1d0d26d7483aef6190ce267bb82734a303a4adcadcafc92459840f86e05bd53f42b5d8403a07  iwlwifi-so-a0-gf-a0.pnvm?id=48407ffd7adb9511701547068b1e6f0956bd1c94
-b1e31efc3506cb20ca9c27c33c66cb6f063a7ef7d8f8c8f1bf8a9c0b05cba658d0767f5b89c8ffec92dfb10b90b24305  iwlwifi-so-a0-gf-a0-71.ucode?id=48407ffd7adb9511701547068b1e6f0956bd1c94
-694c5575199e1cf0dace64fb5111191e65ed89579158589a2db07ec1ccb3bb2c4de5bee82f26b37634a5b7cff26a764b  rtw89/rtw8852a_fw.bin?id=48407ffd7adb9511701547068b1e6f0956bd1c94
 2dda0804dc9fe9d2a5ed7451bc1d3e57886e6b0d957e3638dd4e792fa3f9e67a85d475517d07cb711fe9203c9255f24e  ath11k/WCN6855/hw2.0/amss.bin?id=8bb75626e9dd831d323c4e460414b56260f0b700
 75e9d6d3079527cdf93ab48aa456528bc0c46944cbed21a934cd99bfc825e66ec2152a43c7bca0c01ffcd32adb3d46c9  ath11k/WCN6855/hw2.0/board-2.bin?id=8bb75626e9dd831d323c4e460414b56260f0b700
 c2f61da71f922537f0bcc8325a0bbbcd9ce1c3760d93f97cd3451efbec18226224cdfd416169bc844be446fc9b60e67f  ath11k/WCN6855/hw2.0/m3.bin?id=8bb75626e9dd831d323c4e460414b56260f0b700
 bce2056a07d61d88db2abefad4e4eee3ce6b1e7574a0ad0ec7268bcc83ff0b42a0658dde8498f487caf5e920c0cd4e87  ath11k/WCN6855/hw2.0/regdb.bin?id=8bb75626e9dd831d323c4e460414b56260f0b700
-d791046335e2793a58c9b86dc6983bd744e4a61fa777332b7abc7bf40374f46d390d5c2903b38095c516640f9d91a08d  qca/rampatch_usb_00130200.bin
+b1e31efc3506cb20ca9c27c33c66cb6f063a7ef7d8f8c8f1bf8a9c0b05cba658d0767f5b89c8ffec92dfb10b90b24305  iwlwifi-so-a0-gf-a0-71.ucode?id=48407ffd7adb9511701547068b1e6f0956bd1c94
+874557b285f087de0a1f1d0d26d7483aef6190ce267bb82734a303a4adcadcafc92459840f86e05bd53f42b5d8403a07  iwlwifi-so-a0-gf-a0.pnvm?id=48407ffd7adb9511701547068b1e6f0956bd1c94
+6eddafc4a61519f3708473e8a34df28b4483420c59c1ee191f48b27c7311f7c0e4842b72cbd7b7e47a6cbf4cfdf6e4b5  mediatek/mt7925/BT_RAM_CODE_MT7925_1_1_hdr.bin
+6b3957aaed4f69f559d481735863da3dad41c4eea47a33cd651e4ac132363f6256ce7d7bd40bd0d7734b1ee5d8103535  mediatek/mt7925/WIFI_RAM_CODE_MT7925_1_1.bin
+b75a80e15d74d8309266517fde4ef8f79dc1ae6c92084862157fe0c8a423a1a9c3db62e356de983e77eabfc053be7968  mediatek/mt7925/WIFI_MT7925_PATCH_MCU_1_1_hdr.bin
 06292b389be8895e3989672ff2a11a3df2df21a69da3992ffa7f8f24782e0030b90dff6c32aa406dfb18aed2200487ad  qca/nvm_usb_00130200.bin
+d791046335e2793a58c9b86dc6983bd744e4a61fa777332b7abc7bf40374f46d390d5c2903b38095c516640f9d91a08d  qca/rampatch_usb_00130200.bin
+694c5575199e1cf0dace64fb5111191e65ed89579158589a2db07ec1ccb3bb2c4de5bee82f26b37634a5b7cff26a764b  rtw89/rtw8852a_fw.bin?id=48407ffd7adb9511701547068b1e6f0956bd1c94
 EOF
     # Set LC_COLLATE=C so that files always sort in the same
     # way (so we get the same tar-archive independent of locales).
         env LC_COLLATE=C \
-            tar -C puavo-firmware --mtime='2000-01-01 00:00:00 +00:00' --sort=name -c \
+            tar -C puavo-firmware-bookworm --mtime='2000-01-01 00:00:00 +00:00' --sort=name -c \
             -f "$upstream_pack" .
         )
         ;;
