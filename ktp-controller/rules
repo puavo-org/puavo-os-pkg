@@ -14,6 +14,27 @@ case "${command}" in
 %puavo-ers      ALL = (:puavo) NOPASSWD: /opt/ktp-controller/bin/ktp-controller-agent
 %puavo-ers      ALL =          NOPASSWD: /opt/ktp-controller/bin/ktp-controller-networking
 EOF
+
+    cat <<'EOF' > /etc/rsyslog.d/ktp-controller.conf
+if ($msg startswith ' ktp-controller' or $msg startswith 'ktp-controller') then {
+  action(type="omfile" file="/var/log/ktp-controller.log")
+  stop
+}
+EOF
+
+    cat <<'EOF' > /etc/logrotate.d/ktp-controller
+/var/log/ktp-controller.log {
+    compress
+    delaycompress
+    missingok
+    notifempty
+    daily
+    rotate 14
+    postrotate
+        /usr/lib/rsyslog/rsyslog-rotate
+    endscript
+}
+EOF
     ;;
   unconfigure)
     # All executables under /opt/ktp-controller/ are ours; if they
@@ -25,7 +46,7 @@ EOF
       exit 4
     fi
 
-    rm -f /etc/sudoers.d/ktp-controller /opt/ktp-controller
+    rm -f /etc/sudoers.d/ktp-controller /opt/ktp-controller /etc/logrotate.d/ktp-controller /etc/rsyslog.d/ktp-controller.conf
     ;;
   unpack)
     upstream_pack=$1
