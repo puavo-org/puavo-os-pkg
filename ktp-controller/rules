@@ -16,10 +16,10 @@ case "${command}" in
 EOF
     ;;
   unconfigure)
-      # All executables under /opt/ktp-controller/ are ours; if they
-      # are running, we cannot remove anything: the package is still
-      # in use.
-      if pgrep -f '^/opt/ktp-controller/' > /dev/null 2>&1; then
+    # All executables under /opt/ktp-controller/ are ours; if they
+    # are running, we cannot remove anything: the package is still
+    # in use.
+    if pgrep -f '^/opt/ktp-controller/' > /dev/null 2>&1; then
       echo 'ktp-controller is running, will not unconfigure' >&2
       # 4 == application is busy
       exit 4
