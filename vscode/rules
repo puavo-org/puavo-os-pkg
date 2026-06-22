@@ -12,7 +12,7 @@ vscode_links='
    /usr/share/bash-completion/completions/code
    /usr/share/code
    /usr/share/mime/packages/code-workspace.xml
-   /usr/share/pixmaps/com.visualstudio.code.png
+   /usr/share/pixmaps/vscode.png
    /usr/share/zsh/vendor-completions/_code
    /etc/vscode
 '
@@ -25,10 +25,12 @@ case "${command}" in
           mkdir -p "$(dirname "$f")"
           ln -fns -T "${upstream_dir}/${f}" "$f"
         done
+        ln -fns -T "${upstream_dir}/usr/share/code/code" /usr/local/bin/code
         echo vscode >> /var/lib/puavo-pkg/.update_mime_database
         ;;
     unconfigure)
         rm -f $vscode_links
+        rm -f /usr/local/bin/code
         ;;
     unpack)
         upstream_pack=$1

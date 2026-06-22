@@ -9,18 +9,44 @@ case "${command}" in
   configure)
     upstream_dir=$1
     ln -fns "${upstream_dir}/ktp-controller" /opt/ktp-controller
-    cat <<'EOF' > /etc/sudoers.d/puavo-ers-ktp-controller
-%puavo-ers      ALL = (:puavo) NOPASSWD: /opt/ktp-controller/ktp-controller
+
+    cat <<'EOF' > /etc/sudoers.d/ktp-controller
+%puavo-ers      ALL = (:puavo) NOPASSWD: /opt/ktp-controller/bin/ktp-controller-agent
+%puavo-ers      ALL =          NOPASSWD: /opt/ktp-controller/bin/ktp-controller-networking
+EOF
+
+    cat <<'EOF' > /etc/rsyslog.d/ktp-controller.conf
+if ($msg startswith ' ktp-controller' or $msg startswith 'ktp-controller') then {
+  action(type="omfile" file="/var/log/ktp-controller.log")
+  stop
+}
+EOF
+
+    cat <<'EOF' > /etc/logrotate.d/ktp-controller
+/var/log/ktp-controller.log {
+    compress
+    delaycompress
+    missingok
+    notifempty
+    daily
+    rotate 14
+    postrotate
+        /usr/lib/rsyslog/rsyslog-rotate
+    endscript
+}
 EOF
     ;;
   unconfigure)
-    if pgrep -f /opt/ktp-controller/ktp-controller > /dev/null 2>&1; then
+    # All executables under /opt/ktp-controller/ are ours; if they
+    # are running, we cannot remove anything: the package is still
+    # in use.
+    if pgrep -f '^/opt/ktp-controller/' > /dev/null 2>&1; then
       echo 'ktp-controller is running, will not unconfigure' >&2
       # 4 == application is busy
       exit 4
     fi
 
-    rm -f /etc/sudoers.d/puavo-ers-ktp-controller /opt/ktp-controller
+    rm -f /etc/sudoers.d/ktp-controller /opt/ktp-controller /etc/logrotate.d/ktp-controller /etc/rsyslog.d/ktp-controller.conf
     ;;
   unpack)
     upstream_pack=$1
