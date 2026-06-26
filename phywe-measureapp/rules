@@ -19,6 +19,8 @@ case "${command}" in
       mkdir -p "$(dirname "$f")"
       ln -fns -T "${upstream_dir}/${f}" "$f"
     done
+    sed -i "s/Icon=measureapp/Icon=\/usr\/share\/icons\/hicolor\/0x0\/apps\/measureapp.png/" "${upstream_dir}/usr/share/applications/measureapp.desktop"
+    ln -fns -T /opt/measureAPP/measureapp /usr/local/bin/measureapp
     cat <<'EOF' > /etc/udev/rules.d/99-measureapp-usb.rules
 ATTRS{idVendor}=="1915", ATTRS{idProduct}=="520f", MODE="0664", GROUP="plugdev"
 ATTRS{idVendor}=="811e", ATTRS{idProduct}=="8846", MODE="0664", GROUP="plugdev"
@@ -27,6 +29,7 @@ EOF
     ;;
   unconfigure)
     rm -f $links /etc/udev/rules.d/99-measureapp-usb.rules
+    rm -f /usr/local/bin/measureapp
     ;;
   unpack)
     upstream_pack=$1
