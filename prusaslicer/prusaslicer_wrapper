@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -eu
+
+configfile="$HOME/.config/PrusaSlicer/PrusaSlicer.ini"
+tmpfile="${configfile}.tmp"
+
+if ! [ -e "$configfile" ]; then
+  echo "notify_release = none" > "$tmpfile"
+else
+  sed 's/^notify_release.*/notify_release = none/g' "$configfile" > "$tmpfile"
+fi
+mv "$tmpfile" "$configfile"
+
+exec /opt/prusaslicer/PrusaSlicer.AppImage "$@"

@@ -13,7 +13,7 @@ case "${command}" in
         cat <<EOF > /usr/share/applications/prusaslicer.desktop
 [Desktop Entry]
 Name=PrusaSlicer
-Exec=/opt/prusaslicer/PrusaSlicer.AppImage
+Exec=/opt/prusaslicer/PrusaSlicer
 Type=Application
 Terminal=false
 Icon=glade
@@ -30,7 +30,9 @@ EOF
 	upstream_dir=$2
 
         cp "${upstream_pack}" "${upstream_dir}/PrusaSlicer.AppImage"
+        cp "${upstream_dir}/../prusaslicer_wrapper" "${upstream_dir}/PrusaSlicer"
         chmod 755 "${upstream_dir}/PrusaSlicer.AppImage"
+        chmod 755 "${upstream_dir}/PrusaSlicer"
 	;;
     *)
 	;;
