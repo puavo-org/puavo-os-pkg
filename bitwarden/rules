@@ -32,7 +32,6 @@ case "${command}" in
         done
         ln -fns -T "/opt/Bitwarden/bitwarden" "/usr/bin/bitwarden"
         sed -i "s/Icon=bitwarden/Icon=\/usr\/share\/icons\/hicolor\/64x64\/apps\/bitwarden.png/" "${upstream_dir}/usr/share/applications/bitwarden.desktop"
-        sed -i "s/Exec=/Exec=env XDG_CURRENT_DESKTOP=KDE /" "${upstream_dir}/usr/share/applications/bitwarden.desktop"
         ;;
     unconfigure)
         rm -f $links
