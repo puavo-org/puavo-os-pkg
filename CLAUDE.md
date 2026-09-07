@@ -22,5 +22,8 @@ new version or editing a single file:
 7. Only after that confirmation, create the git commit, matching the existing
    commit message style in this repo (e.g. "Update VS Code to version
    1.136.0.").
+8. After the commit, remove the built `<package>.tar.gz` (or run `make clean`
+   to clear all built tarballs at once) — they are gitignored build artifacts
+   and shouldn't be left lying around in the working tree.
 
 See `README.md` for the broader package build/update/testing commands.
