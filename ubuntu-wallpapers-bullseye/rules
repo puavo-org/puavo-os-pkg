@@ -6,97 +6,30 @@ command=$1
 shift
 
 ubuntu_backgrounds_links='
-  /usr/share/backgrounds/160218-deux-two_by_Pierre_Cante.jpg
   /usr/share/backgrounds/Abstract_Painting_Photo_by_Pierre_Châtel-Innocenti.jpg
-  /usr/share/backgrounds/A_Little_Quetzal_by_vgerasimov.jpg
-  /usr/share/backgrounds/Backyard_Mushrooms_by_Kurt_Zitzelman.jpg
-  /usr/share/backgrounds/Beach_by_Renato_Giordanelli.jpg
-  /usr/share/backgrounds/Beaver_Wallpaper_Grey_4096x2304.png
-  /usr/share/backgrounds/Below_Clouds_by_kobinho.jpg
-  /usr/share/backgrounds/Berries_by_Tom_Kijas.jpg
-  /usr/share/backgrounds/Black_hole_by_Marek_Koteluk.jpg
-  /usr/share/backgrounds/BosqueTK.jpg
   /usr/share/backgrounds/brad-huchteman-stone-mountain.jpg
-  /usr/share/backgrounds/BusquedaNocturna.jpg
-  /usr/share/backgrounds/Cairn_by_Sylvain_Naudin.jpg
-  /usr/share/backgrounds/Camera_Film_by_Markus_Spiske.jpg
-  /usr/share/backgrounds/Cathédrale_Marie-Rheine-du-Monde_by_Thierry_Pon.jpg
-  /usr/share/backgrounds/Cielo_estrellado_by_Eduardo_Diez_Viñuela.jpg
-  /usr/share/backgrounds/clock_by_Bernhard_Hanakam.jpg
   /usr/share/backgrounds/Colored_Pencils_by_Jess_Bailey.jpg
-  /usr/share/backgrounds/Cornered.jpg
   /usr/share/backgrounds/Crocus_Wallpaper_by_Roy_Tanck.jpg
-  /usr/share/backgrounds/CurlsbyCandy.jpg
-  /usr/share/backgrounds/Daisy.jpg
-  /usr/share/backgrounds/Dans_ma_bulle_by_Christophe_Weibel.jpg
-  /usr/share/backgrounds/Definitive_Light_Zen_Orange_by_Pierre_Cante.jpg
-  /usr/share/backgrounds/Early_Morning_by_Robert_Katzki.jpg
-  /usr/share/backgrounds/El_Haouaria_by_Nusi_Nusi.jpg
-  /usr/share/backgrounds/FallDrops,AncientLight.jpg
-  /usr/share/backgrounds/Flora_by_Marek_Koteluk.jpg
-  /usr/share/backgrounds/Fluffodome.jpg
-  /usr/share/backgrounds/Focal-Fossa_WP_4096x2304_GREY.png
   /usr/share/backgrounds/Foggy_Forest_by_Jake_Stewart.jpg
   /usr/share/backgrounds/Forever_by_Shady_S.jpg
-  /usr/share/backgrounds/Frozen_by_fernando_garcila_redondo.jpg
-  /usr/share/backgrounds/Gorilla_Wallpaper_Grey_4096x2304.png
-  /usr/share/backgrounds/Gran_Canaria_by_ALF.jpg
-  /usr/share/backgrounds/Green_Plant_by_Simon_Schlegl.jpg
   /usr/share/backgrounds/Halifax_Sunset_by_Vlad_Drobinin.jpg
-  /usr/share/backgrounds/hardy_wallpaper_uhd.png
   /usr/share/backgrounds/H_by_Manuel_Sagredo.jpg
-  /usr/share/backgrounds/Hippopotamus_Swimming_Photo_by_Francesco_Ungaro.jpg
-  /usr/share/backgrounds/Hirsute-Hippo_WP_4096x2304_Grey.png
-  /usr/share/backgrounds/Ibanez_Infinity_by_Jaco_Kok.jpg
-  /usr/share/backgrounds/Icy_Grass_by_Raymond_Lavoie.jpg
   /usr/share/backgrounds/Icystones2.jpg
-  /usr/share/backgrounds/Impish-Indri_WP_4096x2304_Grey.png
-  /usr/share/backgrounds/InthedarkRedux.jpg
-  /usr/share/backgrounds/Jelly_Fish_by_RaDu_GaLaN.jpg
   /usr/share/backgrounds/joshua-coleman-something-yellow.jpg
   /usr/share/backgrounds/Landscape_Photography_Of_Mountains_by_Simon_Berger.jpg
-  /usr/share/backgrounds/Macro_Shot_of_Black_Animal_by_Gene_Taylor.jpg
   /usr/share/backgrounds/Manhattan_Sunset_by_Giacomo_Ferroni.jpg
-  /usr/share/backgrounds/Maraetaibeforesunrise.jpg
   /usr/share/backgrounds/matt-mcnulty-nyc-2nd-ave.jpg
-  /usr/share/backgrounds/Milky_Way_by_Paulo_José_Oliveira_Amaro.jpg
-  /usr/share/backgrounds/Mono_Lake_by_Angela_Henderson.jpg
   /usr/share/backgrounds/Night_lights_by_Alberto_Salvia_Novella.jpg
   /usr/share/backgrounds/On_top_of_the_Rubihorn_by_Matthias_Niess.jpg
-  /usr/share/backgrounds/Outoffocus.jpg
-  /usr/share/backgrounds/Pantano_de_Orellana_by_mgarciaiz.jpg
-  /usr/share/backgrounds/Partitura_by_Vincijun.jpg
-  /usr/share/backgrounds/passion_flower_by_Irene_Gr.jpg
-  /usr/share/backgrounds/Pointy.jpg
   /usr/share/backgrounds/Raindrops_On_The_Table_by_Alex_Fazit.jpg
   /usr/share/backgrounds/Reflections_by_Trenton_Fox.jpg
-  /usr/share/backgrounds/Roof_Tiles_by_Finn_Sturdy.jpg
   /usr/share/backgrounds/Ross_Jones_Rockpool_(Sydney)_by_Chris_Carignan.jpg
   /usr/share/backgrounds/ryan-stone-skykomish-river.jpg
-  /usr/share/backgrounds/Sea_Fury_by_Ian_Worrall.jpg
-  /usr/share/backgrounds/Silver_Back_Gorilla_by_Mike_Arney.jpg
-  /usr/share/backgrounds/SmoothMoment.jpg
   /usr/share/backgrounds/Spices_in_Athens_by_Makis_Chourdakis.jpg
   /usr/share/backgrounds/Spring_by_Peter_Apas.jpg
   /usr/share/backgrounds/TCP118v1_by_Tiziano_Consonni.jpg
-  /usr/share/backgrounds/The_Land_of_Edonias_by_Γιωργος_Αργυροπουλος.jpg
-  /usr/share/backgrounds/This_Is_Bionic_Beaver_by_Pierre_Cante.jpg
-  /usr/share/backgrounds/Vanishing_by_James_Wilson.jpg
   /usr/share/backgrounds/Wall_with_door_on_Gozo_by_Matthias_Niess.jpg
-  /usr/share/backgrounds/Warmlights.jpg
-  /usr/share/backgrounds/Water_web_by_Tom_Kijas.jpg
   /usr/share/backgrounds/Way_by_Kacper_Ślusarczyk.jpg
-  /usr/share/backgrounds/Xerus_Wallpaper_Grey_4096x2304.png
-  /usr/share/backgrounds/Yellowflower.jpg
-  /usr/share/gnome-background-properties/bionic-wallpapers.xml
-  /usr/share/gnome-background-properties/focal-wallpapers.xml
-  /usr/share/gnome-background-properties/groovy-wallpapers.xml
-  /usr/share/gnome-background-properties/hirsute-wallpapers.xml
-  /usr/share/gnome-background-properties/impish-wallpapers.xml
-  /usr/share/gnome-background-properties/lucid-wallpapers.xml
-  /usr/share/gnome-background-properties/quantal-wallpapers.xml
-  /usr/share/gnome-background-properties/trusty-wallpapers.xml
-  /usr/share/gnome-background-properties/xenial-wallpapers.xml
 '
 
 urlbase='http://cz.archive.ubuntu.com/ubuntu/pool/universe/u/ubuntu-wallpapers'
@@ -161,10 +94,16 @@ ab5854a77027908f46d768b28d52e814602d2dbd1a63e1333503efa82a0df65e4a7f61d8fa5ef38f
 63fcb1486a5bf824321efa9064bdead7b21f43171ce475ed1a27ee8206d6ff9f2787228097dca7983b5e880fb7978cb8  ubuntu-wallpapers-hirsute_22.04.4-0ubuntu1_all.deb
 cfa4ef0b470e588b66bb472db65e5a7489d719734cda3d42bbb2f180ceb4916339b00807fca7af71807fd147b7ae2a0e  ubuntu-wallpapers-impish_22.04.4-0ubuntu1_all.deb
 EOF
+      # The packages carry over 100 wallpapers, pack only the linked ones.
+      for path in $ubuntu_backgrounds_links; do
+        mkdir -p "keep$(dirname "$path")"
+        mv "ubuntu-wallpapers${path}" "keep${path}"
+      done
+
       # Set LC_COLLATE=C so that files always sort in the same
       # way (so we get the same tar-archive independent of locales).
       env LC_COLLATE=C \
-        tar -C ubuntu-wallpapers --mtime='2000-01-01 00:00:00 +00:00' --sort=name -c \
+        tar -C keep --mtime='2000-01-01 00:00:00 +00:00' --sort=name -c \
           -f "$upstream_pack" .
     )
     ;;
