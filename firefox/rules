@@ -5,7 +5,7 @@ set -eu
 command=$1
 shift
 
-version=154.0
+version=155.0.1
 
 urlbase="https://download-installer.cdn.mozilla.net/pub/firefox/releases/${version}/linux-x86_64"
 
@@ -124,17 +124,23 @@ EOF
   download)
     upstream_pack=$(readlink -f "$1")
     tmpdir=
-    trap '[ -n "$tmpdir" ] && rm -rf "$tmpdir"' 0 INT TERM
+    trap '
+      [ -n "$tmpdir" ] \
+        && [ "${PUAVOPKG_DEVMODE:-}" != 'true' ] \
+        && rm -rf "$tmpdir"
+    ' 0 INT TERM
     tmpdir=$(mktemp -d)
 
     firefox_checksums_path="$(pwd)/firefox_checksums.txt"
 
     (
       cd "$tmpdir"
-      new_checksums_path="${tmpdir}/new_firefox_checksums.txt"
+      new_checksums_path="${tmpdir}/firefox_checksums.txt"
+
       if [ "${PUAVOPKG_DEVMODE:-}" = 'true' ]; then
         cat /dev/null > "$new_checksums_path"
       fi
+
       while read sha384 lang_dir; do
         tarpath="${lang_dir}/firefox-${version}.tar.xz"
         tarfile="$(basename "$tarpath")"
@@ -179,6 +185,9 @@ FF_PUAVO_JS_EOF
       env LC_COLLATE=C \
         tar -C firefox -j --mtime='2000-01-01 00:00:00 +00:00' --sort=name -c \
           -f "$upstream_pack" .
+      if [ "${PUAVOPKG_DEVMODE:-}" = 'true' ]; then
+        echo "New firefox checksums are in ${tmpdir}/firefox_checksums.txt" >&2
+      fi
     )
     ;;
   *)
