@@ -124,24 +124,20 @@ EOF
   download)
     upstream_pack=$(readlink -f "$1")
     tmpdir=
-    trap '[ -n "$tmpdir" ] && rm -rf "$tmpdir"' 0 INT TERM
+    trap '
+      [ -n "$tmpdir" ] \
+        && [ "${PUAVOPKG_DEVMODE:-}" != 'true' ] \
+        && rm -rf "$tmpdir"
+    ' 0 INT TERM
     tmpdir=$(mktemp -d)
 
     firefox_checksums_path="$(pwd)/firefox_checksums.txt"
 
     (
       cd "$tmpdir"
-      new_checksums_path="${tmpdir}/new_firefox_checksums.txt"
+      new_checksums_path="${tmpdir}/firefox_checksums.txt"
 
       if [ "${PUAVOPKG_DEVMODE:-}" = 'true' ]; then
-        if [ -z "${PUAVOPKG_SOURCE_DIR:-}" ]; then
-          echo 'When using devmode, set PUAVOPKG_SOURCE_DIR as well!' >&2
-          exit 1
-        fi
-        if [ ! -f "${PUAVOPKG_SOURCE_DIR:-}/firefox_checksums.txt" ]; then
-          echo 'The firefox_checksums.txt does not exist' >&2
-          exit 1
-        fi
         cat /dev/null > "$new_checksums_path"
       fi
 
@@ -190,10 +186,7 @@ FF_PUAVO_JS_EOF
         tar -C firefox -j --mtime='2000-01-01 00:00:00 +00:00' --sort=name -c \
           -f "$upstream_pack" .
       if [ "${PUAVOPKG_DEVMODE:-}" = 'true' ]; then
-        cp "$new_checksums_path" \
-           "${PUAVOPKG_SOURCE_DIR}/firefox_checksums.txt"
-        sha384sum "$upstream_pack" | awk '{ print $1 }' \
-          > "${PUAVOPKG_SOURCE_DIR}/upstream_pack_sha384sum"
+        echo "New firefox checksums are in ${tmpdir}/firefox_checksums.txt" >&2
       fi
     )
     ;;
