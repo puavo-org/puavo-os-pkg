@@ -9,20 +9,44 @@ version=155.0.1
 
 urlbase="https://download-installer.cdn.mozilla.net/pub/firefox/releases/${version}/linux-x86_64"
 
+build_locale='en-GB'
+
+# Fetch a file under URL base into the current directory and check it.
+# In development mode a mismatch is recorded instead of failing.
+download() {
+  url_path=$1
+  checksum=$2
+  filename=$(basename "$url_path")
+
+  wget \
+      --no-use-server-timestamps \
+      --no-cookies \
+      --output-document "$filename" \
+      --progress=dot:mega \
+      "${urlbase}/${url_path}" || {
+      [ $? -eq 4 ] && exit 2 ## Network failure.
+      exit 1
+  }
+
+  if echo "${checksum} ${filename}" | sha384sum --check >/dev/null; then
+    return 0
+  fi
+
+  actual_checksum=$(sha384sum "$filename" | awk '{ print $1 }')
+  if [ "${PUAVOPKG_DEVMODE:-}" != 'true' ]; then
+    echo "checksum NOT matching for $url_path" >&2
+    echo "expected: ${checksum} / actual: ${actual_checksum}" >&2
+    exit 1
+  fi
+  echo "updating ${new_checksums_path} with new checksum" >&2
+  echo "${actual_checksum} ${filename}" >> "$new_checksums_path"
+}
+
 setup_firefox_wrapper() {
   cat <<'EOF' > /usr/local/bin/firefox
 #!/bin/sh
 
 set -eu
-
-case "$LANG" in
-  de_*) firefox_dir=/opt/firefox/de    ;;
-  fi_*) firefox_dir=/opt/firefox/fi    ;;
-  fr_*) firefox_dir=/opt/firefox/fr    ;;
-  sv_*) firefox_dir=/opt/firefox/sv-SE ;;
-  uk_*) firefox_dir=/opt/firefox/uk    ;;
-  *)    firefox_dir=/opt/firefox/en-GB ;;
-esac
 
 # This is needed since Firefox 68, otherwise each language installation
 # (and Firefox 68 from Mozilla binaries compared to old Firefox binaries
@@ -46,9 +70,9 @@ fi
 # make complex camera devices available to Firefox via V4L2 compat
 # library (libcamerify defines LD_PRELOAD and execs Firefox).
 if ${is_libcamerify_installed} && ${is_libcamerify_enabled}; then
-  exec libcamerify "${firefox_dir}/firefox" "$@"
+  exec libcamerify /opt/firefox/firefox "$@"
 else
-  exec "${firefox_dir}/firefox" "$@"
+  exec /opt/firefox/firefox "$@"
 fi
 EOF
   chmod 755 /usr/local/bin/firefox
@@ -67,7 +91,7 @@ Exec=/usr/local/bin/firefox %u
 Terminal=false
 X-MultipleArgs=false
 Type=Application
-Icon=/opt/firefox/en-GB/browser/chrome/icons/default/default128.png
+Icon=/opt/firefox/browser/chrome/icons/default/default128.png
 Categories=Network;WebBrowser;
 MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/vnd.mozilla.xul+xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;
 StartupWMClass=Firefox
@@ -103,7 +127,7 @@ EOF
     ;;
 
   unconfigure)
-    if pgrep -f '/opt/firefox/.*/firefox' > /dev/null 2>&1; then
+    if pgrep -f '/opt/firefox/firefox' > /dev/null 2>&1; then
       echo 'Firefox is running, will not unconfigure' >&2
       # 4 == application is busy
       exit 4
@@ -141,44 +165,37 @@ EOF
         cat /dev/null > "$new_checksums_path"
       fi
 
-      while read sha384 lang_dir; do
-        tarpath="${lang_dir}/firefox-${version}.tar.xz"
-        tarfile="$(basename "$tarpath")"
-        wget \
-            --no-use-server-timestamps \
-            --no-cookies \
-            --output-document "$tarfile" \
-            --progress=dot:mega \
-            "${urlbase}/${tarpath}" || {
-            [ $? -eq 4 ] && exit 2 ## Network failure.
-            exit 1
-        }
-        if ! echo "${sha384} ${tarfile}" | sha384sum --check >/dev/null; then
-          actual_checksum=$(sha384sum "$tarfile" | awk '{ print $1 }')
-          if [ "${PUAVOPKG_DEVMODE:-}" != 'true' ]; then
-            echo "checksum NOT matching for $tarpath" >&2
-            echo "expected: ${sha384} / actual: ${actual_checksum}" >&2
-            exit 1
-          fi
-          echo "updating ${new_checksums_path} with new checksum" >&2
-          echo "${actual_checksum} ${lang_dir}" >> "$new_checksums_path"
-        fi
-        firefox_langdir="firefox/$(dirname "$tarpath")"
-        mkdir -p "$firefox_langdir"
-        tar -C "$firefox_langdir" --strip-components=1 -Jx -f "$tarfile" \
-          || exit 1
-        ln -fns /etc/firefox/distribution "${firefox_langdir}/distribution"
-        ln -fns /etc/firefox/syspref.js \
-                "${firefox_langdir}/defaults/pref/syspref.js"
-        cat <<'FF_PUAVO_JS_EOF' > "${firefox_langdir}/firefox-puavodesktop.js"
+      mkdir -p firefox/distribution/extensions
+
+      # Assemble the pack as follows:
+      #
+      #   firefox/    (extracted browser)
+      #   firefox/distribution/extensions/langpack-<locale>@firefox.mozilla.org.xpi
+      #
+      # Firefox installs everything under distribution/extensions into
+      # each profile, which makes the languages available.
+      while read -r checksum filename; do
+        case "$filename" in
+          *.xpi)
+            download "xpi/${filename}" "$checksum"
+            mv "$filename" \
+              "firefox/distribution/extensions/langpack-${filename%.xpi}@firefox.mozilla.org.xpi"
+            ;;
+          *)
+            download "${build_locale}/${filename}" "$checksum"
+            tar -C firefox --strip-components=1 -Jx -f "$filename"
+            ;;
+        esac
+      done < "$firefox_checksums_path"
+
+      ln -fns /etc/firefox/distribution/policies.json \
+              firefox/distribution/policies.json
+      ln -fns /etc/firefox/syspref.js firefox/defaults/pref/syspref.js
+      cat <<'FF_PUAVO_JS_EOF' > firefox/firefox-puavodesktop.js
 // 
 
 lockPref("autoadmin.global_config_url", "file:///etc/firefox/puavodesktop.js");
 FF_PUAVO_JS_EOF
-      done < "$firefox_checksums_path"
-
-      # hard link many duplicate files
-      rdfind -makehardlinks true firefox/*
 
       # Set LC_COLLATE=C so that files always sort in the same
       # way (so we get the same tar-archive independent of locales).
