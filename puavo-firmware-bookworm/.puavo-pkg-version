@@ -1,5 +1,5 @@
 name puavo-firmware-bookworm
-package-id 7d60b8233b22594563766977684ee447
+package-id eca2553c556fee410eb96f3a9dddfd8e
 pkg-format 2
-timestamp 2026-07-30T08:37:57+02:00
-version 3
+timestamp 2026-09-07T11:14:51+02:00
+version 4
