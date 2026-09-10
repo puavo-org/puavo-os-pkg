@@ -2,7 +2,7 @@
 
 set -eu
 
-version=100
+version=108
 
 command=$1
 shift
@@ -823,7 +823,7 @@ EOF
     unpack)
 	upstream_pack=$1
 	upstream_dir=$2
-	unzip -q -d "${upstream_dir}" "${upstream_pack}"
+	7z x -bd -y -o"${upstream_dir}" "${upstream_pack}" >/dev/null
 	extract_icon "$upstream_dir"
         chmod 755 "${upstream_dir}/Ekapeli_Alku_Linux_${version}/Ekapeli-Alku.x86"
 	;;
