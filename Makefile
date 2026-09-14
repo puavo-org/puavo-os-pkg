@@ -125,6 +125,7 @@ packagedirs += sparkvue
 packagedirs += spotify-client
 packagedirs += structorizer
 packagedirs += supertuxkart
+packagedirs += sweethome3d
 packagedirs += teamviewer
 packagedirs += tela-icon-theme
 packagedirs += telegram-desktop
