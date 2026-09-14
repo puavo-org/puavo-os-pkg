@@ -27,6 +27,10 @@ case "${command}" in
     upstream_pack=$1
     upstream_dir=$2
     dpkg-deb -x "$upstream_pack" "$upstream_dir"
+
+    # Delete bundled GStreamer libraries as in the EShare postinst script
+    # as the libraries in bookworm and trixie are new enough.
+    rm -f "${upstream_dir}"/opt/EShare/lib/libgst*
     ;;
   *)
     ;;

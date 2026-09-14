@@ -14,7 +14,7 @@ case "${command}" in
         cat <<'EOF' > /usr/share/applications/geogebra6.desktop
 [Desktop Entry]
 Name=GeoGebra 6
-Exec=/opt/GeoGebra-linux-x64/GeoGebra
+Exec=/opt/GeoGebra-linux-x64/GeoGebra --disable-gpu-shader-disk-cache
 Type=Application
 Terminal=false
 Icon=glade

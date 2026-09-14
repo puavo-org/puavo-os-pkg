@@ -1,0 +1,40 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+  configure)
+    upstream_dir=$1
+
+    ln -fns "$upstream_dir" /opt/sweethome3d
+
+    cat <<'EOF' > /usr/share/applications/sweethome3d.desktop
+[Desktop Entry]
+Type=Application
+Name=Sweet Home 3D
+Comment=Draw the floor plan of a home and view it in 3D
+Exec=/opt/sweethome3d/SweetHome3D %f
+Icon=/opt/sweethome3d/SweetHome3DIcon.png
+Terminal=false
+StartupNotify=true
+StartupWMClass=com-eteks-sweethome3d-SweetHome3D
+Categories=Graphics;3DGraphics;
+Keywords=home;interior;design;floor;plan;furniture;3D;
+EOF
+    ;;
+  unconfigure)
+    rm -f /opt/sweethome3d /usr/share/applications/sweethome3d.desktop
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    tar --no-same-owner -zx -f "$upstream_pack" -C "$upstream_dir" \
+        --strip-components=1
+    ;;
+  *)
+    ;;
+esac
