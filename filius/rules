@@ -6,13 +6,13 @@ command=$1
 shift
 
 links='
-  /etc/filius
-  /usr/bin/filius
   /usr/share/applications/filius.desktop
   /usr/share/doc/filius
   /usr/share/filius
+  /usr/share/icons/hicolor/32x32/apps/filius.png
+  /usr/share/icons/hicolor/64x64/apps/filius.png
+  /usr/share/icons/hicolor/96x96/apps/filius.png
   /usr/share/mime/packages/application-filius-project.xml
-  /usr/share/pixmaps/filius32.png
 '
 
 case "${command}" in
@@ -22,9 +22,11 @@ case "${command}" in
       mkdir -p "$(dirname "$f")"
       ln -fns -T "${upstream_dir}${f}" "$f"
     done
+    ln -fns -T "${upstream_dir}/usr/share/filius/filius.sh" /usr/bin/filius
     ;;
   unconfigure)
     rm -f $links
+    rm -f /usr/bin/filius
     ;;
   unpack)
     upstream_pack=$1
