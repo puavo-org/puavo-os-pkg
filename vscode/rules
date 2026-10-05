@@ -6,9 +6,9 @@ command=$1
 shift
 
 vscode_links='
-   /usr/share/appdata/code.appdata.xml
-   /usr/share/applications/code.desktop
-   /usr/share/applications/code-url-handler.desktop
+   /usr/share/appdata/com.microsoft.VSCode.appdata.xml
+   /usr/share/applications/com.microsoft.VSCode.desktop
+   /usr/share/applications/com.microsoft.VSCode.UrlHandler.desktop
    /usr/share/bash-completion/completions/code
    /usr/share/code
    /usr/share/mime/packages/code-workspace.xml
