@@ -6,9 +6,6 @@ command=$1
 shift
 
 vscode_links='
-   /usr/share/appdata/com.microsoft.VSCode.appdata.xml
-   /usr/share/applications/com.microsoft.VSCode.desktop
-   /usr/share/applications/com.microsoft.VSCode.UrlHandler.desktop
    /usr/share/bash-completion/completions/code
    /usr/share/code
    /usr/share/mime/packages/code-workspace.xml
@@ -17,6 +14,13 @@ vscode_links='
    /etc/vscode
 '
 
+# Upstream names these com.microsoft.VSCode.*; keep our own code.* names
+# for them instead, since other tooling expects the old names.
+vscode_renamed_links='
+   /usr/share/appdata/com.microsoft.VSCode.appdata.xml:/usr/share/appdata/code.appdata.xml
+   /usr/share/applications/com.microsoft.VSCode.desktop:/usr/share/applications/code.desktop
+   /usr/share/applications/com.microsoft.VSCode.UrlHandler.desktop:/usr/share/applications/code-url-handler.desktop
+'
 
 case "${command}" in
     configure)
@@ -25,11 +29,20 @@ case "${command}" in
           mkdir -p "$(dirname "$f")"
           ln -fns -T "${upstream_dir}/${f}" "$f"
         done
+        for pair in $vscode_renamed_links; do
+          src=${pair%%:*}
+          dst=${pair#*:}
+          mkdir -p "$(dirname "$dst")"
+          ln -fns -T "${upstream_dir}/${src}" "$dst"
+        done
         ln -fns -T "${upstream_dir}/usr/share/code/code" /usr/local/bin/code
         echo vscode >> /var/lib/puavo-pkg/.update_mime_database
         ;;
     unconfigure)
         rm -f $vscode_links
+        for pair in $vscode_renamed_links; do
+          rm -f "${pair#*:}"
+        done
         rm -f /usr/local/bin/code
         ;;
     unpack)
