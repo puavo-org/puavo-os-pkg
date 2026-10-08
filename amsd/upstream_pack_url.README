@@ -1,0 +1,11 @@
+amsd comes from HPE's Management Component Pack (MCP) apt repository.
+The latest version and its download url can be checked from:
+
+https://downloads.linux.hpe.com/SDR/repo/mcp/dists/bookworm/current/non-free/binary-amd64/Packages
+
+The "Filename:" field of the "Package: amsd" stanza is relative to
+https://downloads.linux.hpe.com/SDR/repo/mcp/ and is usually something like:
+https://downloads.linux.hpe.com/SDR/repo/mcp/pool/non-free/amsd_x.x.x-xxxx.xx-debian12_amd64.deb
+
+Compare the "SHA256:" field of that stanza with the downloaded .deb
+before computing upstream_pack_sha384sum.
