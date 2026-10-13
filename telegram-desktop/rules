@@ -10,6 +10,7 @@ case "$command" in
     upstream_dir=$1
 
     ln -fns "${upstream_dir}/Telegram/Telegram" /usr/bin/telegram-desktop
+    ln -fns "${upstream_dir}/Telegram/telegram.png" /usr/share/icons/telegram.png
 
     mkdir -p /etc/tdesktop
     echo "${upstream_dir}/Telegram/Telegram" > /etc/tdesktop/externalupdater
@@ -35,13 +36,15 @@ EOF
   unconfigure)
     rm -f /etc/tdesktop/externalupdater \
           /usr/bin/telegram-desktop \
-          /usr/local/share/applications/telegramdesktop.desktop
+          /usr/local/share/applications/telegramdesktop.desktop \
+          /usr/share/icons/telegram.png
     ;;
   unpack)
     upstream_pack=$1
     upstream_dir=$2
 
     tar -Jx --no-same-owner -C "$upstream_dir" -f "$upstream_pack"
+    cp -p telegram.png "$upstream_dir/Telegram"
     ;;
   *)
     ;;
