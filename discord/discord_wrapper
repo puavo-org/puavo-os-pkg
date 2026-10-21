@@ -5,6 +5,10 @@ set -eu
 configfile="$HOME/.config/discord/settings.json"
 tmpfile="${configfile}.tmp"
 
+if ! [ -d "$HOME/.config/discord" ]; then
+  mkdir "$HOME/.config/discord"
+fi
+
 if ! { [ -e "$configfile" ] && [ "$(json_pp < "$configfile")" ]; }; then
   jq --null-input '.SKIP_HOST_UPDATE=true' > "$tmpfile"
 else

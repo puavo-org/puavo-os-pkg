@@ -37,3 +37,36 @@ new version or editing a single file:
    and shouldn't be left lying around in the working tree.
 
 See `README.md` for the broader package build/update/testing commands.
+
+## Checking for available updates
+
+When asked to "check updates", go through all packages and report which ones
+have a newer upstream version. Produce a list only — do not edit, build or
+commit anything; each actual update is a separate "update `<package>`"
+request.
+
+1. Read the pinned version from each package's `upstream_pack_url`, or from
+   `rules` (`version=` / `urlbase=` variables) for packages without that file.
+   `aversphere2`, `mandelbulber`, `mathpix`, `sparkvue` and
+   `xeroxofficedriver` are empty stubs; skip them.
+2. For GitHub-hosted packages, compare against
+   `https://api.github.com/repos/<owner>/<repo>/releases/latest` (use curl if
+   `gh` is not installed; the unauthenticated limit is 60 requests/hour).
+   Bitwarden desktop and CLI share the `bitwarden/clients` repo, so filter
+   its releases by the `desktop-v` / `cli-v` tag prefix. URL-encoded tags
+   (e.g. `%40` for `@` in prusaslicer) are not real differences.
+3. For other vendors, prefer machine-readable sources: "latest" download
+   redirects (vscode, discord, zoom), apt repository `Packages` files
+   (google-chrome, google-earth, signal — use `Packages.xz` —, sonobus,
+   teamviewer, unityhub, spotify), version APIs (Firefox product-details,
+   Slack `desktop.latestRelease`, HashiCorp checkpoint for vagrant, JetBrains
+   releases API for pycharm), and directory listings or SourceForge RSS
+   feeds (wine-mono, wine-gecko, kdenlive, eclipse, lazarus, sweethome3d).
+4. Packages whose download URL has no version in it (dropbox, webex,
+   teamviewer, airtame, …) can only be checked by downloading and comparing
+   the sha384 checksum; list them as not checked unless asked. Opinsys
+   internal builds, commit-pinned sources, drivers, firmware and fonts can be
+   skipped.
+5. Report in groups: newer version available (pinned vs. latest, flagging
+   major jumps and very stale pins that may be intentional), likely outdated
+   but unconfirmed, up to date, and could not check (with the reason).

@@ -5,6 +5,10 @@ set -eu
 configfile="$HOME/.config/PrusaSlicer/PrusaSlicer.ini"
 tmpfile="${configfile}.tmp"
 
+if ! [ -d "$HOME/.config/PrusaSlicer" ]; then
+  mkdir "$HOME/.config/PrusaSlicer"
+fi
+
 if ! [ -e "$configfile" ]; then
   echo "notify_release = none" > "$tmpfile"
 else
