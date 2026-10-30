@@ -8,14 +8,23 @@ shift
 case "${command}" in
   configure)
     upstream_dir=$1
+    ln -fns "${upstream_dir}/opt/anki" /opt/anki
+    ln -fns /opt/anki/bin/anki /usr/local/bin/anki
+    ln -fns "${upstream_dir}/opt/anki/icons/anki.png" \
+            /usr/share/icons/anki.png
+    ln -fns "${upstream_dir}/opt/anki/share/applications/anki.desktop" \
+            /usr/local/share/applications/anki.desktop
     ;;
   unconfigure)
+    rm -f /opt/anki                                  \
+          /usr/local/bin/anki                        \
+          /usr/local/share/applications/anki.desktop \
+          /usr/share/icons/anki.png
     ;;
   unpack)
     upstream_pack=$1
     upstream_dir=$2
-    ;;
-  download)
+    tar --no-same-owner -zx -f "$upstream_pack" -C "$upstream_dir"
     ;;
   *)
     ;;
