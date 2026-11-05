@@ -18,6 +18,11 @@ new version or editing a single file:
    still exist. Vendors sometimes rename files (VS Code 1.140.0 renamed
    `code.desktop` to `com.microsoft.VSCode.desktop`), and `ln -fns` silently
    creates broken links instead of failing. Fix `rules` if needed.
+   Also check whether `configure` edits any file under `${upstream_dir}` in
+   place (e.g. `sed -i`) — that belongs in `unpack` instead, since `unpack`
+   runs once per extraction while `configure` can run repeatedly (every
+   install/reconfigure), re-applying the same edit pointlessly each time.
+   Flag and move any such edit you find, even on an otherwise routine bump.
 5. If `.puavo-pkg-version` already has uncommitted changes (e.g. from an
    earlier build of the same update), revert it first with
    `git checkout <package>/.puavo-pkg-version`, so that the version number
