@@ -21,8 +21,6 @@ case "${command}" in
           mkdir -p "$(dirname "$f")"
           ln -fns -T "${upstream_dir}/${f}" "$f"
         done
-        # Fix permissions for upstream directory
-        chmod 755 "${upstream_dir}"
         echo slack >> /var/lib/puavo-pkg/.update_mime_database
 	;;
     unconfigure)
@@ -33,6 +31,8 @@ case "${command}" in
 	upstream_dir=$2
 
 	dpkg -x "${upstream_pack}" "${upstream_dir}"
+	# Fix permissions for upstream directory
+	chmod 755 "${upstream_dir}"
 	;;
     *)
 	;;
