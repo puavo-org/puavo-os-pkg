@@ -19,6 +19,7 @@ Type=Application
 Terminal=false
 Icon=glade
 StartupNotify=true
+StartupWMClass=geogebra
 Categories=Education;
 EOF
 	;;
