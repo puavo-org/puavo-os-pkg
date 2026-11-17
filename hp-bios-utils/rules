@@ -8,8 +8,8 @@ shift
 
 ### These version numbers are used below and thus must be
 ### updated to reflect the structure inside the upstream tarball.
-hpf_ver="3.25"
-hpum_ver="3.06"
+hpf_ver="3.26"
+hpum_ver="3.07"
 
 case "${command}" in
   configure)

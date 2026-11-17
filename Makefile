@@ -9,6 +9,7 @@ packagedirs += abitti-naksu
 packagedirs += abitti-naksu2
 packagedirs += adobe-reader
 packagedirs += airtame
+packagedirs += amsd
 packagedirs += anki
 packagedirs += appinventor
 packagedirs += arduino-ide
