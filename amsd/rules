@@ -1,0 +1,141 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+amsd_links='
+  /etc/default/ahslog
+  /etc/default/amsd
+  /etc/default/amsd_rev
+  /etc/default/cpqIde
+  /etc/default/cpqScsi
+  /etc/default/cpqiScsi
+  /etc/default/mr_cpqScsi
+  /etc/default/smad
+  /etc/default/smad_rev
+  /lib/systemd/system/ahslog.service
+  /lib/systemd/system/amsd.service
+  /lib/systemd/system/amsd_rev.service
+  /lib/systemd/system/cpqFca.service
+  /lib/systemd/system/cpqFca_rev.service
+  /lib/systemd/system/cpqIde.service
+  /lib/systemd/system/cpqIde_rev.service
+  /lib/systemd/system/cpqScsi.service
+  /lib/systemd/system/cpqScsi_rev.service
+  /lib/systemd/system/cpqiScsi.service
+  /lib/systemd/system/mr_cpqScsi.service
+  /lib/systemd/system/mr_cpqScsi_rev.service
+  /lib/systemd/system/smad.service
+  /lib/systemd/system/smad_rev.service
+  /lib/udev/rules.d/81-cpqFca.rules
+  /lib/udev/rules.d/81-cpqiScsi.rules
+  /sbin/ahslog
+  /sbin/amsd
+  /sbin/amsd_rev
+  /sbin/cpqFca
+  /sbin/cpqIde
+  /sbin/cpqScsi
+  /sbin/cpqiScsi
+  /sbin/mr_cpqScsi
+  /sbin/smad
+  /sbin/smad_rev
+  /usr/share/amsd/amsd.license
+  /usr/share/man/man1/ahslog.1m.gz
+  /usr/share/man/man1/smad.1m.gz
+  /usr/share/man/man8/amsd.8.gz
+  /usr/share/man/man8/cpqFca.8.gz
+  /usr/share/man/man8/cpqiScsi.8.gz
+  /usr/share/man/man8/mr_cpqScsi.8.gz
+'
+
+# The units that the .deb postinst enables and starts.  The *_rev units
+# and cpqFca.service are not enabled by the postinst either (cpqFca is
+# pulled in by its udev rule).
+amsd_units='
+  ahslog.service
+  amsd.service
+  cpqIde.service
+  cpqScsi.service
+  cpqiScsi.service
+  mr_cpqScsi.service
+  smad.service
+'
+
+# Prints "wants <target>" and "requires <target>" lines from the
+# [Install] section of a unit file.
+unit_install_targets() {
+  awk '
+    /^[[:space:]]*\[/ {
+      in_install = ($0 ~ /^[[:space:]]*\[Install\][[:space:]]*$/)
+      next
+    }
+    in_install && /^[[:space:]]*(WantedBy|RequiredBy)[[:space:]]*=/ {
+      kind = ($0 ~ /^[[:space:]]*WantedBy/) ? "wants" : "requires"
+      value = $0
+      sub(/^[^=]*=/, "", value)
+      n = split(value, targets, /[[:space:]]+/)
+      for (i = 1; i <= n; i++) {
+        if (targets[i] != "") { print kind, targets[i] }
+      }
+    }
+  ' "$1"
+}
+
+# True when systemd runs, i.e. not during puavo-conf preinit at boot.
+systemd_is_running() {
+  [ -d /run/systemd/system ]
+}
+
+case "${command}" in
+  configure)
+    upstream_dir=$1
+
+    for f in $amsd_links; do
+      mkdir -p "$(dirname "$f")"
+      ln -fns -T "${upstream_dir}${f}" "$f"
+    done
+
+    ### From postinst (deb-systemd-helper enable)
+    for unit in $amsd_units; do
+      unit_install_targets "${upstream_dir}/lib/systemd/system/${unit}" \
+        | while read -r kind target; do
+            mkdir -p "/etc/systemd/system/${target}.${kind}"
+            ln -fns -T "/lib/systemd/system/${unit}" \
+                       "/etc/systemd/system/${target}.${kind}/${unit}"
+          done
+    done
+
+    ### From postinst (deb-systemd-invoke start/restart).  At boot
+    ### systemd starts the enabled units itself.
+    if systemd_is_running; then
+      systemctl daemon-reload || true
+      systemctl --no-block restart $amsd_units || true
+    fi
+    ;;
+  unconfigure)
+    if systemd_is_running; then
+      systemctl --no-block stop $amsd_units || true
+    fi
+
+    for unit in $amsd_units; do
+      rm -f /etc/systemd/system/*.wants/"${unit}" \
+            /etc/systemd/system/*.requires/"${unit}"
+    done
+
+    rm -f $amsd_links
+
+    if systemd_is_running; then
+      systemctl daemon-reload || true
+    fi
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    dpkg -x "$upstream_pack" "$upstream_dir"
+    ;;
+  *)
+    ;;
+esac

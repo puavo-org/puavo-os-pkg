@@ -1,0 +1,4 @@
+HPE Agentless Management Service (AMS) for HPE ProLiant Gen10 and newer
+servers.  It passes operating system information (network, storage,
+software inventory and OS logs) to the iLO management processor, so
+that iLO can report it via SNMP, Redfish and the Active Health System.
