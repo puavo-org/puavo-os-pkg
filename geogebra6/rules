@@ -33,6 +33,13 @@ EOF
 
         unzip -q -d "$upstream_dir" "$upstream_pack"
         chmod 755 "${upstream_dir}/GeoGebra-linux-x64"
+
+        # Remove analytics domains from the request whitelist: the Piwik PRO host is dead and made every start hang until TCP timeout.
+        main_js="${upstream_dir}/GeoGebra-linux-x64/resources/app/main.js"
+        sed -i \
+            -e 's/ "google-analytics\.com", "googletagmanager\.com", \/\/ analytics//' \
+            -e '/"geogebra\.containers\.piwik\.pro", "geogebra\.piwik\.pro", \/\/ Piwik/d' \
+            "$main_js"
 	;;
     *)
 	;;

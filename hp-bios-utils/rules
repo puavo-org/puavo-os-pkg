@@ -14,14 +14,21 @@ hpum_ver="3.07"
 case "${command}" in
   configure)
     upstream_dir=$1
-    sed -i '/^KHPATHS/s/KVERS"$/\KVERS \/lib\/modules\/$KVERS\/source"/' "${upstream_dir}/hpflash-${hpf_ver}/non-rpms/hpuefi-mod-${hpum_ver}/hpuefi-vm-flags.sh"
-    make -C "${upstream_dir}/hpflash-${hpf_ver}/non-rpms/hpuefi-mod-${hpum_ver}" default install
+    ### Precompiled drivers and a signed dkms module are baked into Puavo OS Trixie image.
+    ### Compile only if said dkms module doesn't exist, otherwise configure would fail.
+    if ! [ -e "/usr/lib/modules/$(uname -r)/updates/dkms/hpuefi.ko.xz" ]; then
+      sed -i '/^KHPATHS/s/KVERS"$/\KVERS \/lib\/modules\/$KVERS\/source"/' "${upstream_dir}/hpflash-${hpf_ver}/non-rpms/hpuefi-mod-${hpum_ver}/hpuefi-vm-flags.sh"
+      make -C "${upstream_dir}/hpflash-${hpf_ver}/non-rpms/hpuefi-mod-${hpum_ver}" default install
+    fi
     (cd "${upstream_dir}/hpflash-${hpf_ver}/non-rpms/hp-flash-${hpf_ver}_x86_64/" && ./install.sh)
     ;;
   unconfigure)
     rm -rf /opt/hp/hp-flash
     rmdir --ignore-fail-on-non-empty /opt/hp
-    rm -rf /lib/modules/*/kernel/drivers/hpuefi
+    ### Delete the driver folder only if the dkms module doesn't exist.
+    if ! [ -e "/usr/lib/modules/$(uname -r)/updates/dkms/hpuefi.ko.xz" ]; then
+      rm -rf /lib/modules/*/kernel/drivers/hpuefi
+    fi
     ;;
   unpack)
     upstream_pack=$1
