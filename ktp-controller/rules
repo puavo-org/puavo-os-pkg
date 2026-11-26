@@ -11,6 +11,8 @@ case "${command}" in
     ln -fns "${upstream_dir}/ktp-controller" /opt/ktp-controller
 
     cat <<'EOF' > /etc/sudoers.d/ktp-controller
+Defaults:%puavo-ers env_keep += "_KTPC_PROD_MODE"
+
 %puavo-ers      ALL = (:puavo) NOPASSWD: /opt/ktp-controller/bin/ktp-controller-agent
 %puavo-ers      ALL =          NOPASSWD: /opt/ktp-controller/bin/ktp-controller-networking
 EOF
